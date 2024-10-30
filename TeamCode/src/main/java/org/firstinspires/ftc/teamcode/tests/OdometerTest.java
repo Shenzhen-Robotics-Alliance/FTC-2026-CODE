@@ -20,14 +20,14 @@ public class OdometerTest implements SimpleUnitTest {
     private final Telemetry telemetry;
     private int encoderReadTimeMillis;
     private final Queue<Double> reading1, reading2, reading3;
-    private static final MapleLoopClock mainThreadClock = new MapleLoopClock(50), odometerClock = new MapleLoopClock(200);
+    private static final MapleLoopClock mainThreadClock = new MapleLoopClock(50), odometerClock = new MapleLoopClock(250);
     private static final long imuUpdateMarginMillis = 200;
     private final Lock odometryLock = new ReentrantLock();
     private boolean running;
     public OdometerTest(HardwareMap hardwareMap, Telemetry telemetry) {
-        encoder1 = new MapleEncoder(hardwareMap.get(DcMotor.class, "backRight"), false, 2048, 1, 1, 200);
-        encoder2 = new MapleEncoder(hardwareMap.get(DcMotor.class, "frontRight"), false, 2048, 1, 1, 200);
-        encoder3 = new MapleEncoder(hardwareMap.get(DcMotor.class, "backLeft"), false, 2048, 1, 1, 200);
+        encoder1 = new MapleEncoder(hardwareMap.get(DcMotor.class, "backRight"), false, 2048, 1, 1, 250);
+        encoder2 = new MapleEncoder(hardwareMap.get(DcMotor.class, "frontRight"), false, 2048, 1, 1, 250);
+        encoder3 = new MapleEncoder(hardwareMap.get(DcMotor.class, "backLeft"), false, 2048, 1, 1, 250);
         this.imu = hardwareMap.get(IMU.class, "imu");
         this.telemetry = telemetry;
 

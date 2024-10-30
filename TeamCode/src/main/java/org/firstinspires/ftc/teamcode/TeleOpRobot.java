@@ -11,6 +11,7 @@ import org.firstinspires.ftc.teamcode.utils.MapleJoystickDriveInput;
 import java.io.IOException;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 /**
  * robot during teleop stage'
@@ -37,7 +38,7 @@ public class TeleOpRobot extends Robot {
         ));
 
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(
-                () -> robotContainer.driveSubsystem.setPose(new Pose2d())
+                () -> robotContainer.driveSubsystem.setPose(new Pose2d(0, 0, Rotation2d.fromDegrees(90)))
         );
     }
 

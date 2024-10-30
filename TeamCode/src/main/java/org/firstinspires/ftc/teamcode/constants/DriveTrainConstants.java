@@ -12,9 +12,9 @@ import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
  * */
 public class DriveTrainConstants {
     public static final String
-            CENTER_ODOMETER_WHEEL_NAME = "backRight",
-            LEFT_ODOMETER_WHEEL_NAME = "frontLeft",
-            RIGHT_ODOMETER_WHEEL_NAME = "frontRight";
+            CENTER_ODOMETER_WHEEL_NAME = "frontRight",
+            LEFT_ODOMETER_WHEEL_NAME = "backLeft",
+            RIGHT_ODOMETER_WHEEL_NAME = "backRight";
 
     /* if the RAW encoder reading is POSITIVE when moving to the left, false; other wise, true */
     public static final boolean CENTER_ODOMETER_WHEEL_INVERTED = true;
@@ -29,8 +29,8 @@ public class DriveTrainConstants {
             BACK_RIGHT_MOTOR_DIRECTION = 1;
 
     public static final IMU.Parameters IMU_PARAMS = new IMU.Parameters(new RevHubOrientationOnRobot(
-            RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
-            RevHubOrientationOnRobot.UsbFacingDirection.UP
+            RevHubOrientationOnRobot.LogoFacingDirection.UP,
+            RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD
     ));
 
     public static final double ODOMETER_ENCODER_TICKS_PER_REVOLUTION = 2048; // 2048 ticks mag encoder
