@@ -4,7 +4,7 @@ import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.BACK_
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.BACK_RIGHT_MOTOR_DIRECTION;
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.FRONT_LEFT_MOTOR_DIRECTION;
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.FRONT_RIGHT_MOTOR_DIRECTION;
-import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.MAX_ANGULAR_VELOCITY_DEGREES_PER_SECOND;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.MAX_VELOCITY_METERS_PER_SECOND;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
@@ -84,7 +84,7 @@ public class MecanumDriveSubsystem extends SubsystemBase implements HolonomicDri
 
     @Override
     public double getChassisMaxAngularVelocity() {
-        return Math.toRadians(MAX_ANGULAR_VELOCITY_DEGREES_PER_SECOND);
+        return MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
     }
 
     @Override

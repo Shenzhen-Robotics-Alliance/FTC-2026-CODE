@@ -6,12 +6,12 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.commands.drive.GamePadDrive;
+import org.firstinspires.ftc.teamcode.subsystems.drive.HolonomicDriveSubsystem;
 import org.firstinspires.ftc.teamcode.utils.MapleJoystickDriveInput;
 
 import java.io.IOException;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 
 /**
  * robot during teleop stage'
@@ -20,12 +20,18 @@ import edu.wpi.first.math.geometry.Rotation2d;
 public class TeleOpRobot extends Robot {
     private final RobotContainer robotContainer;
     private final GamepadEx pilotGamePad, copilotGamePad;
+    private final Runnable calibrateIMU;
     public TeleOpRobot(RobotContainer robotContainer, Gamepad pilotGamePad, Gamepad copilotGamePad) {
         super();
         this.robotContainer = robotContainer;
         this.pilotGamePad = new GamepadEx(pilotGamePad);
         this.copilotGamePad = new GamepadEx(copilotGamePad);
 
+        this.calibrateIMU = () -> robotContainer.driveSubsystem.setPose(new Pose2d(
+                robotContainer.driveSubsystem.getPose().getTranslation(),
+                HolonomicDriveSubsystem.getDriverStationFacing(robotContainer.currentSide)
+        ));
+        calibrateIMU.run();
         configureKeyBindings();
     }
 
@@ -37,9 +43,7 @@ public class TeleOpRobot extends Robot {
                 robotContainer.currentSide
         ));
 
-        this.pilotGamePad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(
-                () -> robotContainer.driveSubsystem.setPose(new Pose2d(0, 0, Rotation2d.fromDegrees(90)))
-        );
+        this.pilotGamePad.getGamepadButton(GamepadKeys.Button.Y).whenPressed(calibrateIMU);
     }
 
     @Override

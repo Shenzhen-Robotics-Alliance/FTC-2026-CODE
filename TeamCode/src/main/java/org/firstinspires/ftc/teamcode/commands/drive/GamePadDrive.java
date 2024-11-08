@@ -14,8 +14,6 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
-// TODO: test the current logic
-//  then, add straight-line maintenance PID
 public class GamePadDrive extends CommandBase {
     private final HolonomicDriveSubsystem driveSubsystem;
     private final MapleJoystickDriveInput driveInput;

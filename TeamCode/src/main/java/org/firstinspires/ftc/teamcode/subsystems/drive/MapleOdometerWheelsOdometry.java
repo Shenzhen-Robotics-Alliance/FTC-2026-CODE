@@ -150,8 +150,8 @@ public class MapleOdometerWheelsOdometry implements Subsystem {
         final double[] xCorners = new double[4];
         final double[] yCorners = new double[4];
         for (int i = 0; i < 4; i++) {
-            xCorners[i] = (corners[i].getY() / FIELD_WIDTH_METERS * 144) - (double) 144/2;
-            yCorners[i] = -(corners[i].getX() / FIELD_HEIGHT_METERS * 144) + (double) 144/2;
+            xCorners[i] = corners[i].getX() / FIELD_WIDTH_METERS * 144;
+            yCorners[i] = corners[i].getY() / FIELD_WIDTH_METERS * 144;
         }
         packet.fieldOverlay()
                 .setFill(color)
