@@ -1,46 +1,47 @@
+// package org.firstinspires.ftc.teamcode;
 package org.firstinspires.ftc.teamcode.tests;
+
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name="TestSuperStruct")
 public class SingleFileOpMode extends OpMode {
-    private DcMotor frontLeft, frontRight, backLeft, backRight;
+    private DcMotor FrontLeftMotor, FrontRightMotor, BackLeftMotor, BackRightMotor;
     private DcMotorEx elevator;
 
     private Servo arm1, arm2, wristRot, wristFlip, claw;
     @Override
     public void init() {
-        this.frontLeft = hardwareMap.get(DcMotor.class, "FrontLeftMotor");
-        this.frontRight = hardwareMap.get(DcMotor.class, "FrontRightMotor");
-        this.backLeft = hardwareMap.get(DcMotor.class, "BackLeftMotor");
-        this.backRight = hardwareMap.get(DcMotor.class, "BackRightMotor");
+        this.FrontLeftMotor  = hardwareMap.get(DcMotor.class, "FrontLeftMotor");
+        this.FrontRightMotor = hardwareMap.get(DcMotor.class, "FrontRightMotor");
+        this.BackLeftMotor = hardwareMap.get(DcMotor.class, "BackLeftMotor");
+        this.BackRightMotor = hardwareMap.get(DcMotor.class, "BackRightMotor");
 
-        this.frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.backRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        this.frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        this.FrontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.BackLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.FrontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.FrontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.BackLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.BackRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         this.elevator = hardwareMap.get(DcMotorEx.class, "Elevator");
+        this.elevator.setDirection(DcMotorSimple.Direction.REVERSE);
 
         this.arm1 = hardwareMap.get(Servo.class, "Arm1");
         this.arm2 = hardwareMap.get(Servo.class, "Arm2");
+        arm2.setDirection(Servo.Direction.REVERSE);
         this.wristFlip = hardwareMap.get(Servo.class, "WristFlip");
         this.wristRot = hardwareMap.get(Servo.class, "WristRot");
         this.claw = hardwareMap.get(Servo.class, "Claw");
-        arm2.setDirection(Servo.Direction.REVERSE);
 
         this.state = State.HOLD;
         this.closeClaw = true;
     }
-
     // states
     enum State {
         GRAB,
@@ -56,23 +57,43 @@ public class SingleFileOpMode extends OpMode {
         final double strafe = gamepad1.left_stick_x;
         final double omega = gamepad1.right_stick_x;
 
-        frontLeft.setPower(forward + strafe + omega);
-        frontRight.setPower(forward - strafe - omega);
-        backLeft.setPower(forward - strafe + omega);
-        backRight.setPower(forward + strafe - omega);
+        FrontLeftMotor.setPower(forward - strafe + omega);
+        FrontRightMotor.setPower(forward + strafe - omega);
+        BackLeftMotor.setPower(forward + strafe + omega);
+        BackRightMotor.setPower(forward - strafe - omega);
 
         FSM();
 
         // update claw position
-        claw.setPosition(closeClaw ? 1: 0);
+        claw.setPosition(closeClaw ? 0.6: 0);
+
+        elevator.setPower(gamepad2.right_stick_y);
+        telemetry.addData("elevator position", elevator.getCurrentPosition());
     }
 
     // finite state machine
     public void FSM() {
+        if(gamepad2.a) {
+            state = State.GRAB;
+            closeClaw = false;
+        }
+        else if(gamepad2.b) {
+            closeClaw = true;
+            state = State.HOLD;
+        }
+        else if(gamepad2.x)
+            state = State.SCORE;
+
+        if (state!= State.HOLD) {
+            if(gamepad2.right_trigger > 0.5)
+                closeClaw = true;
+            else if (gamepad2.right_bumper)
+                closeClaw = false;
+        }
+
         switch (state) {
             case GRAB: {
                 // run close loop on elevator
-                elevator.setTargetPosition(0);
 
                 // wrist flip
                 wristFlip.setPosition(0);
@@ -82,15 +103,14 @@ public class SingleFileOpMode extends OpMode {
                 arm2.setPosition(0);
 
                 // run wrist rot
-                final double wristRotRadians = Math.atan2(gamepad2.left_stick_y, gamepad2.left_stick_x);
-                if (Math.hypot(gamepad2.left_stick_y, gamepad2.left_stick_x) > 0.5)
-                    wristRot.setPosition(wristRotRadians / Math.PI);
+                wristRot.setPosition(0.5 + 0.5 * gamepad2.left_stick_x);
+                telemetry.addData("wrist rot", 0.5 + 0.5 * gamepad2.left_stick_x);
+
                 break;
             }
 
             case HOLD: {
                 // run close loop on elevator
-                elevator.setTargetPosition(0);
 
                 // wrist flip
                 wristFlip.setPosition(0.5);
@@ -106,7 +126,6 @@ public class SingleFileOpMode extends OpMode {
 
             case SCORE: {
                 // run close loop on elevator
-                elevator.setTargetPosition(1000);
 
                 // wrist flip
                 wristFlip.setPosition(0.5);
