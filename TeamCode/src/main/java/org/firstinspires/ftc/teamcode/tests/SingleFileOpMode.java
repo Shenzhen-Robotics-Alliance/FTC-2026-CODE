@@ -14,7 +14,7 @@ public class SingleFileOpMode extends OpMode {
     private DcMotor FrontLeftMotor, FrontRightMotor, BackLeftMotor, BackRightMotor;
     private DcMotorEx elevator;
 
-    private Servo arm1, arm2, wristRot, wristFlip, claw;
+    private Servo wristRot, wristFlip, claw, arm1, arm2;
     @Override
     public void init() {
         this.FrontLeftMotor  = hardwareMap.get(DcMotor.class, "FrontLeftMotor");
@@ -30,7 +30,6 @@ public class SingleFileOpMode extends OpMode {
         this.BackRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         this.elevator = hardwareMap.get(DcMotorEx.class, "Elevator");
-        this.elevator.setDirection(DcMotorSimple.Direction.REVERSE);
 
         this.arm1 = hardwareMap.get(Servo.class, "Arm1");
         this.arm2 = hardwareMap.get(Servo.class, "Arm2");
@@ -46,7 +45,8 @@ public class SingleFileOpMode extends OpMode {
     enum State {
         GRAB,
         HOLD,
-        SCORE
+        SCORE,
+        FALL
     }
     private State state;
     private boolean closeClaw;
@@ -62,11 +62,11 @@ public class SingleFileOpMode extends OpMode {
         BackLeftMotor.setPower(forward + strafe + omega);
         BackRightMotor.setPower(forward - strafe - omega);
 
+
         FSM();
 
         // update claw position
-        claw.setPosition(closeClaw ? 0.6: 0);
-
+        claw.setPosition(closeClaw ? 0.7: 0);
         elevator.setPower(gamepad2.right_stick_y);
         telemetry.addData("elevator position", elevator.getCurrentPosition());
     }
@@ -75,20 +75,24 @@ public class SingleFileOpMode extends OpMode {
     public void FSM() {
         if(gamepad2.a) {
             state = State.GRAB;
-            closeClaw = false;
         }
         else if(gamepad2.b) {
             closeClaw = true;
             state = State.HOLD;
         }
-        else if(gamepad2.x)
+        else if(gamepad2.x){
             state = State.SCORE;
-
+        }
+        else if(gamepad2.right_bumper){
+            state = State.FALL;
+            closeClaw = false;
+        }
         if (state!= State.HOLD) {
-            if(gamepad2.right_trigger > 0.5)
+            if(gamepad2.right_trigger > 0.5){
                 closeClaw = true;
-            else if (gamepad2.right_bumper)
+            }else if(gamepad2.left_trigger > 0.5){
                 closeClaw = false;
+            }
         }
 
         switch (state) {
@@ -96,15 +100,16 @@ public class SingleFileOpMode extends OpMode {
                 // run close loop on elevator
 
                 // wrist flip
-                wristFlip.setPosition(0);
+                wristFlip.setPosition(0.);//0
 
                 // arm
-                arm1.setPosition(0);
-                arm2.setPosition(0);
+                arm1.setPosition(0.3);//0.2
+                arm2.setPosition(0.3);//0.2
 
                 // run wrist rot
                 wristRot.setPosition(0.5 + 0.5 * gamepad2.left_stick_x);
                 telemetry.addData("wrist rot", 0.5 + 0.5 * gamepad2.left_stick_x);
+
 
                 break;
             }
@@ -113,11 +118,11 @@ public class SingleFileOpMode extends OpMode {
                 // run close loop on elevator
 
                 // wrist flip
-                wristFlip.setPosition(0.5);
+                wristFlip.setPosition(1);
 
                 // arm
-                arm1.setPosition(0.7);
-                arm2.setPosition(0.7);
+                arm1.setPosition(0.75);
+                arm2.setPosition(0.75);
 
                 // run wrist rot
                 wristRot.setPosition(0.5);
@@ -128,14 +133,31 @@ public class SingleFileOpMode extends OpMode {
                 // run close loop on elevator
 
                 // wrist flip
-                wristFlip.setPosition(0.5);
+                wristFlip.setPosition(1);
 
                 // arm
-                arm1.setPosition(0.7);
-                arm2.setPosition(0.7);
+                arm1.setPosition(0.8);
+                arm2.setPosition(0.8);
 
                 // run wrist rot
                 wristRot.setPosition(0.5);
+
+                break;
+            }
+
+            case FALL: {
+                // wrist flip
+                wristFlip.setPosition(0.1);
+
+                // arm
+                arm1.setPosition(0.2);
+                arm2.setPosition(0.2);
+
+                // run wrist rot
+                wristRot.setPosition(0.5 + 0.5 * gamepad2.left_stick_x);
+                telemetry.addData("wrist rot", 0.5 + 0.5 * gamepad2.left_stick_x);
+
+                break;
             }
         }
     }
