@@ -52,7 +52,7 @@ public class GamePadDrive extends CommandBase {
         );
 
         if (driveStationCentricModeSwitch.getAsBoolean() && allianceSide != AllianceSide.NOT_GIVEN)
-            driveSubsystem.runDriverStationCentricChassisSpeeds(currentChassisSpeedsSetPointDriverStationCentric, allianceSide);
+            driveSubsystem.runFieldCentricChassisSpeeds(currentChassisSpeedsSetPointDriverStationCentric);
         else
             driveSubsystem.runRobotCentricChassisSpeeds(currentChassisSpeedsSetPointDriverStationCentric);
     }

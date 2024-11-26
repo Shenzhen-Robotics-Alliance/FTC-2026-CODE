@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.subsystems.drive;
 import com.arcrobotics.ftclib.command.Subsystem;
 
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
-import org.firstinspires.ftc.teamcode.utils.AllianceSide;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -16,7 +15,6 @@ public interface HolonomicDriveSubsystem extends Subsystem {
      * @param speeds a discrete chassis speed, robot-centric
      * */
     void runRawChassisSpeeds(ChassisSpeeds speeds);
-
 
     /**
      * Returns the current odometry Pose.
@@ -49,24 +47,6 @@ public interface HolonomicDriveSubsystem extends Subsystem {
      * @param timestamp  The timestamp of the vision measurement in seconds.
      */
     void addVisionMeasurement(Pose2d visionPose, double timestamp);
-
-    /**
-     * runs a driverstation-centric ChassisSpeeds
-     * @param driverStationCentricSpeeds a continuous chassis speeds, driverstation-centric, normally from a gamepad
-     * */
-    default void runDriverStationCentricChassisSpeeds(ChassisSpeeds driverStationCentricSpeeds, AllianceSide side) {
-        final Rotation2d driverStationFacing = getDriverStationFacing(side);
-        runRobotCentricChassisSpeeds(ChassisSpeeds.fromFieldRelativeSpeeds(
-                driverStationCentricSpeeds,
-                getPose().getRotation().minus(driverStationFacing)
-        ));
-    }
-
-    static Rotation2d getDriverStationFacing(AllianceSide side) {
-        return (AllianceSide.RED.equals(side)) ?
-                Rotation2d.fromDegrees(90) // red
-                : Rotation2d.fromDegrees(-90); // blue
-    }
 
     /**
      * runs a field-centric ChassisSpeeds

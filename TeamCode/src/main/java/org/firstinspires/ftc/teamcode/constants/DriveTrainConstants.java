@@ -12,9 +12,14 @@ import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
  * */
 public class DriveTrainConstants {
     public static final String
-            CENTER_ODOMETER_WHEEL_NAME = "frontRight",
-            LEFT_ODOMETER_WHEEL_NAME = "backLeft",
-            RIGHT_ODOMETER_WHEEL_NAME = "backRight";
+        FRONT_LEFT_MOTOR_NAME = "FrontLeftMotor",
+        FRONT_RIGHT_MOTOR_NAME = "FrontRightMotor",
+        BACK_LEFT_MOTOR_NAME = "BackLeftMotor",
+        BACK_RIGHT_MOTOR_NAME = "BackRightMotor";
+    public static final String
+            CENTER_ODOMETER_WHEEL_NAME = "FrontRightMotor",
+            LEFT_ODOMETER_WHEEL_NAME = "BackLeftMotor",
+            RIGHT_ODOMETER_WHEEL_NAME = "BackRightMotor";
 
     /* if the RAW encoder reading is POSITIVE when moving to the left, false; other wise, true */
     public static final boolean CENTER_ODOMETER_WHEEL_INVERTED = true;

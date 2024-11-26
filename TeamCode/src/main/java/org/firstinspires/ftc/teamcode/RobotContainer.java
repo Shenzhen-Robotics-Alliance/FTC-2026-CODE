@@ -1,7 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.BACK_LEFT_MOTOR_NAME;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.BACK_RIGHT_MOTOR_NAME;
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.CENTER_ODOMETER_WHEEL_INVERTED;
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.CENTER_ODOMETER_WHEEL_NAME;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.FRONT_LEFT_MOTOR_NAME;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.FRONT_RIGHT_MOTOR_NAME;
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.IMU_PARAMS;
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.LEFT_ODOMETER_WHEEL_INVERTED;
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.LEFT_ODOMETER_WHEEL_NAME;
@@ -46,45 +50,7 @@ public final class RobotContainer implements Closeable {
         this.currentSide = side;
 
         /* here we creates all the subsystems */
-        final DcMotor
-                frontLeft = hardwareMap.get(DcMotor.class, "frontLeft"),
-                frontRight = hardwareMap.get(DcMotor.class, "frontRight"),
-                backLeft = hardwareMap.get(DcMotor.class, "backLeft"),
-                backRight = hardwareMap.get(DcMotor.class, "backRight");
-
-        final IMU imu = hardwareMap.get(IMU.class, "imu");
-        imu.initialize(IMU_PARAMS);
-
-        this.testOdometry = new MapleOdometerWheelsOdometry(
-                ODOMETER_WHEELS_TRACK_WIDTH_METERS,
-                ODOMETER_CENTER_WHEELS_OFFSET,
-                new MapleEncoder(
-                        hardwareMap.get(DcMotor.class, LEFT_ODOMETER_WHEEL_NAME),
-                        LEFT_ODOMETER_WHEEL_INVERTED,
-                        ODOMETER_ENCODER_TICKS_PER_REVOLUTION,
-                        1,
-                        ODOMETER_WHEELS_RADIUS_METERS,
-                        50
-                ),
-                new MapleEncoder(
-                        hardwareMap.get(DcMotor.class, RIGHT_ODOMETER_WHEEL_NAME),
-                        RIGHT_ODOMETER_WHEEL_INVERTED,
-                        ODOMETER_ENCODER_TICKS_PER_REVOLUTION,
-                        1,
-                        ODOMETER_WHEELS_RADIUS_METERS,
-                        50
-                ),
-                new MapleEncoder(
-                        hardwareMap.get(DcMotor.class, CENTER_ODOMETER_WHEEL_NAME),
-                        CENTER_ODOMETER_WHEEL_INVERTED,
-                        ODOMETER_ENCODER_TICKS_PER_REVOLUTION,
-                        1,
-                        ODOMETER_WHEELS_RADIUS_METERS,
-                        50
-                ),
-                imu,
-                new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)) // facing forward
-        );
+        this.testOdometry = new MapleOdometerWheelsOdometry(hardwareMap, new Pose2d());
         testOdometry.register();
         testOdometry.setDefaultCommand(new FunctionalCommand(
                 () -> {},
@@ -94,15 +60,7 @@ public final class RobotContainer implements Closeable {
                 testOdometry
         ));
 
-        this.driveSubsystem = new MecanumDriveSubsystem(
-                frontLeft, frontRight, backLeft, backRight,
-                testOdometry
-        );
-
-//        this.vision = new AprilTagVision(
-//                new VisionIOFTCVisionPortal(hardwareMap.get(WebcamName.class, "AprilTag Cam")),
-//                driveSubsystem
-//        );
+        this.driveSubsystem = new MecanumDriveSubsystem(hardwareMap, testOdometry);
     }
 
     @Override

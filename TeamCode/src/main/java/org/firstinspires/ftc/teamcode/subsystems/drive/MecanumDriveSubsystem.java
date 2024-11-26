@@ -1,14 +1,19 @@
 package org.firstinspires.ftc.teamcode.subsystems.drive;
 
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.BACK_LEFT_MOTOR_DIRECTION;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.BACK_LEFT_MOTOR_NAME;
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.BACK_RIGHT_MOTOR_DIRECTION;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.BACK_RIGHT_MOTOR_NAME;
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.FRONT_LEFT_MOTOR_DIRECTION;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.FRONT_LEFT_MOTOR_NAME;
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.FRONT_RIGHT_MOTOR_DIRECTION;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.FRONT_RIGHT_MOTOR_NAME;
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.MAX_VELOCITY_METERS_PER_SECOND;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.constants.DriveTrainConstants;
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
@@ -24,11 +29,11 @@ public class MecanumDriveSubsystem extends SubsystemBase implements HolonomicDri
     private final MecanumDriveKinematics mecanumDriveKinematics;
     private final MapleOdometerWheelsOdometry odometry;
 
-    public MecanumDriveSubsystem(DcMotor frontLeft, DcMotor frontRight, DcMotor backLeft, DcMotor backRight, MapleOdometerWheelsOdometry odometry) {
-        this.frontLeft = frontLeft;
-        this.frontRight = frontRight;
-        this.backLeft = backLeft;
-        this.backRight = backRight;
+    public MecanumDriveSubsystem(HardwareMap hardwareMap, MapleOdometerWheelsOdometry odometry) {
+        frontLeft = hardwareMap.get(DcMotor.class, FRONT_LEFT_MOTOR_NAME);
+        frontRight = hardwareMap.get(DcMotor.class, FRONT_RIGHT_MOTOR_NAME);
+        backLeft = hardwareMap.get(DcMotor.class, BACK_LEFT_MOTOR_NAME);
+        backRight = hardwareMap.get(DcMotor.class, BACK_RIGHT_MOTOR_NAME);
         this.odometry = odometry;
 
         this.mecanumDriveKinematics = DriveTrainConstants.KINEMATICS;

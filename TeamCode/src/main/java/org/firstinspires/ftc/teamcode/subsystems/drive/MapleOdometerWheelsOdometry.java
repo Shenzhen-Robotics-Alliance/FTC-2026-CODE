@@ -1,12 +1,20 @@
 package org.firstinspires.ftc.teamcode.subsystems.drive;
 
-import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.KINEMATICS;
-import static org.firstinspires.ftc.teamcode.constants.FieldConstants.FIELD_HEIGHT_METERS;
-import static org.firstinspires.ftc.teamcode.constants.FieldConstants.FIELD_WIDTH_METERS;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.CENTER_ODOMETER_WHEEL_INVERTED;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.CENTER_ODOMETER_WHEEL_NAME;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.IMU_PARAMS;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.LEFT_ODOMETER_WHEEL_INVERTED;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.LEFT_ODOMETER_WHEEL_NAME;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.ODOMETER_CENTER_WHEELS_OFFSET;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.ODOMETER_ENCODER_TICKS_PER_REVOLUTION;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.ODOMETER_WHEELS_RADIUS_METERS;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.ODOMETER_WHEELS_TRACK_WIDTH_METERS;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.RIGHT_ODOMETER_WHEEL_INVERTED;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.RIGHT_ODOMETER_WHEEL_NAME;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.arcrobotics.ftclib.command.Subsystem;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -17,12 +25,9 @@ import org.firstinspires.ftc.teamcode.utils.MapleOdometerWheels.OdometerWheelsPo
 import org.firstinspires.ftc.teamcode.utils.MapleOdometerWheels.OdometerWheelsSpeeds;
 import org.firstinspires.ftc.teamcode.utils.MapleTime;
 
-import java.util.Arrays;
-
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
@@ -35,23 +40,38 @@ public class MapleOdometerWheelsOdometry implements Subsystem {
     private double previousIMUUpdateTimeSeconds = 0;
     private OdometerWheelsPositions previousPositions;
 
-    /**
-     * @param leftOdometerWheel the odometer wheel on the LEFT side of the robot, its reading goes POSITIVE when robot drives FORWARD
-     * @param rightOdometerWheel the odometer wheel on the RIGHT side of the robot, its reading goes POSITIVE when robot drives FORWARD
-     * @param centerOdometerWheel the odometer wheel on the CENTER of the robot, its reading goes POSITIVE when robot drives LEFTWARDS
-     * */
-    public MapleOdometerWheelsOdometry(
-            double trackWidthMeters, double centerWheelOffsetMeters,
-            MapleEncoder leftOdometerWheel, MapleEncoder rightOdometerWheel, MapleEncoder centerOdometerWheel, IMU imu,
-            Pose2d initialPose) {
-        this.leftOdometerWheel = leftOdometerWheel;
-        this.rightOdometerWheel = rightOdometerWheel;
-        this.centerOdometerWheel = centerOdometerWheel;
-        this.imu = imu;
+    public MapleOdometerWheelsOdometry(HardwareMap hardwareMap, Pose2d initialPose) {
+        this.leftOdometerWheel = new MapleEncoder(
+                hardwareMap.get(DcMotor.class, LEFT_ODOMETER_WHEEL_NAME),
+                LEFT_ODOMETER_WHEEL_INVERTED,
+                ODOMETER_ENCODER_TICKS_PER_REVOLUTION,
+                1,
+                ODOMETER_WHEELS_RADIUS_METERS,
+                50
+        );
+        this.rightOdometerWheel = new MapleEncoder(
+                hardwareMap.get(DcMotor.class, RIGHT_ODOMETER_WHEEL_NAME),
+                RIGHT_ODOMETER_WHEEL_INVERTED,
+                ODOMETER_ENCODER_TICKS_PER_REVOLUTION,
+                1,
+                ODOMETER_WHEELS_RADIUS_METERS,
+                50
+        );
+        this.centerOdometerWheel = new MapleEncoder(
+                hardwareMap.get(DcMotor.class, CENTER_ODOMETER_WHEEL_NAME),
+                CENTER_ODOMETER_WHEEL_INVERTED,
+                ODOMETER_ENCODER_TICKS_PER_REVOLUTION,
+                1,
+                ODOMETER_WHEELS_RADIUS_METERS,
+                50
+        );
+
+        this.imu = hardwareMap.get(IMU.class, "imu");
+        imu.initialize(IMU_PARAMS);
 
         pollEncodersBlocking();
         poseEstimator = new OdometerWheelsPoseEstimator(
-                trackWidthMeters, centerWheelOffsetMeters,
+                ODOMETER_WHEELS_TRACK_WIDTH_METERS, ODOMETER_CENTER_WHEELS_OFFSET,
                 getIMUAngleBlocking(),
                 getLatestPositions(),
                 initialPose
@@ -97,7 +117,6 @@ public class MapleOdometerWheelsOdometry implements Subsystem {
     /**
      * fetches the data cached by encoder thread (if encoder thread enabled) and feed these data to the pose estimator
      * */
-    private TelemetryPacket packet;
     public void periodic() {
         pollEncodersBlocking();
         final Twist2d twist2d = poseEstimator.kinematics.toTwist2d(previousPositions, getLatestPositions());
@@ -114,10 +133,6 @@ public class MapleOdometerWheelsOdometry implements Subsystem {
                 currentRotation,
                 getLatestPositions()
         );
-
-        packet = new TelemetryPacket();
-        displayPoseOnDashboard(getEstimatedPose(), "black");
-        FtcDashboard.getInstance().sendTelemetryPacket(packet);
     }
 
     public void resetPose(Pose2d currentPose) {
@@ -135,26 +150,5 @@ public class MapleOdometerWheelsOdometry implements Subsystem {
 
     public Pose2d getEstimatedPose() {
         return poseEstimator.getEstimatedPosition();
-    }
-
-    public void displayPoseOnDashboard(Pose2d pose, String color) {
-        final Translation2d center = pose.getTranslation();
-        final Rotation2d robotFacing = pose.getRotation();
-        final Translation2d[] corners = new Translation2d[] {
-                center.plus(KINEMATICS.getFrontLeft().rotateBy(robotFacing)),
-                center.plus(KINEMATICS.getFrontRight().rotateBy(robotFacing)),
-                center.plus(KINEMATICS.getRearRight().rotateBy(robotFacing)),
-                center.plus(KINEMATICS.getRearLeft().rotateBy(robotFacing))
-        };
-        System.out.println(Arrays.toString(corners));
-        final double[] xCorners = new double[4];
-        final double[] yCorners = new double[4];
-        for (int i = 0; i < 4; i++) {
-            xCorners[i] = corners[i].getX() / FIELD_WIDTH_METERS * 144;
-            yCorners[i] = corners[i].getY() / FIELD_WIDTH_METERS * 144;
-        }
-        packet.fieldOverlay()
-                .setFill(color)
-                .fillPolygon(xCorners, yCorners);
     }
 }
