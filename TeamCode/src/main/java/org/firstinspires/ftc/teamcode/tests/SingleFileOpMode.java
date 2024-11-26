@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name="TestSuperStruct")
+// @TeleOp(name="TestSuperStruct")
 public class SingleFileOpMode extends OpMode {
     private DcMotor FrontLeftMotor, FrontRightMotor, BackLeftMotor, BackRightMotor;
     private DcMotorEx elevator;
@@ -45,8 +45,7 @@ public class SingleFileOpMode extends OpMode {
     enum State {
         GRAB,
         HOLD,
-        SCORE,
-        FALL
+        SCORE
     }
     private State state;
     private boolean closeClaw;
@@ -83,10 +82,6 @@ public class SingleFileOpMode extends OpMode {
         else if(gamepad2.x){
             state = State.SCORE;
         }
-        else if(gamepad2.right_bumper){
-            state = State.FALL;
-            closeClaw = false;
-        }
         if (state!= State.HOLD) {
             if(gamepad2.right_trigger > 0.5){
                 closeClaw = true;
@@ -99,17 +94,19 @@ public class SingleFileOpMode extends OpMode {
             case GRAB: {
                 // run close loop on elevator
 
+
+                final boolean dropToGround = gamepad2.right_bumper;
+
                 // wrist flip
-                wristFlip.setPosition(0.);//0
+                wristFlip.setPosition(dropToGround ? 0.1:0);
 
                 // arm
-                arm1.setPosition(0.3);//0.2
-                arm2.setPosition(0.3);//0.2
+                arm1.setPosition(dropToGround ? 0.2:0.3);
+                arm2.setPosition(dropToGround ? 0.2:0.3);
 
                 // run wrist rot
                 wristRot.setPosition(0.5 + 0.5 * gamepad2.left_stick_x);
                 telemetry.addData("wrist rot", 0.5 + 0.5 * gamepad2.left_stick_x);
-
 
                 break;
             }
@@ -141,21 +138,6 @@ public class SingleFileOpMode extends OpMode {
 
                 // run wrist rot
                 wristRot.setPosition(0.5);
-
-                break;
-            }
-
-            case FALL: {
-                // wrist flip
-                wristFlip.setPosition(0.1);
-
-                // arm
-                arm1.setPosition(0.2);
-                arm2.setPosition(0.2);
-
-                // run wrist rot
-                wristRot.setPosition(0.5 + 0.5 * gamepad2.left_stick_x);
-                telemetry.addData("wrist rot", 0.5 + 0.5 * gamepad2.left_stick_x);
 
                 break;
             }
