@@ -1,43 +1,30 @@
 package org.firstinspires.ftc.teamcode.tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
+@TeleOp(name = "MotorsMatch")
+public class MotorsMatch extends OpMode {
+    private DcMotor mot0, mot1, mot2, mot3;
 
-public class MotorsMatch implements SimpleUnitTest {
-    private final HardwareMap hardwareMap;
-    private final Gamepad gamepad;
-    private final DcMotor frontLeft, frontRight, backLeft, backRight;
-    private final Telemetry telemetry;
-
-    public MotorsMatch(HardwareMap hardwareMap, Gamepad gamepad, Telemetry telemetry) {
-        this.hardwareMap = hardwareMap;
-        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        backRight = hardwareMap.get(DcMotor.class, "backRight");
-
-        this.gamepad = gamepad;
-        this.telemetry = telemetry;
-    }
-
-    // TODO: match the motors on chassis
     @Override
-    public void testStart() {
-
+    public void init() {
+        mot0 = hardwareMap.get(DcMotor.class, "mot0"); // fl, n; rig, r
+        mot1 = hardwareMap.get(DcMotor.class, "mot1"); // bl, n; hor, r
+        mot2 = hardwareMap.get(DcMotor.class, "mot2"); // br, r; lef, n
+        mot3 = hardwareMap.get(DcMotor.class, "mot3"); // fr, r
     }
 
     @Override
-    public void testPeriodic() {
-        frontLeft.setPower(gamepad.a ? 0.5:0);
-        frontRight.setPower(gamepad.b ? 0.5:0);
-        backLeft.setPower(gamepad.x ? 0.5:0);
-        backRight.setPower(gamepad.y ? 0.5:0);
-        telemetry.addData("front left enc ", frontLeft.getCurrentPosition());
-        telemetry.addData("front right enc ", frontRight.getCurrentPosition());
-        telemetry.addData("back left enc ", backLeft.getCurrentPosition());
-        telemetry.addData("back right enc ", backRight.getCurrentPosition());
+    public void loop() {
+        mot0.setPower(gamepad1.a ? 0.5:0);
+        mot1.setPower(gamepad1.b ? 0.5:0);
+        mot2.setPower(gamepad1.x ? 0.5:0);
+        mot3.setPower(gamepad1.y ? 0.5:0);
+        telemetry.addData("mot 0 enc ", mot0.getCurrentPosition());
+        telemetry.addData("mot 1 enc ", mot1.getCurrentPosition());
+        telemetry.addData("mot 2 enc ", mot2.getCurrentPosition());
+        telemetry.addData("mot 3 enc ", mot3.getCurrentPosition());
     }
 }

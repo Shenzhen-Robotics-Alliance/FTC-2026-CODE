@@ -13,29 +13,24 @@ import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.ODOME
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.RIGHT_ODOMETER_WHEEL_INVERTED;
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.RIGHT_ODOMETER_WHEEL_NAME;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IMU;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.utils.MapleLoopClock;
 import org.firstinspires.ftc.teamcode.utils.MapleOdometerWheels.MapleEncoder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 
-public class OdometryCalibration implements SimpleUnitTest {
-    private final Telemetry telemetry;
+public class OdometryCalibration extends OpMode {
     private final MapleLoopClock clock = new MapleLoopClock(50.0);
-    private final MapleEncoder leftOdometerWheel, rightOdometerWheel, centerOdometerWheel;
-    private final DcMotor frontLeft, frontRight, backLeft, backRight;
-    private final Gamepad gamepad;
+    private MapleEncoder leftOdometerWheel, rightOdometerWheel, centerOdometerWheel;
+    private DcMotor frontLeft, frontRight, backLeft, backRight;
     private double radiansRotated, previousRotationRadians;
-    private final IMU imu;
-    public OdometryCalibration(HardwareMap hardwareMap, Telemetry telemetry, Gamepad gamepad) {
-        this.telemetry = telemetry;
-
+    private IMU imu;
+    @Override
+    public void init() {
         this.leftOdometerWheel = new MapleEncoder(
                 hardwareMap.get(DcMotor.class, LEFT_ODOMETER_WHEEL_NAME),
                 LEFT_ODOMETER_WHEEL_INVERTED,
@@ -67,13 +62,9 @@ public class OdometryCalibration implements SimpleUnitTest {
 
         this.imu = hardwareMap.get(IMU.class, "imu");
 
-        this.gamepad = gamepad;
-
-    }
-    @Override
-    public void testStart() {
         radiansRotated = 0;
         previousRotationRadians = getIMUReading();
+
     }
 
     private double getIMUReading() {
@@ -81,7 +72,7 @@ public class OdometryCalibration implements SimpleUnitTest {
     }
 
     @Override
-    public void testPeriodic() {
+    public void loop() {
         leftOdometerWheel.poll();
         rightOdometerWheel.poll();
         centerOdometerWheel.poll();
@@ -91,7 +82,7 @@ public class OdometryCalibration implements SimpleUnitTest {
         telemetry.addData("right rev", rightOdometerWheel.getDistanceMeters());
         telemetry.addData("center rev", centerOdometerWheel.getDistanceMeters());
 
-        final double rotaryPower = gamepad.a ? 0.3: -0;
+        final double rotaryPower = gamepad1.a ? 0.3: -0;
         frontLeft.setPower(-rotaryPower * FRONT_LEFT_MOTOR_DIRECTION);
         backLeft.setPower(-rotaryPower * BACK_LEFT_MOTOR_DIRECTION);
         frontRight.setPower(rotaryPower * FRONT_RIGHT_MOTOR_DIRECTION);
