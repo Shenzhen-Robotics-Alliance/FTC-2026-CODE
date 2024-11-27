@@ -5,7 +5,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
-import org.firstinspires.ftc.teamcode.commands.drive.GamePadDrive;
+import org.firstinspires.ftc.teamcode.commands.drive.JoystickDriveCommandFactory;
 import org.firstinspires.ftc.teamcode.utils.MapleJoystickDriveInput;
 
 import java.io.IOException;
@@ -36,11 +36,10 @@ public class TeleOpRobot extends Robot {
     }
 
     private void configureKeyBindings() {
-        robotContainer.driveSubsystem.setDefaultCommand(new GamePadDrive(
+        robotContainer.driveSubsystem.setDefaultCommand(JoystickDriveCommandFactory.joystickDrive(
                 robotContainer.driveSubsystem,
                 MapleJoystickDriveInput.leftHandedJoystick(pilotGamePad),
-                () -> true,
-                robotContainer.currentSide
+                () -> pilotGamePad.gamepad.right_bumper
         ));
 
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.START).whenPressed(calibrateIMU);

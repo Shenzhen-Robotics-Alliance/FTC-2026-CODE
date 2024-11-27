@@ -1,12 +1,16 @@
 package org.firstinspires.ftc.teamcode.subsystems.drive;
 
+import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.Subsystem;
 
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 
+import java.util.function.BooleanSupplier;
+import java.util.function.Supplier;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 public interface HolonomicDriveSubsystem extends Subsystem {
@@ -78,32 +82,15 @@ public interface HolonomicDriveSubsystem extends Subsystem {
         return chassisSpeeds.omegaRadiansPerSecond == 0 && chassisSpeeds.vxMetersPerSecond == 0 && chassisSpeeds.vyMetersPerSecond == 0;
     }
 
-    static ChassisSpeeds constrainAcceleration(
-            ChassisSpeeds currentSpeeds, ChassisSpeeds desiredSpeeds,
-            double maxLinearAccelerationMetersPerSecSq, double maxAngularAccelerationRadPerSecSq,
-            double periodSecs) {
-        Translation2d currentLinearVelocityMetersPerSec = new Translation2d(currentSpeeds.vxMetersPerSecond, currentSpeeds.vyMetersPerSecond),
-                desiredLinearVelocityMetersPerSec = new Translation2d(desiredSpeeds.vxMetersPerSecond, desiredSpeeds.vyMetersPerSecond),
-                linearVelocityDifference = desiredLinearVelocityMetersPerSec.minus(currentLinearVelocityMetersPerSec);
-
-        final double maxLinearVelocityChangeIn1Period = maxLinearAccelerationMetersPerSecSq * periodSecs;
-        final boolean desiredLinearVelocityReachableWithin1Period = linearVelocityDifference.getNorm() <= maxLinearVelocityChangeIn1Period;
-        final Translation2d linearVelocityChangeVector = new Translation2d(maxLinearVelocityChangeIn1Period, linearVelocityDifference.getAngle()),
-                newLinearVelocity = desiredLinearVelocityReachableWithin1Period ?
-                        desiredLinearVelocityMetersPerSec
-                        : currentLinearVelocityMetersPerSec.plus(linearVelocityChangeVector);
-
-        final double angularVelocityDifference = desiredSpeeds.omegaRadiansPerSecond - currentSpeeds.omegaRadiansPerSecond,
-                maxAngularVelocityChangeIn1Period = maxAngularAccelerationRadPerSecSq * periodSecs,
-                angularVelocityChange = Math.copySign(maxAngularVelocityChangeIn1Period, angularVelocityDifference);
-        final boolean desiredAngularVelocityReachableWithin1Period = Math.abs(angularVelocityDifference) <= maxAngularVelocityChangeIn1Period;
-        final double newAngularVelocity = desiredAngularVelocityReachableWithin1Period ?
-                desiredSpeeds.omegaRadiansPerSecond
-                : currentSpeeds.omegaRadiansPerSecond + angularVelocityChange;
-        return new ChassisSpeeds(
-                newLinearVelocity.getX(),
-                newLinearVelocity.getY(),
-                newAngularVelocity
+    default Command driveCommand(Supplier<ChassisSpeeds> chassisSpeedsSupplier, BooleanSupplier fieldCentricSwitch) {
+        return new RunCommand(
+                () -> {
+                    if (fieldCentricSwitch.getAsBoolean())
+                        runFieldCentricChassisSpeeds(chassisSpeedsSupplier.get());
+                   else
+                       runRobotCentricChassisSpeeds(chassisSpeedsSupplier.get());
+                },
+                this
         );
     }
 }

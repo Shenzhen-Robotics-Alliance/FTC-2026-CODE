@@ -1,16 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystems.drive;
 
-import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.CENTER_ODOMETER_WHEEL_INVERTED;
-import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.CENTER_ODOMETER_WHEEL_NAME;
-import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.IMU_PARAMS;
-import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.LEFT_ODOMETER_WHEEL_INVERTED;
-import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.LEFT_ODOMETER_WHEEL_NAME;
-import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.ODOMETER_CENTER_WHEELS_OFFSET;
-import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.ODOMETER_ENCODER_TICKS_PER_REVOLUTION;
-import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.ODOMETER_WHEELS_RADIUS_METERS;
-import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.ODOMETER_WHEELS_TRACK_WIDTH_METERS;
-import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.RIGHT_ODOMETER_WHEEL_INVERTED;
-import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.RIGHT_ODOMETER_WHEEL_NAME;
+import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.*;
 
 import com.arcrobotics.ftclib.command.Subsystem;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -133,6 +123,9 @@ public class MapleOdometerWheelsOdometry implements Subsystem {
                 currentRotation,
                 getLatestPositions()
         );
+        SystemConstants.telemetry.addData("leftEnc", leftOdometerWheel.getDistanceMeters());
+        SystemConstants.telemetry.addData("rightEnc", rightOdometerWheel.getDistanceMeters());
+        SystemConstants.telemetry.addData("centerEnc", centerOdometerWheel.getDistanceMeters());
     }
 
     public void resetPose(Pose2d currentPose) {
