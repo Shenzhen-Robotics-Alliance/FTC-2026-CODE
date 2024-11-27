@@ -10,10 +10,10 @@ public class MotorsMatch extends OpMode {
 
     @Override
     public void init() {
-        mot0 = hardwareMap.get(DcMotor.class, "mot0"); // fl, n; rig, r
-        mot1 = hardwareMap.get(DcMotor.class, "mot1"); // bl, n; hor, r
-        mot2 = hardwareMap.get(DcMotor.class, "mot2"); // br, r; lef, n
-        mot3 = hardwareMap.get(DcMotor.class, "mot3"); // fr, r
+        mot0 = hardwareMap.get(DcMotor.class, "mot0"); // br, r; rig, r
+        mot1 = hardwareMap.get(DcMotor.class, "mot1"); // fr, r; hor, r
+        mot2 = hardwareMap.get(DcMotor.class, "mot2"); // bl, n; lef, n
+        mot3 = hardwareMap.get(DcMotor.class, "mot3"); // fl, n
     }
 
     @Override

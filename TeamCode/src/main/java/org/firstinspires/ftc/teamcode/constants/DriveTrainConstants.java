@@ -12,26 +12,26 @@ import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
  * */
 public class DriveTrainConstants {
     public static final String
-        FRONT_LEFT_MOTOR_NAME = "FrontLeftMotor",
-        FRONT_RIGHT_MOTOR_NAME = "FrontRightMotor",
-        BACK_LEFT_MOTOR_NAME = "BackLeftMotor",
-        BACK_RIGHT_MOTOR_NAME = "BackRightMotor";
+        FRONT_LEFT_MOTOR_NAME = "frontLeft",
+        FRONT_RIGHT_MOTOR_NAME = "frontRight",
+        BACK_LEFT_MOTOR_NAME = "backLeft",
+        BACK_RIGHT_MOTOR_NAME = "backRight";
     public static final String
-            CENTER_ODOMETER_WHEEL_NAME = "FrontRightMotor",
-            LEFT_ODOMETER_WHEEL_NAME = "BackLeftMotor",
-            RIGHT_ODOMETER_WHEEL_NAME = "BackRightMotor";
+            CENTER_ODOMETER_WHEEL_NAME = "frontRight",
+            LEFT_ODOMETER_WHEEL_NAME = "backLeft",
+            RIGHT_ODOMETER_WHEEL_NAME = "backRight";
 
     /* if the RAW encoder reading is POSITIVE when moving to the left, false; other wise, true */
-    public static final boolean CENTER_ODOMETER_WHEEL_INVERTED = true;
+    public static final boolean CENTER_ODOMETER_WHEEL_INVERTED = false;
     /* if the RAW encoder reading is POSITIVE when moving front, false; other wise, true */
-    public static final boolean LEFT_ODOMETER_WHEEL_INVERTED = true;
-    public static final boolean RIGHT_ODOMETER_WHEEL_INVERTED = false;
+    public static final boolean LEFT_ODOMETER_WHEEL_INVERTED = false;
+    public static final boolean RIGHT_ODOMETER_WHEEL_INVERTED = true;
 
     public static final double
-            FRONT_LEFT_MOTOR_DIRECTION = -1,
-            FRONT_RIGHT_MOTOR_DIRECTION = 1,
-            BACK_LEFT_MOTOR_DIRECTION = -1,
-            BACK_RIGHT_MOTOR_DIRECTION = 1;
+            FRONT_LEFT_MOTOR_DIRECTION = 1,
+            FRONT_RIGHT_MOTOR_DIRECTION = -1,
+            BACK_LEFT_MOTOR_DIRECTION = 1,
+            BACK_RIGHT_MOTOR_DIRECTION = -1;
 
     public static final IMU.Parameters IMU_PARAMS = new IMU.Parameters(new RevHubOrientationOnRobot(
             RevHubOrientationOnRobot.LogoFacingDirection.UP,
@@ -42,7 +42,7 @@ public class DriveTrainConstants {
     public static final double ODOMETER_WHEELS_RADIUS_METERS = 24.0/1000; // 24mm
 
     public static final double ODOMETER_WHEELS_TRACK_WIDTH_METERS = 0.257;
-    public static final double ODOMETER_CENTER_WHEELS_OFFSET = -0.022;
+    public static final double ODOMETER_CENTER_WHEELS_OFFSET = -0.017;
 
     public static final double CHASSIS_WIDTH_METERS = 0.3;
     public static final double CHASSIS_LENGTH_METERS = 0.4;
@@ -54,5 +54,5 @@ public class DriveTrainConstants {
             new Translation2d(-CHASSIS_LENGTH_METERS /2, -CHASSIS_WIDTH_METERS / 2)
     );
 
-    public static final double MAX_VELOCITY_METERS_PER_SECOND = 2.0, MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = Math.toRadians(540);
+    public static final double MAX_VELOCITY_METERS_PER_SECOND = 2.0, MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = Math.toRadians(360);
 }

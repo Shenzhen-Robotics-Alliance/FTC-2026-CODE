@@ -14,6 +14,7 @@ import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.RIGHT
 import static org.firstinspires.ftc.teamcode.constants.DriveTrainConstants.RIGHT_ODOMETER_WHEEL_NAME;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
 
@@ -23,6 +24,7 @@ import org.firstinspires.ftc.teamcode.utils.MapleOdometerWheels.MapleEncoder;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 
+@TeleOp(name="Odometry Calibration")
 public class OdometryCalibration extends OpMode {
     private final MapleLoopClock clock = new MapleLoopClock(50.0);
     private MapleEncoder leftOdometerWheel, rightOdometerWheel, centerOdometerWheel;
@@ -78,9 +80,9 @@ public class OdometryCalibration extends OpMode {
         centerOdometerWheel.poll();
 
         telemetry.addLine("rotate the robot with button A for 10 revolutions on field (3600 degrees) and press button x");
-        telemetry.addData("left rev", leftOdometerWheel.getDistanceMeters());
-        telemetry.addData("right rev", rightOdometerWheel.getDistanceMeters());
-        telemetry.addData("center rev", centerOdometerWheel.getDistanceMeters());
+        telemetry.addData("left dis", leftOdometerWheel.getDistanceMeters());
+        telemetry.addData("right dis", rightOdometerWheel.getDistanceMeters());
+        telemetry.addData("center dis", centerOdometerWheel.getDistanceMeters());
 
         final double rotaryPower = gamepad1.a ? 0.3: -0;
         frontLeft.setPower(-rotaryPower * FRONT_LEFT_MOTOR_DIRECTION);
