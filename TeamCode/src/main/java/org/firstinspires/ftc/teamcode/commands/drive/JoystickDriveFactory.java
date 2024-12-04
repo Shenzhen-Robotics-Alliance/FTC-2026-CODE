@@ -10,12 +10,12 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
-public class JoystickDriveCommandFactory {
+public class JoystickDriveFactory {
     public static Command joystickDrive(HolonomicDriveSubsystem driveSubsystem, MapleJoystickDriveInput driveInput, BooleanSupplier driverStationCentricModeSwitch) {
-        return driveSubsystem.driveCommand(
+        return driveSubsystem.drive(
                 () -> {
                     final ChassisSpeeds desiredDriveStationCentricSpeed = driveInput.getJoystickChassisSpeeds(
-                            driveSubsystem.getChassisMaxLinearVelocity(), driveSubsystem.getChassisMaxAngularVelocity()
+                            driveSubsystem.getChassisMaxLinearVelocity(), driveSubsystem.getChassisMaxAngularVelocity() * 0.8
                     );
                     SystemConstants.telemetry.addData("Driver Station Requested Speed", desiredDriveStationCentricSpeed);
                     return desiredDriveStationCentricSpeed;

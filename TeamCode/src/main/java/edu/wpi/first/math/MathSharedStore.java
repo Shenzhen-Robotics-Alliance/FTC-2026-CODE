@@ -4,7 +4,7 @@
 
 package edu.wpi.first.math;
 
-import org.firstinspires.ftc.teamcode.utils.MapleTime;
+import org.firstinspires.ftc.teamcode.utils.MapleTimer;
 
 import edu.wpi.first.util.WPIUtilJNI;
 
@@ -73,6 +73,6 @@ public final class MathSharedStore {
    * @return The time in seconds.
    */
   public static double getTimestamp() {
-    return MapleTime.getMatchTimeSeconds();
+    return MapleTimer.getMatchTimeSeconds();
   }
 }

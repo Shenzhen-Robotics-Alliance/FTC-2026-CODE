@@ -1,8 +1,12 @@
 package org.firstinspires.ftc.teamcode.subsystems.drive;
 
+import static org.firstinspires.ftc.teamcode.constants.DriveControlLoops.*;
+
 import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.Subsystem;
+import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 
@@ -12,6 +16,7 @@ import java.util.function.Supplier;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.trajectory.Trajectory;
 
 public interface HolonomicDriveSubsystem extends Subsystem {
     /**
@@ -82,7 +87,7 @@ public interface HolonomicDriveSubsystem extends Subsystem {
         return chassisSpeeds.omegaRadiansPerSecond == 0 && chassisSpeeds.vxMetersPerSecond == 0 && chassisSpeeds.vyMetersPerSecond == 0;
     }
 
-    default Command driveCommand(Supplier<ChassisSpeeds> chassisSpeedsSupplier, BooleanSupplier fieldCentricSwitch) {
+    default Command drive(Supplier<ChassisSpeeds> chassisSpeedsSupplier, BooleanSupplier fieldCentricSwitch) {
         return new RunCommand(
                 () -> {
                     if (fieldCentricSwitch.getAsBoolean())
@@ -92,5 +97,31 @@ public interface HolonomicDriveSubsystem extends Subsystem {
                 },
                 this
         );
+    }
+
+    default Command driveToPose(Supplier<Pose2d> target) {
+        return drive(
+                () -> driveController.calculate(
+                        getPose(),
+                        target.get(),
+                        0,
+                        target.get().getRotation()),
+                () -> false)
+                .beforeStarting(() -> driveController.getThetaController().reset(getFacing().getRadians()));
+    }
+
+    default Command driveToPose(Supplier<Pose2d> target, Pose2d tolerance, double timeOutSeconds) {
+        return driveToPose(target)
+                .beforeStarting(() -> driveController.setTolerance(tolerance))
+                .raceWith(new WaitUntilCommand(driveController::atReference))
+                .withTimeout((long)(timeOutSeconds * 1000))
+                .andThen(new InstantCommand(this::stop));
+    }
+
+
+    default Command followTrajectory(Supplier<Trajectory.State> desiredState, Supplier<Rotation2d> desiredRotation) {
+        return drive(
+                () -> driveController.calculate(getPose(), desiredState.get(), desiredRotation.get()),
+                () -> false);
     }
 }

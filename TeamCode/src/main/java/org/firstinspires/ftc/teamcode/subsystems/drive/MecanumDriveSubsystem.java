@@ -15,6 +15,7 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.constants.DriveControlLoops;
 import org.firstinspires.ftc.teamcode.constants.DriveTrainConstants;
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 
@@ -60,7 +61,7 @@ public class MecanumDriveSubsystem extends SubsystemBase implements HolonomicDri
     }
 
     private void runDriveOpenLoop(DcMotor motor, double desiredSpeedMetersPerSecond) {
-        motor.setPower(desiredSpeedMetersPerSecond);
+        motor.setPower(DriveControlLoops.driveFeedForward.calculate(desiredSpeedMetersPerSecond));
     }
 
     @Override

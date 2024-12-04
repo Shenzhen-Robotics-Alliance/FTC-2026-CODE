@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.utils.MapleOdometerWheels.MapleEncoder;
 import org.firstinspires.ftc.teamcode.utils.MapleOdometerWheels.OdometerWheelsPoseEstimator;
 import org.firstinspires.ftc.teamcode.utils.MapleOdometerWheels.OdometerWheelsPositions;
 import org.firstinspires.ftc.teamcode.utils.MapleOdometerWheels.OdometerWheelsSpeeds;
-import org.firstinspires.ftc.teamcode.utils.MapleTime;
+import org.firstinspires.ftc.teamcode.utils.MapleTimer;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -112,14 +112,14 @@ public class MapleOdometerWheelsOdometry implements Subsystem {
         final Twist2d twist2d = poseEstimator.kinematics.toTwist2d(previousPositions, getLatestPositions());
         previousPositions = getLatestPositions();
 
-        if (MapleTime.getMatchTimeSeconds() - previousIMUUpdateTimeSeconds > 1.0/ SystemConstants.IMU_UPDATE_HZ) {
+        if (MapleTimer.getMatchTimeSeconds() - previousIMUUpdateTimeSeconds > 1.0/ SystemConstants.IMU_UPDATE_HZ) {
             currentRotation = getIMUAngleBlocking();
-            previousIMUUpdateTimeSeconds = MapleTime.getMatchTimeSeconds();
+            previousIMUUpdateTimeSeconds = MapleTimer.getMatchTimeSeconds();
         } else
             currentRotation = currentRotation.plus(Rotation2d.fromRadians(twist2d.dtheta));
 
         poseEstimator.updateWithTime(
-                MapleTime.getMatchTimeSeconds(),
+                MapleTimer.getMatchTimeSeconds(),
                 currentRotation,
                 getLatestPositions()
         );
