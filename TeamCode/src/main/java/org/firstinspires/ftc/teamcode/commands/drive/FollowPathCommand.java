@@ -23,6 +23,8 @@ public class FollowPathCommand extends CommandBase {
 
     private final MapleTimer timer;
 
+    private double timeOutSeconds;
+
     public FollowPathCommand(Trajectory trajectory, HolonomicDriveSubsystem driveSubsystem, Rotation2d desiredRotation) {
         this(trajectory, 1, driveSubsystem, desiredRotation);
     }
@@ -73,6 +75,8 @@ public class FollowPathCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
+        if (timer.getTimeSeconds() > timeOutSeconds)
+            return true;
         return getPathTime() >= trajectory.getTotalTimeSeconds()
                 && driveController.atReference();
     }
@@ -86,13 +90,12 @@ public class FollowPathCommand extends CommandBase {
         return timer.getTimeSeconds() * speedMultiplier;
     }
 
-    public FollowPathCommand withTimeOutAfterTrajectoryFinished(double timeOutSeconds) {
-        return (FollowPathCommand) this.withTimeout((long) (
-                (trajectory.getTotalTimeSeconds() + timeOutSeconds) * 1000
-        ));
+    public FollowPathCommand withTimeOutAfterTrajectoryFinished(double timeOutAfterFinishSeconds) {
+        this.timeOutSeconds = trajectory.getTotalTimeSeconds() * speedMultiplier + timeOutAfterFinishSeconds;
+        return this;
     }
 
-    public Command withNavigateToStartingPoint(Pose2d startingPointTolerance, double navigateTimeOutSeconds) {
+    public Command driveToStartingPointSequence(Pose2d startingPointTolerance, double navigateTimeOutSeconds) {
         return driveSubsystem
                 .driveToPose(
                         () -> new Pose2d(trajectory.getInitialPose().getTranslation(), driveSubsystem.getFacing()),
