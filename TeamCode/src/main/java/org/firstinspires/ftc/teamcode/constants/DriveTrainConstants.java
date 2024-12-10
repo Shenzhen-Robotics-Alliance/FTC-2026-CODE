@@ -55,4 +55,6 @@ public class DriveTrainConstants {
     );
 
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 2.0, MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = Math.toRadians(360);
+
+    public static final double TRANSLATIONAL_LOOK_AHEAD_TIME = 0.4, ROTATIONAL_LOOK_AHEAD_TIME = 0.3;
 }

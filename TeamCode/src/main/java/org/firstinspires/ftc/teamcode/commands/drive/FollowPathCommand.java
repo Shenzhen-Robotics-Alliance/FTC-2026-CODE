@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.commands.drive;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandBase;
 
+import org.firstinspires.ftc.teamcode.constants.DriveTrainConstants;
 import org.firstinspires.ftc.teamcode.subsystems.drive.HolonomicDriveSubsystem;
 import org.firstinspires.ftc.teamcode.utils.MapleTimer;
 
@@ -14,6 +15,7 @@ import static org.firstinspires.ftc.teamcode.constants.DriveControlLoops.*;
 
 public class FollowPathCommand extends CommandBase {
     private final Trajectory trajectory;
+    private final double speedMultiplier;
     private final Rotation2d desiredRotation;
     private final double delaySecondsStartRotating;
     private final Pose2d tolerance;
@@ -22,14 +24,21 @@ public class FollowPathCommand extends CommandBase {
     private final MapleTimer timer;
 
     public FollowPathCommand(Trajectory trajectory, HolonomicDriveSubsystem driveSubsystem, Rotation2d desiredRotation) {
-        this(trajectory, driveSubsystem, desiredRotation, 0);
+        this(trajectory, 1, driveSubsystem, desiredRotation);
     }
 
-    public FollowPathCommand(Trajectory trajectory, HolonomicDriveSubsystem driveSubsystem, Rotation2d desiredRotation, double pathProgressPercentageStartRotating) {
-        this(trajectory, driveSubsystem, desiredRotation, pathProgressPercentageStartRotating, new Pose2d(0.05, 0.05, Rotation2d.fromDegrees(5)));
+    public FollowPathCommand(Trajectory trajectory, double speedMultiplier, HolonomicDriveSubsystem driveSubsystem, Rotation2d desiredRotation) {
+        this(trajectory, speedMultiplier, driveSubsystem, desiredRotation, 0);
     }
-    public FollowPathCommand(Trajectory trajectory, HolonomicDriveSubsystem driveSubsystem, Rotation2d desiredRotation, double pathProgressPercentageStartRotating, Pose2d tolerance) {
+
+    public FollowPathCommand(Trajectory trajectory, double speedMultiplier, HolonomicDriveSubsystem driveSubsystem, Rotation2d desiredRotation, double pathProgressPercentageStartRotating) {
+        this(trajectory, speedMultiplier, driveSubsystem, desiredRotation, pathProgressPercentageStartRotating, new Pose2d(0.05, 0.05, Rotation2d.fromDegrees(5)));
+    }
+    public FollowPathCommand(Trajectory trajectory, double speedMultiplier, HolonomicDriveSubsystem driveSubsystem, Rotation2d desiredRotation, double pathProgressPercentageStartRotating, Pose2d tolerance) {
+        assert 0 < speedMultiplier && speedMultiplier <= 1 : "speed multiplier must be in the range 0~1";
+
         this.trajectory = trajectory;
+        this.speedMultiplier = speedMultiplier;
         this.desiredRotation = desiredRotation;
 
         this.delaySecondsStartRotating = pathProgressPercentageStartRotating * trajectory.getTotalTimeSeconds();
@@ -50,11 +59,13 @@ public class FollowPathCommand extends CommandBase {
 
     @Override
     public void execute() {
-        final Trajectory.State state = trajectory.sample(timer.getTimeSeconds());
+        final Trajectory.State state = scaleTime(trajectory.sample(getPathTime()), speedMultiplier);
         driveSubsystem.runRobotCentricChassisSpeeds(driveController.calculate(
-                driveSubsystem.getPose(),
+                driveSubsystem.getPoseWithVelocityCompensation(
+                        DriveTrainConstants.TRANSLATIONAL_LOOK_AHEAD_TIME,
+                        DriveTrainConstants.ROTATIONAL_LOOK_AHEAD_TIME),
                 state,
-                timer.getTimeSeconds() > delaySecondsStartRotating ?
+                getPathTime() > delaySecondsStartRotating ?
                         desiredRotation
                         : driveSubsystem.getFacing()
                 ));
@@ -62,13 +73,17 @@ public class FollowPathCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return timer.getTimeSeconds() >= trajectory.getTotalTimeSeconds()
+        return getPathTime() >= trajectory.getTotalTimeSeconds()
                 && driveController.atReference();
     }
 
     @Override
     public void end(boolean interrupted) {
         driveSubsystem.stop();
+    }
+
+    public double getPathTime() {
+        return timer.getTimeSeconds() * speedMultiplier;
     }
 
     public FollowPathCommand withTimeOutAfterTrajectoryFinished(double timeOutSeconds) {
@@ -84,5 +99,14 @@ public class FollowPathCommand extends CommandBase {
                         startingPointTolerance,
                         navigateTimeOutSeconds)
                 .andThen(this);
+    }
+
+    private static Trajectory.State scaleTime(Trajectory.State rawState, double speedMultiplier) {
+        return new Trajectory.State(
+                rawState.timeSeconds,
+                rawState.velocityMetersPerSecond * speedMultiplier,
+                rawState.accelerationMetersPerSecondSq * speedMultiplier,
+                rawState.poseMeters,
+                rawState.curvatureRadPerMeter);
     }
 }

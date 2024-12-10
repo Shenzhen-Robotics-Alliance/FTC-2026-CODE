@@ -8,6 +8,7 @@ import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.Subsystem;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
+import org.firstinspires.ftc.teamcode.constants.DriveTrainConstants;
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 
 import java.util.function.BooleanSupplier;
@@ -15,6 +16,9 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 
@@ -29,6 +33,16 @@ public interface HolonomicDriveSubsystem extends Subsystem {
      * Returns the current odometry Pose.
      */
     Pose2d getPose();
+
+    default Pose2d getPoseWithVelocityCompensation(double translationLookAheadTime, double rotationalLookAheadTime) {
+        final ChassisSpeeds robotSpeedsFieldRelative = getMeasuredChassisSpeedsFieldRelative();
+        final Transform2d lookAheadTransform = new Transform2d(
+                robotSpeedsFieldRelative.vxMetersPerSecond * translationLookAheadTime,
+                robotSpeedsFieldRelative.vyMetersPerSecond * translationLookAheadTime,
+                new Rotation2d(robotSpeedsFieldRelative.omegaRadiansPerSecond * rotationalLookAheadTime));
+
+        return getPose().plus(lookAheadTransform);
+    }
 
     default Rotation2d getFacing() {return getPose().getRotation(); }
 
@@ -102,7 +116,9 @@ public interface HolonomicDriveSubsystem extends Subsystem {
     default Command driveToPose(Supplier<Pose2d> target) {
         return drive(
                 () -> driveController.calculate(
-                        getPose(),
+                        this.getPoseWithVelocityCompensation(
+                                DriveTrainConstants.TRANSLATIONAL_LOOK_AHEAD_TIME,
+                                DriveTrainConstants.ROTATIONAL_LOOK_AHEAD_TIME),
                         target.get(),
                         0,
                         target.get().getRotation()),
@@ -121,7 +137,12 @@ public interface HolonomicDriveSubsystem extends Subsystem {
 
     default Command followTrajectory(Supplier<Trajectory.State> desiredState, Supplier<Rotation2d> desiredRotation) {
         return drive(
-                () -> driveController.calculate(getPose(), desiredState.get(), desiredRotation.get()),
+                () -> driveController.calculate(
+                        this.getPoseWithVelocityCompensation(
+                                DriveTrainConstants.TRANSLATIONAL_LOOK_AHEAD_TIME,
+                                DriveTrainConstants.ROTATIONAL_LOOK_AHEAD_TIME),
+                        desiredState.get(),
+                        desiredRotation.get()),
                 () -> false);
     }
 }
