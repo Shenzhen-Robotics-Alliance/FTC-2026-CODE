@@ -19,6 +19,7 @@ import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Twist2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 
@@ -143,5 +144,9 @@ public class MapleOdometerWheelsOdometry implements Subsystem {
 
     public Pose2d getEstimatedPose() {
         return poseEstimator.getEstimatedPosition();
+    }
+
+    public ChassisSpeeds getMeasureSpeedsRobotRelative() {
+        return this.poseEstimator.kinematics.toChassisSpeeds(getLatestSpeeds());
     }
 }

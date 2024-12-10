@@ -46,6 +46,7 @@ public class MecanumDriveSubsystem extends SubsystemBase implements HolonomicDri
 
     @Override
     public void periodic() {
+
     }
 
     @Override
@@ -80,7 +81,7 @@ public class MecanumDriveSubsystem extends SubsystemBase implements HolonomicDri
 
     @Override
     public ChassisSpeeds getMeasuredChassisSpeedsRobotRelative() {
-        return null;
+        return odometry.getMeasureSpeedsRobotRelative();
     }
 
     @Override
