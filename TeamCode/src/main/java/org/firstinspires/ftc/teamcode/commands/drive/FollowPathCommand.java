@@ -4,7 +4,6 @@ import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.constants.DriveControlLoops;
-import org.firstinspires.ftc.teamcode.constants.DriveTrainConstants;
 import org.firstinspires.ftc.teamcode.subsystems.drive.HolonomicDriveSubsystem;
 import org.firstinspires.ftc.teamcode.utils.MapleTimer;
 
@@ -35,8 +34,9 @@ public class FollowPathCommand extends CommandBase {
     }
 
     public FollowPathCommand(Trajectory trajectory, double speedMultiplier, HolonomicDriveSubsystem driveSubsystem, Rotation2d desiredRotation, double pathProgressPercentageStartRotating) {
-        this(trajectory, speedMultiplier, driveSubsystem, desiredRotation, pathProgressPercentageStartRotating, new Pose2d(0.05, 0.05, Rotation2d.fromDegrees(5)));
+        this(trajectory, speedMultiplier, driveSubsystem, desiredRotation, pathProgressPercentageStartRotating, DriveControlLoops.tolerance);
     }
+
     public FollowPathCommand(Trajectory trajectory, double speedMultiplier, HolonomicDriveSubsystem driveSubsystem, Rotation2d desiredRotation, double pathProgressPercentageStartRotating, Pose2d tolerance) {
         assert 0 < speedMultiplier && speedMultiplier <= 1 : "speed multiplier must be in the range 0~1";
 

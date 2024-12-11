@@ -52,8 +52,7 @@ public class DriveTrainConstants {
             new Translation2d(CHASSIS_LENGTH_METERS /2, CHASSIS_WIDTH_METERS / 2),
             new Translation2d(CHASSIS_LENGTH_METERS /2, -CHASSIS_WIDTH_METERS / 2),
             new Translation2d(-CHASSIS_LENGTH_METERS /2, CHASSIS_WIDTH_METERS / 2),
-            new Translation2d(-CHASSIS_LENGTH_METERS /2, -CHASSIS_WIDTH_METERS / 2)
-    );
+            new Translation2d(-CHASSIS_LENGTH_METERS /2, -CHASSIS_WIDTH_METERS / 2));
 
     public static final double MAX_VELOCITY_METERS_PER_SECOND = 2.0, MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = Math.toRadians(360);
 }

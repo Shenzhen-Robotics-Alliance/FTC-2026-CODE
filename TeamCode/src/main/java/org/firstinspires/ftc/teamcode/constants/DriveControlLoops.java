@@ -4,6 +4,9 @@ import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 public class DriveControlLoops {
@@ -19,4 +22,9 @@ public class DriveControlLoops {
     );
 
     public static final double TRANSLATIONAL_LOOK_AHEAD_TIME = 0.4, ROTATIONAL_LOOK_AHEAD_TIME = 0.3;
+
+    public static final Pose2d tolerance = new Pose2d(0.02, 0.02, Rotation2d.fromDegrees(5));
+    public static final TrajectoryConfig trajectoryConfig = new TrajectoryConfig(
+            DriveTrainConstants.MAX_VELOCITY_METERS_PER_SECOND,
+            5);
 }

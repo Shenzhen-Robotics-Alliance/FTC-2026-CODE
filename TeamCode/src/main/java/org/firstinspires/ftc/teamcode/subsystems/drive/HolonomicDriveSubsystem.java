@@ -8,10 +8,14 @@ import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.Subsystem;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
+import org.firstinspires.ftc.teamcode.commands.drive.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.constants.DriveControlLoops;
 import org.firstinspires.ftc.teamcode.constants.DriveTrainConstants;
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
@@ -22,6 +26,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 
 public interface HolonomicDriveSubsystem extends Subsystem {
     /**
@@ -145,5 +150,16 @@ public interface HolonomicDriveSubsystem extends Subsystem {
                         desiredState.get(),
                         desiredRotation.get()),
                 () -> false);
+    }
+
+
+    default Command followPath(Pose2d[] wayPoints, Rotation2d desiredRotation, double speedMultiplier) {
+        List<Pose2d> wayPointsList = new ArrayList<>(Arrays.asList(wayPoints));
+        return new FollowPathCommand(
+                TrajectoryGenerator.generateTrajectory(wayPointsList, trajectoryConfig),
+                speedMultiplier,
+                this,
+                desiredRotation,
+                0);
     }
 }
