@@ -80,8 +80,7 @@ public class MapleJoystickDriveInput {
         final double deadBand = MapleCommonMath.linearInterpretationWithBounding(
                 0, DEAD_BAND_WHEN_OTHER_AXIS_EMPTY,
                 1, DEAD_BAND_WHEN_OTHER_AXIS_FULL,
-                Math.abs(otherAxisValue)
-        );
+                Math.abs(otherAxisValue));
         return MathUtil.applyDeadband(axisValue, deadBand, 1);
     }
 
@@ -89,31 +88,27 @@ public class MapleJoystickDriveInput {
         return new MapleJoystickDriveInput(
                 () -> driverGamePad.left_stick_x,
                 () -> driverGamePad.left_stick_y,
-                () -> driverGamePad.right_stick_x
-        );
+                () -> driverGamePad.right_stick_x);
     }
 
     public static MapleJoystickDriveInput leftHandedJoystick(GamepadEx driverGamePad) {
         return new MapleJoystickDriveInput(
                 driverGamePad::getLeftX,
                 () -> -driverGamePad.getLeftY(), // GamepadEx has reversed y
-                driverGamePad::getRightX
-        );
+                driverGamePad::getRightX);
     }
 
     public static MapleJoystickDriveInput rightHandedJoystick(Gamepad driverGamePad) {
         return new MapleJoystickDriveInput(
                 () -> driverGamePad.right_stick_x,
                 () -> driverGamePad.right_stick_y,
-                () -> driverGamePad.left_stick_x
-        );
+                () -> driverGamePad.left_stick_x);
     }
 
     public static MapleJoystickDriveInput rightHandedJoystick(GamepadEx driverGamePad) {
         return new MapleJoystickDriveInput(
                 driverGamePad::getRightX,
                 () -> -driverGamePad.getRightY(), // GamepadEx has reversed y
-                driverGamePad::getLeftX
-        );
+                driverGamePad::getLeftX);
     }
 }

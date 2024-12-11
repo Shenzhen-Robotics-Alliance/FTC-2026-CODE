@@ -108,6 +108,7 @@ public class MapleOdometerWheelsOdometry implements Subsystem {
     /**
      * fetches the data cached by encoder thread (if encoder thread enabled) and feed these data to the pose estimator
      * */
+    @Override
     public void periodic() {
         pollEncodersBlocking();
         final Twist2d twist2d = poseEstimator.kinematics.toTwist2d(previousPositions, getLatestPositions());
@@ -124,9 +125,8 @@ public class MapleOdometerWheelsOdometry implements Subsystem {
                 currentRotation,
                 getLatestPositions()
         );
-        SystemConstants.telemetry.addData("leftEnc", leftOdometerWheel.getDistanceMeters());
-        SystemConstants.telemetry.addData("rightEnc", rightOdometerWheel.getDistanceMeters());
-        SystemConstants.telemetry.addData("centerEnc", centerOdometerWheel.getDistanceMeters());
+
+        SystemConstants.telemetry.addData("Measured Speeds", getMeasureSpeedsRobotRelative());
     }
 
     public void resetPose(Pose2d currentPose) {

@@ -14,7 +14,7 @@ public class OdometerWheelsKinematics implements Kinematics<OdometerWheelsSpeeds
 
     @Override
     public ChassisSpeeds toChassisSpeeds(OdometerWheelsSpeeds wheelSpeeds) {
-        final double omegaRadPerSec = (wheelSpeeds.leftWheelMetersPerSecond - wheelSpeeds.rightWheelMetersPerSecond) / trackWidth,
+        final double omegaRadPerSec = (wheelSpeeds.rightWheelMetersPerSecond - wheelSpeeds.leftWheelMetersPerSecond) / trackWidth,
                 xMPS = (wheelSpeeds.leftWheelMetersPerSecond + wheelSpeeds.rightWheelMetersPerSecond) / 2,
                 yMPS = (wheelSpeeds.centerWheelMetersPerSecond - (centerWheelOffSetFromCenter * omegaRadPerSec));
         return new ChassisSpeeds(xMPS, yMPS, omegaRadPerSec);

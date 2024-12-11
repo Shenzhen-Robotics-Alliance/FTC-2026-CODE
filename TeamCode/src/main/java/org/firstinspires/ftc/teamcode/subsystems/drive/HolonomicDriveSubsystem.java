@@ -40,6 +40,11 @@ public interface HolonomicDriveSubsystem extends Subsystem {
      */
     Pose2d getPose();
 
+    default Pose2d getPoseWithVelocityCompensation() {
+        return getPoseWithVelocityCompensation(ROTATIONAL_LOOK_AHEAD_TIME, TRANSLATIONAL_LOOK_AHEAD_TIME);
+    }
+
+
     default Pose2d getPoseWithVelocityCompensation(double translationLookAheadTime, double rotationalLookAheadTime) {
         final ChassisSpeeds robotSpeedsFieldRelative = getMeasuredChassisSpeedsFieldRelative();
         final Transform2d lookAheadTransform = new Transform2d(
