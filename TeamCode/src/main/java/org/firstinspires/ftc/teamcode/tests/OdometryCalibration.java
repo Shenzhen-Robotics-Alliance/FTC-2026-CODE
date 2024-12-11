@@ -19,6 +19,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.IMU;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.constants.DriveTrainConstants;
 import org.firstinspires.ftc.teamcode.utils.MapleLoopClock;
 import org.firstinspires.ftc.teamcode.utils.MapleOdometerWheels.MapleEncoder;
 
@@ -63,6 +64,7 @@ public class OdometryCalibration extends OpMode {
         this.backRight = hardwareMap.get(DcMotor.class, "backRight");
 
         this.imu = hardwareMap.get(IMU.class, "imu");
+        this.imu.initialize(DriveTrainConstants.IMU_PARAMS);
 
         radiansRotated = 0;
         previousRotationRadians = getIMUReading();

@@ -10,21 +10,29 @@ public class MotorsMatch extends OpMode {
 
     @Override
     public void init() {
-        mot0 = hardwareMap.get(DcMotor.class, "mot0"); // br, r; rig, r
-        mot1 = hardwareMap.get(DcMotor.class, "mot1"); // fr, r; hor, r
-        mot2 = hardwareMap.get(DcMotor.class, "mot2"); // bl, n; lef, n
-        mot3 = hardwareMap.get(DcMotor.class, "mot3"); // fl, n
+        mot0 = hardwareMap.get(DcMotor.class, "mot0"); // br, rev   | right
+        mot1 = hardwareMap.get(DcMotor.class, "mot1"); // bl        | left, reversed
+        mot2 = hardwareMap.get(DcMotor.class, "mot2"); // fr, rev   | center, reversed
+        mot3 = hardwareMap.get(DcMotor.class, "mot3"); // fl        |
+
+        mot0.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        mot1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        mot2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        mot3.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
 
     @Override
     public void loop() {
-        mot0.setPower(gamepad1.a ? 0.5:0);
-        mot1.setPower(gamepad1.b ? 0.5:0);
-        mot2.setPower(gamepad1.x ? 0.5:0);
-        mot3.setPower(gamepad1.y ? 0.5:0);
+        double speed = gamepad1.left_stick_y;
+        mot0.setPower(gamepad1.a ? speed:0);
+        mot1.setPower(gamepad1.b ? speed:0);
+        mot2.setPower(gamepad1.x ? speed:0);
+        mot3.setPower(gamepad1.y ? speed:0);
         telemetry.addData("mot 0 enc ", mot0.getCurrentPosition());
         telemetry.addData("mot 1 enc ", mot1.getCurrentPosition());
         telemetry.addData("mot 2 enc ", mot2.getCurrentPosition());
         telemetry.addData("mot 3 enc ", mot3.getCurrentPosition());
+
+        telemetry.addData("speed", speed);
     }
 }

@@ -17,4 +17,6 @@ public class DriveControlLoops {
             new PIDController(5.0, 0, 0),
             rotationController
     );
+
+    public static final double TRANSLATIONAL_LOOK_AHEAD_TIME = 0.4, ROTATIONAL_LOOK_AHEAD_TIME = 0.3;
 }

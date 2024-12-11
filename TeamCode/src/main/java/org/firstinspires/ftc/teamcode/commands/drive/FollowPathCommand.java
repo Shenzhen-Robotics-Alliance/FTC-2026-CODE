@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.commands.drive;
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandBase;
 
+import org.firstinspires.ftc.teamcode.constants.DriveControlLoops;
 import org.firstinspires.ftc.teamcode.constants.DriveTrainConstants;
 import org.firstinspires.ftc.teamcode.subsystems.drive.HolonomicDriveSubsystem;
 import org.firstinspires.ftc.teamcode.utils.MapleTimer;
@@ -64,8 +65,8 @@ public class FollowPathCommand extends CommandBase {
         final Trajectory.State state = scaleTime(trajectory.sample(getPathTime()), speedMultiplier);
         driveSubsystem.runRobotCentricChassisSpeeds(driveController.calculate(
                 driveSubsystem.getPoseWithVelocityCompensation(
-                        DriveTrainConstants.TRANSLATIONAL_LOOK_AHEAD_TIME,
-                        DriveTrainConstants.ROTATIONAL_LOOK_AHEAD_TIME),
+                        DriveControlLoops.TRANSLATIONAL_LOOK_AHEAD_TIME,
+                        DriveControlLoops.ROTATIONAL_LOOK_AHEAD_TIME),
                 state,
                 getPathTime() > delaySecondsStartRotating ?
                         desiredRotation

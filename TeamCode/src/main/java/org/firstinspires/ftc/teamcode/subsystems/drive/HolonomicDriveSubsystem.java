@@ -8,6 +8,7 @@ import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.Subsystem;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
+import org.firstinspires.ftc.teamcode.constants.DriveControlLoops;
 import org.firstinspires.ftc.teamcode.constants.DriveTrainConstants;
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 
@@ -117,8 +118,8 @@ public interface HolonomicDriveSubsystem extends Subsystem {
         return drive(
                 () -> driveController.calculate(
                         this.getPoseWithVelocityCompensation(
-                                DriveTrainConstants.TRANSLATIONAL_LOOK_AHEAD_TIME,
-                                DriveTrainConstants.ROTATIONAL_LOOK_AHEAD_TIME),
+                                DriveControlLoops.TRANSLATIONAL_LOOK_AHEAD_TIME,
+                                DriveControlLoops.ROTATIONAL_LOOK_AHEAD_TIME),
                         target.get(),
                         0,
                         target.get().getRotation()),
@@ -139,8 +140,8 @@ public interface HolonomicDriveSubsystem extends Subsystem {
         return drive(
                 () -> driveController.calculate(
                         this.getPoseWithVelocityCompensation(
-                                DriveTrainConstants.TRANSLATIONAL_LOOK_AHEAD_TIME,
-                                DriveTrainConstants.ROTATIONAL_LOOK_AHEAD_TIME),
+                                DriveControlLoops.TRANSLATIONAL_LOOK_AHEAD_TIME,
+                                DriveControlLoops.ROTATIONAL_LOOK_AHEAD_TIME),
                         desiredState.get(),
                         desiredRotation.get()),
                 () -> false);
