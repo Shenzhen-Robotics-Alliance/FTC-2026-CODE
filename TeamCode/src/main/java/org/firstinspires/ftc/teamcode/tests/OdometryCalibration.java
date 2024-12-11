@@ -67,6 +67,7 @@ public class OdometryCalibration extends OpMode {
         this.imu.initialize(DriveTrainConstants.IMU_PARAMS);
 
         radiansRotated = 0;
+        imu.resetYaw();
         previousRotationRadians = getIMUReading();
 
     }
@@ -102,6 +103,8 @@ public class OdometryCalibration extends OpMode {
             telemetry.addData("track width (meters)", trackWidth); // 0.257
             telemetry.addData("center wheel offset (meters)", centerWheelOffset); // -0.022
         }
+
+        telemetry.addData("rotation", Math.toDegrees(radiansRotated));
 
         telemetry.update();
         clock.tick();
