@@ -19,6 +19,7 @@ import org.firstinspires.ftc.teamcode.constants.DriveControlLoops;
 import org.firstinspires.ftc.teamcode.constants.DriveTrainConstants;
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -38,10 +39,10 @@ public class MecanumDriveSubsystem extends SubsystemBase implements HolonomicDri
         this.odometry = odometry;
 
         this.mecanumDriveKinematics = DriveTrainConstants.KINEMATICS;
-        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        frontLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        frontRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        backLeft.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//        backRight.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     @Override
@@ -62,6 +63,10 @@ public class MecanumDriveSubsystem extends SubsystemBase implements HolonomicDri
     }
 
     private void runDriveOpenLoop(DcMotor motor, double desiredSpeedMetersPerSecond) {
+        desiredSpeedMetersPerSecond = MathUtil.applyDeadband(
+                desiredSpeedMetersPerSecond,
+                DriveControlLoops.DRIVE_DEAD_BAND_MPS,
+                MAX_VELOCITY_METERS_PER_SECOND);
         motor.setPower(DriveControlLoops.driveFeedForward.calculate(desiredSpeedMetersPerSecond));
     }
 

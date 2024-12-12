@@ -7,6 +7,7 @@ import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.Subsystem;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
+import com.arcrobotics.ftclib.command.button.Trigger;
 
 import org.firstinspires.ftc.teamcode.commands.drive.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.constants.DriveControlLoops;
@@ -127,9 +128,7 @@ public interface HolonomicDriveSubsystem extends Subsystem {
     default Command driveToPose(Supplier<Pose2d> target) {
         return drive(
                 () -> driveController.calculate(
-                        this.getPoseWithVelocityCompensation(
-                                DriveControlLoops.TRANSLATIONAL_LOOK_AHEAD_TIME,
-                                DriveControlLoops.ROTATIONAL_LOOK_AHEAD_TIME),
+                        this.getPoseWithVelocityCompensation(),
                         target.get(),
                         0,
                         target.get().getRotation()),
@@ -138,11 +137,24 @@ public interface HolonomicDriveSubsystem extends Subsystem {
     }
 
     default Command driveToPose(Supplier<Pose2d> target, Pose2d tolerance, double timeOutSeconds) {
+        final Trigger isStationary = isVelocityBelow(0.1);
         return driveToPose(target)
                 .beforeStarting(() -> driveController.setTolerance(tolerance))
-                .raceWith(new WaitUntilCommand(driveController::atReference))
+                .beforeStarting(() -> driveController.calculate(getPose(), target.get(), 0, target.get().getRotation()))
+                .raceWith(new WaitUntilCommand(
+                        () -> driveController.atReference() && isStationary.get()))
                 .withTimeout((long)(timeOutSeconds * 1000))
                 .andThen(new InstantCommand(this::stop));
+    }
+
+    default Trigger isVelocityBelow(double velocityPercent) {
+        return new Trigger(() -> {
+            final ChassisSpeeds speeds = getMeasuredChassisSpeedsRobotRelative();
+            return Math.hypot(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond)
+                    < getChassisMaxLinearVelocity() * velocityPercent
+                    && Math.abs(speeds.omegaRadiansPerSecond)
+                    < getChassisMaxAngularVelocity() * velocityPercent;
+        });
     }
 
 

@@ -38,6 +38,7 @@ public class MapleOdometerWheelsOdometry implements Subsystem, AutoCloseable {
     private final MapleEncoder leftOdometerWheel, rightOdometerWheel, centerOdometerWheel;
     private final IMU imu;
     private Rotation2d currentRotation;
+    private Rotation2d imuOffset;
     private OdometerWheelsPositions previousPositions;
 
     private int odometryTicksInRobotPeriod = 0;
@@ -102,10 +103,13 @@ public class MapleOdometerWheelsOdometry implements Subsystem, AutoCloseable {
         imuThread.start();
     }
 
+    private final Lock encodersLock = new ReentrantLock();
     private void pollEncodersBlocking() {
+        encodersLock.lock();
         leftOdometerWheel.poll();
         rightOdometerWheel.poll();
         centerOdometerWheel.poll();
+        encodersLock.unlock();
     }
 
     /**
@@ -113,8 +117,13 @@ public class MapleOdometerWheelsOdometry implements Subsystem, AutoCloseable {
     * note that this method will block the thread for 10~20 ms (because the control hub sucks)
     * so avoid calling it periodically
     * */
+    private final Lock imuLock = new ReentrantLock();
     private Rotation2d getIMUAngleBlocking() {
-        return Rotation2d.fromRadians(imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
+        imuLock.lock();
+        Rotation2d imuAngle =  Rotation2d.fromRadians(imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS));
+        imuLock.unlock();
+
+        return imuAngle;
     }
 
     public OdometerWheelsPositions getLatestPositions() {
@@ -167,17 +176,20 @@ public class MapleOdometerWheelsOdometry implements Subsystem, AutoCloseable {
         Rotation2d imuMeasurement = getIMUAngleBlocking();
 
         addVisionMeasurement(
-                new Pose2d(estimatedPose.getTranslation(), imuMeasurement),
+                new Pose2d(estimatedPose.getTranslation(), imuMeasurement.plus(imuOffset)),
                 time,
-                VecBuilder.fill(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY, 0.002));
+                VecBuilder.fill(9999, 9999, 0.002));
     }
 
     public void resetPose(Pose2d currentPose) {
         pollEncodersBlocking();
+        Rotation2d imuAngle = getIMUAngleBlocking();
 
         this.poseEstimatorLock.lock();
-        this.poseEstimator.resetPosition(getIMUAngleBlocking(), getLatestPositions(), currentPose);
+        currentRotation = currentPose.getRotation();
+        this.imuOffset = currentRotation.minus(imuAngle);
         estimatedPose = currentPose;
+        this.poseEstimator.resetPosition(currentRotation, getLatestPositions(), currentPose);
         this.poseEstimatorLock.unlock();
     }
 

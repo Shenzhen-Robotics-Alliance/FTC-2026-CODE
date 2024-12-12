@@ -42,8 +42,8 @@ public class DriveTrainConstants {
     public static final double ODOMETER_ENCODER_TICKS_PER_REVOLUTION = 2048; // 2048 ticks mag encoder
     public static final double ODOMETER_WHEELS_RADIUS_METERS = 24.0/1000; // 24mm
 
-    public static final double ODOMETER_WHEELS_TRACK_WIDTH_METERS = 0.274;
-    public static final double ODOMETER_CENTER_WHEELS_OFFSET = -0.126;
+    public static final double ODOMETER_WHEELS_TRACK_WIDTH_METERS = 0.273;
+    public static final double ODOMETER_CENTER_WHEELS_OFFSET = -0.096;
 
     public static final double CHASSIS_WIDTH_METERS = 0.3;
     public static final double CHASSIS_LENGTH_METERS = 0.4;
