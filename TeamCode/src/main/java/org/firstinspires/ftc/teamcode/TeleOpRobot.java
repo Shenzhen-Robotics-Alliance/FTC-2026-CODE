@@ -55,8 +55,8 @@ public class TeleOpRobot extends Robot {
                         new Pose2d(0, 0, Rotation2d.fromDegrees(45)),
                         new Pose2d(0.5, 0.5, Rotation2d.fromDegrees(90)),
                         new Pose2d(0.5, 1, Rotation2d.fromDegrees(90))},
-                Rotation2d.fromDegrees(90),
-                0.3));
+                Rotation2d.fromDegrees(0),
+                0.5));
 
         new Trigger(() -> this.pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)
                 .whileActiveOnce(robotContainer.driveSubsystem.driveToPose(() -> new Pose2d(0, 0, Rotation2d.fromDegrees(0)), new Pose2d(0.02, 0.02, Rotation2d.fromDegrees(5)), 2));

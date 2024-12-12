@@ -109,7 +109,7 @@ public class FollowPathCommand extends CommandBase {
         return new Trajectory.State(
                 rawState.timeSeconds,
                 rawState.velocityMetersPerSecond * speedMultiplier,
-                rawState.accelerationMetersPerSecondSq * speedMultiplier,
+                rawState.accelerationMetersPerSecondSq * speedMultiplier * speedMultiplier,
                 rawState.poseMeters,
                 rawState.curvatureRadPerMeter);
     }

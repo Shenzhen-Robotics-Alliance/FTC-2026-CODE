@@ -21,8 +21,8 @@ public class ExampleAuto implements Auto {
                         new Pose2d(0, 0, Rotation2d.fromDegrees(45)),
                         new Pose2d(0.5, 0.5, Rotation2d.fromDegrees(90)),
                         new Pose2d(0.5, 1, Rotation2d.fromDegrees(90))},
-                Rotation2d.fromDegrees(90),
-                1));
+                Rotation2d.fromDegrees(0),
+                0.5));
 
         sequence.addCommands(new WaitCommand(5000));
 
