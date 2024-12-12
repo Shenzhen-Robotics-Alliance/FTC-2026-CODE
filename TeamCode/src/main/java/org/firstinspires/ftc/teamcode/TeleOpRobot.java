@@ -36,16 +36,16 @@ public class TeleOpRobot extends Robot {
     }
 
     private void configureKeyBindings() {
-//        robotContainer.driveSubsystem.setDefaultCommand(JoystickDriveFactory.joystickDrive(
-//                robotContainer.driveSubsystem,
-//                MapleJoystickDriveInput.leftHandedJoystick(pilotGamePad),
-//                () -> true));
-
         robotContainer.driveSubsystem.setDefaultCommand(JoystickDriveFactory.joystickDrive(
                 robotContainer.driveSubsystem,
                 MapleJoystickDriveInput.leftHandedJoystick(pilotGamePad),
-                () -> -pilotGamePad.getRightY(),
-                () -> -pilotGamePad.getRightX()));
+                () -> true));
+
+//        robotContainer.driveSubsystem.setDefaultCommand(JoystickDriveFactory.joystickDrive(
+//                robotContainer.driveSubsystem,
+//                MapleJoystickDriveInput.leftHandedJoystick(pilotGamePad),
+//                () -> -pilotGamePad.getRightY(),
+//                () -> -pilotGamePad.getRightX()));
 
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.START).whenPressed(calibrateIMU);
     }
