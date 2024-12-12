@@ -43,22 +43,6 @@ public class MapleOdometerWheelsOdometry implements Subsystem, AutoCloseable {
     private int odometryTicksInRobotPeriod = 0;
 
     public MapleOdometerWheelsOdometry(HardwareMap hardwareMap, Pose2d initialPose) {
-        this.odometryThread = new Thread(() -> {
-            final MapleLoopClock clock = new MapleLoopClock(SystemConstants.ODOMETRY_UPDATE_RATE_HZ);
-            while (running) {
-                clock.tick();
-                updateEncoders();
-                odometryTicksInRobotPeriod++;
-            }
-        });
-        this.imuThread = new Thread(() -> {
-            final MapleLoopClock clock = new MapleLoopClock(SystemConstants.IMU_UPDATE_HZ);
-            while (running) {
-                clock.tick();
-                updateIMU();
-            }
-        });
-
         this.leftOdometerWheel = new MapleEncoder(
                 hardwareMap.get(DcMotor.class, LEFT_ODOMETER_WHEEL_NAME),
                 LEFT_ODOMETER_WHEEL_INVERTED,
@@ -96,6 +80,26 @@ public class MapleOdometerWheelsOdometry implements Subsystem, AutoCloseable {
 
         resetPose(initialPose);
         measuredSpeeds = new ChassisSpeeds();
+
+        this.odometryThread = new Thread(() -> {
+            final MapleLoopClock clock = new MapleLoopClock(SystemConstants.ODOMETRY_UPDATE_RATE_HZ);
+            while (running) {
+                clock.tick();
+                updateEncoders();
+                odometryTicksInRobotPeriod++;
+            }
+        });
+        this.imuThread = new Thread(() -> {
+            final MapleLoopClock clock = new MapleLoopClock(SystemConstants.IMU_UPDATE_HZ);
+            while (running) {
+                clock.tick();
+                updateIMU();
+            }
+        });
+        odometryThread.setDaemon(true);
+        imuThread.setDaemon(true);
+        odometryThread.start();
+        imuThread.start();
     }
 
     private void pollEncodersBlocking() {
@@ -202,7 +206,5 @@ public class MapleOdometerWheelsOdometry implements Subsystem, AutoCloseable {
     @Override
     public void close() throws Exception {
         running = false;
-        odometryThread.join();
-        imuThread.join();
     }
 }
