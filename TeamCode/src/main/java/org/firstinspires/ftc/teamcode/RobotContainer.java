@@ -8,7 +8,6 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.MapleOdometerWheelsOdomet
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.utils.AllianceSide;
 
-import java.io.Closeable;
 import java.io.IOException;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -16,7 +15,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 /**
  * declares all the subsystems of a robot
  * */
-public final class RobotContainer implements Closeable {
+public final class RobotContainer implements AutoCloseable {
     public final AllianceSide currentSide;
 
     public final MecanumDriveSubsystem driveSubsystem;
@@ -43,7 +42,7 @@ public final class RobotContainer implements Closeable {
     }
 
     @Override
-    public void close() throws IOException {
-        // vision.close();
+    public void close() throws Exception {
+        testOdometry.close();
     }
 }

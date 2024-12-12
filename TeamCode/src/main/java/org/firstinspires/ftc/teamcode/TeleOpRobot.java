@@ -8,8 +8,6 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.teamcode.commands.drive.JoystickDriveFactory;
 import org.firstinspires.ftc.teamcode.utils.MapleJoystickDriveInput;
 
-import java.io.IOException;
-
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 
@@ -55,7 +53,7 @@ public class TeleOpRobot extends Robot {
         super.reset();
         try {
             robotContainer.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
