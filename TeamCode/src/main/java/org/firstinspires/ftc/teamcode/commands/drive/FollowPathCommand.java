@@ -113,4 +113,16 @@ public class FollowPathCommand extends CommandBase {
                 rawState.poseMeters,
                 rawState.curvatureRadPerMeter);
     }
+
+    public static Pose2d[] reversePath(Pose2d[] pathWayPoints) {
+        final Pose2d[] revered = new Pose2d[pathWayPoints.length];
+        for (int i = 0; i < pathWayPoints.length; i++) {
+            final Pose2d originalWayPoint = pathWayPoints[pathWayPoints.length -1-i];
+            revered[i] = new Pose2d(
+                    originalWayPoint.getTranslation(),
+                    originalWayPoint.getRotation().plus(Rotation2d.kCCW_Pi_2));
+        }
+
+        return revered;
+    }
 }
