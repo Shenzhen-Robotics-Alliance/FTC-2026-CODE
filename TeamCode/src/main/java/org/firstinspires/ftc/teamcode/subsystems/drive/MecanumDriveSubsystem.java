@@ -52,6 +52,11 @@ public class MecanumDriveSubsystem extends SubsystemBase implements HolonomicDri
 
     @Override
     public void runRawChassisSpeeds(ChassisSpeeds speeds) {
+        speeds = new ChassisSpeeds(
+                speeds.vxMetersPerSecond,
+                speeds.vyMetersPerSecond * DriveControlLoops.HORIZONTAL_MOVEMENT_COMPENSATION_FACTOR,
+                speeds.omegaRadiansPerSecond);
+
         final MecanumDriveWheelSpeeds wheelSpeeds = mecanumDriveKinematics.toWheelSpeeds(speeds);
         runDriveOpenLoop(frontLeft, wheelSpeeds.frontLeftMetersPerSecond * FRONT_LEFT_MOTOR_DIRECTION);
         runDriveOpenLoop(frontRight, wheelSpeeds.frontRightMetersPerSecond * FRONT_RIGHT_MOTOR_DIRECTION);
