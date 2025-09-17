@@ -10,10 +10,10 @@ public class MotorsMatch extends OpMode {
 
     @Override
     public void init() {
-        mot0 = hardwareMap.get(DcMotor.class, "mot0"); // br, rev   | right
-        mot1 = hardwareMap.get(DcMotor.class, "mot1"); // bl        | left, reversed
-        mot2 = hardwareMap.get(DcMotor.class, "mot2"); // fr, rev   | center, reversed
-        mot3 = hardwareMap.get(DcMotor.class, "mot3"); // fl        |
+        mot0 = hardwareMap.get(DcMotor.class, "mot0"); // FrontLeft
+        mot1 = hardwareMap.get(DcMotor.class, "mot1"); // frontRight reverse need
+        mot2 = hardwareMap.get(DcMotor.class, "mot2"); // backleft reverse need
+        mot3 = hardwareMap.get(DcMotor.class, "mot3"); // backright
 
         mot0.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         mot1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -23,7 +23,7 @@ public class MotorsMatch extends OpMode {
 
     @Override
     public void loop() {
-        double speed = gamepad1.left_stick_y;
+        double speed = 1;
         mot0.setPower(gamepad1.a ? speed:0);
         mot1.setPower(gamepad1.b ? speed:0);
         mot2.setPower(gamepad1.x ? speed:0);

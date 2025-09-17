@@ -5,15 +5,15 @@ package org.firstinspires.ftc.teamcode.tests;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.Servo;
 
 // @TeleOp(name="TestSuperStruct")
 public class SingleFileOpMode extends OpMode {
     private DcMotor FrontLeftMotor, FrontRightMotor, BackLeftMotor, BackRightMotor;
-    private DcMotorEx elevator;
-
-    private Servo wristRot, wristFlip, claw, arm1, arm2;
+    private DcMotor intake,shooter0,shooter1,shooter2;
+    private State state;
+    private final double intakeSpeed = 0.8;
+    private final double shootSpeed = 0.9;
+    private final double outputSpeed = -0.8;
     @Override
     public void init() {
         this.FrontLeftMotor  = hardwareMap.get(DcMotor.class, "FrontLeftMotor");
@@ -21,33 +21,24 @@ public class SingleFileOpMode extends OpMode {
         this.BackLeftMotor = hardwareMap.get(DcMotor.class, "BackLeftMotor");
         this.BackRightMotor = hardwareMap.get(DcMotor.class, "BackRightMotor");
 
-        this.FrontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        this.FrontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         this.BackLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
         this.FrontLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.FrontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.BackLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.BackRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
-        this.elevator = hardwareMap.get(DcMotorEx.class, "Elevator");
-
-        this.arm1 = hardwareMap.get(Servo.class, "Arm1");
-        this.arm2 = hardwareMap.get(Servo.class, "Arm2");
-        arm2.setDirection(Servo.Direction.REVERSE);
-        this.wristFlip = hardwareMap.get(Servo.class, "WristFlip");
-        this.wristRot = hardwareMap.get(Servo.class, "WristRot");
-        this.claw = hardwareMap.get(Servo.class, "Claw");
-
-        this.state = State.HOLD;
-        this.closeClaw = true;
+        this.intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.shooter0.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.shooter1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.shooter2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
     // states
     enum State {
-        GRAB,
+        INTAKE,
         HOLD,
-        SCORE
+        OUTPUT,
+        SHOOT
     }
-    private State state;
-    private boolean closeClaw;
 
     @Override
     public void loop() {
@@ -63,83 +54,57 @@ public class SingleFileOpMode extends OpMode {
 
         FSM();
 
-        // update claw position
-        claw.setPosition(closeClaw ? 0.7: 0);
-        elevator.setPower(gamepad2.right_stick_y);
-        telemetry.addData("elevator position", elevator.getCurrentPosition());
     }
 
     // finite state machine
     public void FSM() {
-        if(gamepad2.a) {
-            state = State.GRAB;
+        if(gamepad1.a) {
+            state = State.INTAKE;
         }
-        else if(gamepad2.b) {
-            closeClaw = true;
+        else if(gamepad1.b) {
             state = State.HOLD;
         }
-        else if(gamepad2.x){
-            state = State.SCORE;
+        else if(gamepad1.x) {
+            state = State.SHOOT;
+        }else if(gamepad1.y){
+            state = State.OUTPUT;
         }
-        if (state!= State.HOLD) {
-            if(gamepad2.right_trigger > 0.5){
-                closeClaw = true;
-            }else if(gamepad2.left_trigger > 0.5){
-                closeClaw = false;
-            }
-        }
+
 
         switch (state) {
-            case GRAB: {
-                // run close loop on elevator
-
-
-                final boolean dropToGround = gamepad2.right_bumper;
-
-                // wrist flip
-                wristFlip.setPosition(dropToGround ? 0.1:0);
-
-                // arm
-                arm1.setPosition(dropToGround ? 0.2:0.3);
-                arm2.setPosition(dropToGround ? 0.2:0.3);
-
-                // run wrist rot
-                wristRot.setPosition(0.5 + 0.5 * gamepad2.left_stick_x);
-                telemetry.addData("wrist rot", 0.5 + 0.5 * gamepad2.left_stick_x);
+            case INTAKE: {
+                // run close loop on intake
+                intake.setPower(intakeSpeed);
 
                 break;
             }
 
             case HOLD: {
-                // run close loop on elevator
+              //stop the close loop
+              intake.setPower(0);
+              shooter0.setPower(0);
+              shooter1.setPower(0);
+              shooter2.setPower(0);
 
-                // wrist flip
-                wristFlip.setPosition(1);
+              break;
+            }
 
-                // arm
-                arm1.setPosition(0.75);
-                arm2.setPosition(0.75);
+            case SHOOT: {
+                // run close loop on SHOOT
+                shooter0.setPower(shootSpeed);
+                shooter1.setPower(shootSpeed);
+                shooter2.setPower(shootSpeed);
 
-                // run wrist rot
-                wristRot.setPosition(0.5);
                 break;
             }
 
-            case SCORE: {
-                // run close loop on elevator
-
-                // wrist flip
-                wristFlip.setPosition(1);
-
-                // arm
-                arm1.setPosition(0.8);
-                arm2.setPosition(0.8);
-
-                // run wrist rot
-                wristRot.setPosition(0.5);
-
-                break;
+            case OUTPUT: {
+                //run close loop on output
+                shooter0.setPower(outputSpeed);
+                shooter1.setPower(outputSpeed);
+                shooter2.setPower(outputSpeed);
             }
+
         }
     }
 }
