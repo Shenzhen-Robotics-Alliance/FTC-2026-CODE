@@ -9,11 +9,11 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 // @TeleOp(name="TestSuperStruct")
 public class SingleFileOpMode extends OpMode {
     private DcMotor FrontLeftMotor, FrontRightMotor, BackLeftMotor, BackRightMotor;
-    private DcMotor intake,shooter0,shooter1,shooter2;
+    private DcMotor intakeMotor,shooter0,shooter1,shooter2;
     private State state;
     private final double intakeSpeed = 0.8;
     private final double shootSpeed = 0.9;
-    private final double outputSpeed = -0.8;
+    private final double outtakeSpeed = -0.8;
     @Override
     public void init() {
         this.FrontLeftMotor  = hardwareMap.get(DcMotor.class, "FrontLeftMotor");
@@ -27,7 +27,7 @@ public class SingleFileOpMode extends OpMode {
         this.FrontRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.BackLeftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.BackRightMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.shooter0.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.shooter1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.shooter2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -36,7 +36,7 @@ public class SingleFileOpMode extends OpMode {
     enum State {
         INTAKE,
         HOLD,
-        OUTPUT,
+        OUTTAKE,
         SHOOT
     }
 
@@ -67,21 +67,21 @@ public class SingleFileOpMode extends OpMode {
         else if(gamepad1.x) {
             state = State.SHOOT;
         }else if(gamepad1.y){
-            state = State.OUTPUT;
+            state = State.OUTTAKE;
         }
 
 
         switch (state) {
             case INTAKE: {
                 // run close loop on intake
-                intake.setPower(intakeSpeed);
+                intakeMotor.setPower(intakeSpeed);
 
                 break;
             }
 
             case HOLD: {
               //stop the close loop
-              intake.setPower(0);
+              intakeMotor.setPower(0);
               shooter0.setPower(0);
               shooter1.setPower(0);
               shooter2.setPower(0);
@@ -98,11 +98,12 @@ public class SingleFileOpMode extends OpMode {
                 break;
             }
 
-            case OUTPUT: {
+            case OUTTAKE: {
                 //run close loop on output
-                shooter0.setPower(outputSpeed);
-                shooter1.setPower(outputSpeed);
-                shooter2.setPower(outputSpeed);
+                shooter0.setPower(outtakeSpeed);
+                shooter1.setPower(outtakeSpeed);
+                shooter2.setPower(outtakeSpeed);
+                intakeMotor.setPower(outtakeSpeed);
             }
 
         }
