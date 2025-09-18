@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.utils.MapleMaths;
 
+import org.firstinspires.ftc.teamcode.constants.SystemConstants;
+import org.firstinspires.ftc.teamcode.subsystems.vision.LimelightSubsystem;
+
 public class Angles {
     /**
      * simplify an angle into the range 0-360 degrees
@@ -33,7 +36,14 @@ public class Angles {
         if (difference < -loopLength / 2) return loopLength + difference; // go the other way around
         return difference;
     }
+    public static double Distance_get() {
+        double angleInRadians = java.lang.Math.toRadians(SystemConstants.CAMERA_ANGLE_DEGREE+ LimelightSubsystem.getTargetY());
+        double sinValue = java.lang.Math.sin(angleInRadians);
 
+        double tanValue = java.lang.Math.tan(angleInRadians);
+        return SystemConstants.APRILTAG_HIGHT_CM-SystemConstants.CAMERA_HIEHT_CM / tanValue;
+
+    }
     /**
      * get the mid point between two points
      */
