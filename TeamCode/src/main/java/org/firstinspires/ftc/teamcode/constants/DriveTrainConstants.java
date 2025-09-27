@@ -30,9 +30,9 @@ public class DriveTrainConstants {
 
     public static final double
             FRONT_LEFT_MOTOR_DIRECTION = 1,
-            FRONT_RIGHT_MOTOR_DIRECTION = -1,
-            BACK_LEFT_MOTOR_DIRECTION = 1,
-            BACK_RIGHT_MOTOR_DIRECTION = -1;
+            FRONT_RIGHT_MOTOR_DIRECTION = 1,
+            BACK_LEFT_MOTOR_DIRECTION = -1,
+            BACK_RIGHT_MOTOR_DIRECTION = 1;
 
     public static final IMU.Parameters IMU_PARAMS = new IMU.Parameters(new RevHubOrientationOnRobot(
             RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
@@ -43,9 +43,9 @@ public class DriveTrainConstants {
     public static final double ODOMETER_WHEELS_RADIUS_METERS = 16.0/1000; // 24mm
 
 
-
-    public static final double ODOMETER_WHEELS_TRACK_WIDTH_METERS = 0.273;
-    public static final double ODOMETER_CENTER_WHEELS_OFFSET = -0.096;
+    //need changes
+    public static final double ODOMETER_WHEELS_TRACK_WIDTH_METERS = 0.171; //0.215
+    public static final double ODOMETER_CENTER_WHEELS_OFFSET = -0.076; //
 
     public static final double CHASSIS_WIDTH_METERS = 0.305;
     public static final double CHASSIS_LENGTH_METERS = 0.4;
