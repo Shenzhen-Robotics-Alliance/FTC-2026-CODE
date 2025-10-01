@@ -15,16 +15,16 @@ public class IntakeSubsystem extends SubsystemBase{
 
     public DcMotorEx intakeMotor;
     private Telemetry telemetry;
-    private  DcMotor encoder;
+    private DcMotor encoder;
     public static double Kp = 0, Ki = 0, Kd = 0, Kf = 0;
     private double integralLimit = 0.3;
     public final double maximumPower =1;
     public final double minimumPower = -1;
     public  double targetVelocity = 0 ;
 
-    public static final double INTAKE_SPEED = 1800;   // 收集速度 (ticks/sec)
-    public static final double OUTTAKE_SPEED = -1600;  // 排出速度 (ticks/sec)
-    public static final double STOP_SPEED = 0;        // 停止
+    public static final double INTAKE_SPEED = 1800;   // intake speed (ticks/sec)
+    public static final double OUTTAKE_SPEED = -1600;  // outtake speed (ticks/sec)
+    public static final double STOP_SPEED = 0;        // stop
 
 
     //predicted

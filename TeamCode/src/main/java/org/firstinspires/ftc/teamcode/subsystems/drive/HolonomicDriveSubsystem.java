@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.subsystems.drive;
 
-import static org.firstinspires.ftc.teamcode.constants.DriveControlLoops.*;
+import static org.firstinspires.ftc.teamcode.constants.DriveControlLoops.ROTATIONAL_LOOK_AHEAD_TIME;
+import static org.firstinspires.ftc.teamcode.constants.DriveControlLoops.TRANSLATIONAL_LOOK_AHEAD_TIME;
+import static org.firstinspires.ftc.teamcode.constants.DriveControlLoops.driveController;
+import static org.firstinspires.ftc.teamcode.constants.DriveControlLoops.trajectoryConfig;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -11,7 +14,6 @@ import com.arcrobotics.ftclib.command.button.Trigger;
 
 import org.firstinspires.ftc.teamcode.commands.drive.FollowPathCommand;
 import org.firstinspires.ftc.teamcode.constants.DriveControlLoops;
-import org.firstinspires.ftc.teamcode.constants.DriveTrainConstants;
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 
 import java.util.ArrayList;
@@ -23,8 +25,6 @@ import java.util.function.Supplier;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.geometry.Twist2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
