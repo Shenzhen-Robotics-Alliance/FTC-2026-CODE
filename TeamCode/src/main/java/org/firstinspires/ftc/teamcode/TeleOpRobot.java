@@ -43,7 +43,7 @@ public class TeleOpRobot extends Robot {
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.START).whenPressed(calibrateOdometry);
 
         //pilot left trigger to intake
-        if(pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5){
+        if(pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5 && robotContainer.intakeContinueCommand.isFinished()){
             robotContainer.intakeContinueCommand.execute();
         }
 
@@ -53,7 +53,7 @@ public class TeleOpRobot extends Robot {
         }
 
         //pilot left bumper outtake
-        if (pilotGamePad.getButton(GamepadKeys.Button.LEFT_BUMPER)&&robotContainer.outtakeContinueCommand.isFinished()){
+        if (pilotGamePad.getButton(GamepadKeys.Button.LEFT_BUMPER) && robotContainer.outtakeContinueCommand.isFinished()){
             robotContainer.outtakeContinueCommand.execute();
         }
 
@@ -61,6 +61,11 @@ public class TeleOpRobot extends Robot {
         if(copilotGamePad.getLeftX()>0.1){
             robotContainer.rotSubsystem.setTargetVelocity(0.5);
             robotContainer.rotCommands.execute();
+        }
+
+        //copilot A stop shooter rotate
+        if(copilotGamePad.getButton(GamepadKeys.Button.A)){
+            robotContainer.rotSubsystem.setRotStop();
         }
 
     }
