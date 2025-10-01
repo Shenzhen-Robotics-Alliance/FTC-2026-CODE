@@ -31,7 +31,7 @@ public class IntakeSubsystem extends SubsystemBase{
 
     private PIDController velocityController;
 
-    public void init(HardwareMap hardwareMap,double kf){
+    public IntakeSubsystem(HardwareMap hardwareMap) {
         this.intakeMotor = hardwareMap.get(DcMotorEx.class,"intakeMotor");
         this.encoder = hardwareMap.get(DcMotor.class,"intakeMotor");
         this.intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -39,8 +39,8 @@ public class IntakeSubsystem extends SubsystemBase{
         this.encoder = hardwareMap.get(DcMotor.class,"intakeMotor");
 
         this.velocityController = new PIDController(Kp,Ki,Kd);
-        this.Kf = kf;
     }
+
 
 
     public void periodic(){
@@ -63,7 +63,7 @@ public class IntakeSubsystem extends SubsystemBase{
         intakeMotor.setPower(totalOutput);
     }
 
-    public void intakeStop(){
+    public void setIntakeStop(){
         intakeMotor.setPower(0);
     }
 

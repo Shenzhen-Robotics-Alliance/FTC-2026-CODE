@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.command.Robot;
-import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -10,7 +9,6 @@ import org.firstinspires.ftc.teamcode.commands.drive.JoystickDriveFactory;
 import org.firstinspires.ftc.teamcode.utils.MapleJoystickDriveInput;
 
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 
 /**
  * robot during teleop stage'
@@ -37,12 +35,6 @@ public class TeleOpRobot extends Robot {
                 MapleJoystickDriveInput.leftHandedJoystick(pilotGamePad),
                 () -> true));
 
-//        robotContainer.driveSubsystem.setDefaultCommand(JoystickDriveFactory.joystickDrive(
-//                robotContainer.driveSubsystem,
-//                MapleJoystickDriveInput.leftHandedJoystick(pilotGamePad),
-//                () -> -pilotGamePad.getRightY(),
-//                () -> -pilotGamePad.getRightX()));
-
         robotContainer.driveSubsystem.setDefaultCommand(JoystickDriveFactory.joystickDrive(
                 robotContainer.driveSubsystem,
                 MapleJoystickDriveInput.leftHandedJoystick(pilotGamePad),
@@ -50,17 +42,29 @@ public class TeleOpRobot extends Robot {
 
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.START).whenPressed(calibrateOdometry);
 
-        this.pilotGamePad.getGamepadButton(GamepadKeys.Button.B).whenHeld(robotContainer.driveSubsystem.followPath(
-                new Pose2d[]{
-                        new Pose2d(0, 0, Rotation2d.fromDegrees(45)),
-                        new Pose2d(0.5, 0.5, Rotation2d.fromDegrees(90)),
-                        new Pose2d(0.5, 1, Rotation2d.fromDegrees(90))},
-                Rotation2d.fromDegrees(0),
-                0.5));
+        //pilot left trigger to intake
+        if(pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5){
+            robotContainer.intakeContinueCommand.execute();
+        }
 
-        new Trigger(() -> this.pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)
-                .whileActiveOnce(robotContainer.driveSubsystem.driveToPose(() -> new Pose2d(0, 0, Rotation2d.fromDegrees(0)), new Pose2d(0.02, 0.02, Rotation2d.fromDegrees(5)), 2));
+        //pilot A stop the intake
+        if(pilotGamePad.getButton(GamepadKeys.Button.A)){
+            robotContainer.intakeStop.end(true);
+        }
+
+        //pilot left bumper outtake
+        if (pilotGamePad.getButton(GamepadKeys.Button.LEFT_BUMPER)&&robotContainer.outtakeContinueCommand.isFinished()){
+            robotContainer.outtakeContinueCommand.execute();
+        }
+
+        //copilot LeftX control the shooter rotate
+        if(copilotGamePad.getLeftX()>0.1){
+            robotContainer.rotSubsystem.setTargetVelocity(0.5);
+            robotContainer.rotCommands.execute();
+        }
+
     }
+
 
     @Override
     public void reset() {

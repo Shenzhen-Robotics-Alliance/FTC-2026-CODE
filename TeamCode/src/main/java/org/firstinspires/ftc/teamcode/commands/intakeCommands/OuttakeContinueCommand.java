@@ -29,6 +29,6 @@ public class OuttakeContinueCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted){
-        intakeSubsystem.intakeStop();
+        intakeSubsystem.setIntakeStop();
     }
 }
