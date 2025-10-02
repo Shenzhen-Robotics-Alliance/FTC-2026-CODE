@@ -29,6 +29,7 @@ public class TeleOpRobot extends Robot {
         configureKeyBindings();
     }
 
+
     private void configureKeyBindings() {
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).whenHeld(JoystickDriveFactory.joystickDrive(
                 robotContainer.driveSubsystem,
@@ -42,31 +43,13 @@ public class TeleOpRobot extends Robot {
 
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.START).whenPressed(calibrateOdometry);
 
-        //pilot left trigger to intake
-        if(pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5 && robotContainer.intakeContinueCommand.isFinished()){
-            robotContainer.intakeContinueCommand.execute();
-        }
-
-        //pilot A stop the intake
-        if(pilotGamePad.getButton(GamepadKeys.Button.A)){
-            robotContainer.intakeStop.end(true);
-        }
-
-        //pilot left bumper outtake
-        if (pilotGamePad.getButton(GamepadKeys.Button.LEFT_BUMPER) && robotContainer.outtakeContinueCommand.isFinished()){
-            robotContainer.outtakeContinueCommand.execute();
-        }
-
-        //copilot LeftX control the shooter rotate
-        if(copilotGamePad.getLeftX()>0.1){
-            robotContainer.rotSubsystem.setTargetVelocity(0.5);
+        if(copilotGamePad.getLeftX()>0.15){
             robotContainer.rotCommands.execute();
+        }else if (copilotGamePad.getLeftX()<=0.15){
+            robotContainer.rotSubsystem.setRotateStop();
         }
 
-        //copilot A stop shooter rotate
-        if(copilotGamePad.getButton(GamepadKeys.Button.A)){
-            robotContainer.rotSubsystem.setRotStop();
-        }
+
 
     }
 
