@@ -14,11 +14,11 @@ public class IntakeStop extends CommandBase {
 
     @Override
     public void initialize(){
-        intakeSubsystem.setIntakeStop();
+        intakeSubsystem.intake.setMotorsStop();
     }
 
     public void execute(){
-        intakeSubsystem.setIntakeStop();
+        intakeSubsystem.intake.setMotorsStop();
     }
 
     @Override
@@ -28,7 +28,7 @@ public class IntakeStop extends CommandBase {
 
     @Override
     public void end(boolean interrupted){
-        intakeSubsystem.setIntakeStop();
+        intakeSubsystem.intake.setMotorsStop();
     }
 
 }

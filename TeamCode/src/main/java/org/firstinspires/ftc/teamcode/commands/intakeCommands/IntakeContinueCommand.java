@@ -14,7 +14,7 @@ public class IntakeContinueCommand extends CommandBase {
 
     @Override
     public void initialize() {
-        intakeSubsystem.setTargetVelocity(IntakeSubsystem.INTAKE_SPEED);
+        intakeSubsystem.intake.setMotorsStop();
     }
 
     public void execute(){
@@ -27,6 +27,6 @@ public class IntakeContinueCommand extends CommandBase {
     }
 
     public void end(boolean interrupted){
-        intakeSubsystem.setIntakeStop();
+        intakeSubsystem.intake.setMotorsStop();
     }
 }

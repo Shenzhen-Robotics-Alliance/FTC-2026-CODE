@@ -14,7 +14,7 @@ public class RotCommands extends CommandBase{
     }
 
     public void initialize(){
-      rotSubsystem.setRotateStop();
+      rotSubsystem.rotate.setMotorsStop();
     }
 
     public void execute(){
@@ -25,5 +25,5 @@ public class RotCommands extends CommandBase{
         return false;
     }
 
-    public void end(boolean interrupted){rotSubsystem.setRotateStop();}
+    public void end(boolean interrupted){rotSubsystem.rotate.setMotorsStop();}
 }
