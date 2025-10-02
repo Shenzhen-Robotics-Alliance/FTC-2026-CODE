@@ -26,7 +26,7 @@ public class RotSubsystem extends SubsystemBase {
         this.RotMotor = hardwareMap.get(DcMotorEx.class,"RotMotor");
         RotMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.encoder = hardwareMap.get(DcMotor.class,"RotMotor");
-        this.RotMotor.setDirection(DcMotorSimple.Direction.FORWARD); //reverse if needed
+        this.RotMotor.setDirection(DcMotorSimple.Direction.REVERSE); //reverse if needed
 
         this.velocityController = new PIDController(0,0,0);
     }

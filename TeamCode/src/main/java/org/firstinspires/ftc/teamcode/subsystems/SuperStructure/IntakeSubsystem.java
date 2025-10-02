@@ -13,7 +13,7 @@ import edu.wpi.first.math.controller.PIDController;
 
 public class IntakeSubsystem extends SubsystemBase{
 
-    public DcMotorEx intakeMotor;
+    public DcMotorEx IntakeMotor;
     private Telemetry telemetry;
     private DcMotor encoder;
     public static double Kp = 0, Ki = 0, Kd = 0, Kf = 0;
@@ -32,11 +32,11 @@ public class IntakeSubsystem extends SubsystemBase{
     private PIDController velocityController;
 
     public IntakeSubsystem(HardwareMap hardwareMap) {
-        this.intakeMotor = hardwareMap.get(DcMotorEx.class,"intakeMotor");
-        this.encoder = hardwareMap.get(DcMotor.class,"intakeMotor");
-        this.intakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        this.intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.encoder = hardwareMap.get(DcMotor.class,"intakeMotor");
+        this.IntakeMotor = hardwareMap.get(DcMotorEx.class,"IntakeMotor");
+        this.encoder = hardwareMap.get(DcMotor.class,"IntakeMotor");
+        this.IntakeMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        this.IntakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.encoder = hardwareMap.get(DcMotor.class,"IntakeMotor");
 
         this.velocityController = new PIDController(Kp,Ki,Kd);
     }
@@ -48,7 +48,7 @@ public class IntakeSubsystem extends SubsystemBase{
     }
 
     public void updatePidControl(){
-        double currentVelocity = intakeMotor.getVelocity();
+        double currentVelocity = IntakeMotor.getVelocity();
 
         double pidOutput = velocityController.calculate(currentVelocity,targetVelocity);
 
@@ -60,11 +60,11 @@ public class IntakeSubsystem extends SubsystemBase{
         //restrict the range of output
         totalOutput = Range.clip(totalOutput,minimumPower,maximumPower);
 
-        intakeMotor.setPower(totalOutput);
+        IntakeMotor.setPower(totalOutput);
     }
 
     public void setIntakeStop(){
-        intakeMotor.setPower(0);
+        IntakeMotor.setPower(0);
     }
 
     public void setTargetVelocity(double velocity) {
@@ -77,7 +77,7 @@ public class IntakeSubsystem extends SubsystemBase{
 
     // get current velocity
     public double getCurrentVelocity() {
-        return intakeMotor.getVelocity();
+        return IntakeMotor.getVelocity();
     }
 
     //get target velocity
