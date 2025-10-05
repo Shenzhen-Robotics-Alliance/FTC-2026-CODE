@@ -19,7 +19,7 @@ public class RotSubsystem extends SubsystemBase {
     public static final double CLOCKWISE_SPEED = 1800;  //clockwise speed
     public static final double COUNTER_CLOCKWISE_SPEED = -1600;  //counter clockwise speed
     public static final double STOP_SPEED = 0;  // Stop
-    public static double Kp = 0, Ki = 0, Kd = 0, Kf = 0.01;
+    public static double Kp = 0.05, Ki = 0.1, Kd = 0.002, Kf = 0.01;
 
 
     public RotSubsystem(HardwareMap hardwareMap){
