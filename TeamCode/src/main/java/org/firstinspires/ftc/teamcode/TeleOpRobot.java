@@ -44,12 +44,10 @@ public class TeleOpRobot extends Robot {
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.START).whenPressed(calibrateOdometry);
 
         if(copilotGamePad.getLeftX()>0.15){
-            robotContainer.rotCommands.execute();
+            robotContainer.rotCommand.execute();
         }else if (copilotGamePad.getLeftX()<=0.15){
             robotContainer.rotSubsystem.setRotateStop();
         }
-
-
 
     }
 

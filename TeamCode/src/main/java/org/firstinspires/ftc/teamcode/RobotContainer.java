@@ -6,10 +6,12 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.commands.intakeCommands.IntakeContinueCommand;
 import org.firstinspires.ftc.teamcode.commands.intakeCommands.IntakeStop;
 import org.firstinspires.ftc.teamcode.commands.intakeCommands.OuttakeContinueCommand;
-import org.firstinspires.ftc.teamcode.commands.shotCommands.RotCommands;
+import org.firstinspires.ftc.teamcode.commands.shotCommands.RotCommand;
+import org.firstinspires.ftc.teamcode.commands.shotCommands.ShootCommand;
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.RotSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MapleOdometerWheelsOdometry;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.utils.AllianceSide;
@@ -28,9 +30,14 @@ public final class RobotContainer implements AutoCloseable {
     public final IntakeStop intakeStop;
     public final OuttakeContinueCommand outtakeContinueCommand;
     public final RotSubsystem rotSubsystem;
-    public final RotCommands rotCommands;
+    public final RotCommand rotCommand;
 
     public final MapleOdometerWheelsOdometry odometry;
+
+    public final ShooterSubsystem shooterSubsystem ;
+
+    public final ShootCommand shootCommand;
+
 
     // public final AprilTagVision vision;
     /** create all the subsystem with the hardware map */
@@ -50,13 +57,16 @@ public final class RobotContainer implements AutoCloseable {
 
         this.driveSubsystem = new MecanumDriveSubsystem(hardwareMap, odometry);
 
+        this.rotSubsystem = new RotSubsystem(hardwareMap);
+        this.rotCommand = new RotCommand(rotSubsystem);
+
+        this.shooterSubsystem = new ShooterSubsystem(hardwareMap);
+        this.shootCommand = new ShootCommand(shooterSubsystem);
+
         this.intakeSubsystem = new IntakeSubsystem(hardwareMap);
         this.intakeContinueCommand = new IntakeContinueCommand(intakeSubsystem);
         this.intakeStop = new IntakeStop(intakeSubsystem);
-        this.outtakeContinueCommand = new OuttakeContinueCommand(intakeSubsystem);
-
-        this.rotSubsystem = new RotSubsystem(hardwareMap);
-        this.rotCommands = new RotCommands(rotSubsystem);
+        this.outtakeContinueCommand = new OuttakeContinueCommand(intakeSubsystem,shooterSubsystem);
     }
 
     @Override

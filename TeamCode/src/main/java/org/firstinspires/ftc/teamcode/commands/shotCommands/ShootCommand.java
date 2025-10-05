@@ -1,30 +1,24 @@
-package org.firstinspires.ftc.teamcode.commands.intakeCommands;
+package org.firstinspires.ftc.teamcode.commands.shotCommands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 
-import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.ShooterSubsystem;
 
-public class OuttakeContinueCommand extends CommandBase {
-    private IntakeSubsystem intakeSubsystem;
+public class ShootCommand extends CommandBase {
     private ShooterSubsystem shooterSubsystem;
 
-    public OuttakeContinueCommand(IntakeSubsystem intakeSubsystem,ShooterSubsystem shooterSubsystem){
-        this.intakeSubsystem = intakeSubsystem;
+    public ShootCommand(ShooterSubsystem shooterSubsystem){
         this.shooterSubsystem = shooterSubsystem;
-        addRequirements(intakeSubsystem);
         addRequirements(shooterSubsystem);
     }
 
     @Override
     public void initialize(){
-        intakeSubsystem.intake.setMotorsStop();
         shooterSubsystem.shooter.setMotorsStop();
     }
 
     @Override
     public void execute(){
-        intakeSubsystem.periodic();
         shooterSubsystem.periodic();
     }
 
@@ -35,7 +29,7 @@ public class OuttakeContinueCommand extends CommandBase {
 
     @Override
     public void end(boolean interrupted){
-        intakeSubsystem.intake.setMotorsStop();
         shooterSubsystem.shooter.setMotorsStop();
     }
+
 }
