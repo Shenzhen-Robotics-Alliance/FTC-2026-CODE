@@ -30,7 +30,7 @@ public class DriveTrainConstants {
 
     public static final double
             FRONT_LEFT_MOTOR_DIRECTION = 1,
-            FRONT_RIGHT_MOTOR_DIRECTION = 1,
+            FRONT_RIGHT_MOTOR_DIRECTION = -1,
             BACK_LEFT_MOTOR_DIRECTION = -1,
             BACK_RIGHT_MOTOR_DIRECTION = 1;
 

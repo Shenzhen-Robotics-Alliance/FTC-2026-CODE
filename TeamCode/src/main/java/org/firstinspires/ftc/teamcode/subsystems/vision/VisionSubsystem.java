@@ -4,12 +4,12 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+
 
 /**
  * A subsystem that encapsulates all logic for the Limelight 3 camera.
  */
-public class LimelightSubsystem extends SubsystemBase {
+public class VisionSubsystem extends SubsystemBase {
 
     public final Limelight3A limelight;
 
@@ -20,7 +20,7 @@ public class LimelightSubsystem extends SubsystemBase {
     public int targetID = 0;
     private  int pipelineIndex = 0;
 
-    public LimelightSubsystem(HardwareMap hardwareMap) {
+    public VisionSubsystem(HardwareMap hardwareMap) {
         // Initialize the hardware from the robot's configuration
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
 
@@ -52,7 +52,7 @@ public class LimelightSubsystem extends SubsystemBase {
         return targetX;
     }
 
-    public static double getTargetY() {
+    public double getTargetY() {
         return targetY;
     }
 
