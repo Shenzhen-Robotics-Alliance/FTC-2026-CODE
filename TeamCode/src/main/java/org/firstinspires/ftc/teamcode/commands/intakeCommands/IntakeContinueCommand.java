@@ -21,12 +21,13 @@ public class IntakeContinueCommand extends CommandBase {
         intakeSubsystem.periodic();
     }
 
+    public void end(boolean interrupted){
+        intakeSubsystem.intake.setMotorsStop();
+    }
+
     @Override
     public boolean isFinished(){
         return false;
     }
 
-    public void end(boolean interrupted){
-        intakeSubsystem.intake.setMotorsStop();
-    }
 }

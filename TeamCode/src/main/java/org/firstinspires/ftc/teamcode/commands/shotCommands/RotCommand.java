@@ -20,11 +20,12 @@ public class RotCommand extends CommandBase{
         super.execute();
     }
 
+    public void end(boolean interrupted){
+        rotSubsystem.rotate.setMotorsStop();
+    }
+
     public boolean isFinished(){
         return false;
     }
 
-    public void end(boolean interrupted){
-        rotSubsystem.rotate.setMotorsStop();
-    }
 }

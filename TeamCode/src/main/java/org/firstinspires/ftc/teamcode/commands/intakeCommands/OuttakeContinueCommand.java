@@ -29,13 +29,15 @@ public class OuttakeContinueCommand extends CommandBase {
     }
 
     @Override
-    public boolean isFinished(){
-        return false;
-    }
-
-    @Override
     public void end(boolean interrupted){
         intakeSubsystem.intake.setMotorsStop();
         shooterSubsystem.shooter.setMotorsStop();
     }
+
+    @Override
+    public boolean isFinished(){
+        return false;
+    }
+
+
 }

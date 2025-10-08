@@ -22,13 +22,13 @@ public class IntakeStop extends CommandBase {
     }
 
     @Override
-    public boolean isFinished(){
-        return false;
+    public void end(boolean interrupted){
+        intakeSubsystem.intake.setMotorsStop();
     }
 
     @Override
-    public void end(boolean interrupted){
-        intakeSubsystem.intake.setMotorsStop();
+    public boolean isFinished(){
+        return false;
     }
 
 }

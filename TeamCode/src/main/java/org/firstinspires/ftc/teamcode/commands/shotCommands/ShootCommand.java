@@ -22,14 +22,15 @@ public class ShootCommand extends CommandBase {
         shooterSubsystem.periodic();
     }
 
-    @Override
-    public boolean isFinished(){
-        return false;
-    }
 
     @Override
     public void end(boolean interrupted){
         shooterSubsystem.shooter.setMotorsStop();
+    }
+
+    @Override
+    public boolean isFinished(){
+        return false;
     }
 
 }
