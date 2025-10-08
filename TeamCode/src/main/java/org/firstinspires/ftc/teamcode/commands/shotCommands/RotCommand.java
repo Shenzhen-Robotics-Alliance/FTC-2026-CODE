@@ -6,14 +6,14 @@ import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.RotSubsystem;
 
 public class RotCommand extends CommandBase{
     private RotSubsystem rotSubsystem;
-    //private LinearMotion linearMotion;
+
     public RotCommand(RotSubsystem rotSubsystem){
         this.rotSubsystem = rotSubsystem;
         addRequirements(rotSubsystem);
     }
 
     public void initialize(){
-      rotSubsystem.rotate.setMotorsStop();
+        rotSubsystem.rotate.setMotorsStop();
     }
 
     public void execute(){
@@ -24,5 +24,7 @@ public class RotCommand extends CommandBase{
         return false;
     }
 
-    public void end(boolean interrupted){rotSubsystem.rotate.setMotorsStop();}
+    public void end(boolean interrupted){
+        rotSubsystem.rotate.setMotorsStop();
+    }
 }

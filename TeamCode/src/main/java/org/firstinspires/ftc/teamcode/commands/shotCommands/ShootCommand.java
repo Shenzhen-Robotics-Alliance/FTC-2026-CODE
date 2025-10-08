@@ -14,7 +14,7 @@ public class ShootCommand extends CommandBase {
 
     @Override
     public void initialize(){
-        shooterSubsystem.shooter.setMotorsStop();
+        shooterSubsystem.setShooterStop();
     }
 
     @Override
