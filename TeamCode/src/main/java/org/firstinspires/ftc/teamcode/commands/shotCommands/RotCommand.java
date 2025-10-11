@@ -25,7 +25,7 @@ public class RotCommand extends CommandBase{
     public void execute(){
         double joystickValue = joystickSupplier.get();
 
-        if(Math.abs(joystickValue) > 0.15) {
+        if(Math.abs(joystickValue) > 0.3) {
             double currentPos = rotSubsystem.rotate.getCurrentSetPoint();
             double increment = joystickValue * 15;
             rotSubsystem.rotate.goToPosition(currentPos + increment);
