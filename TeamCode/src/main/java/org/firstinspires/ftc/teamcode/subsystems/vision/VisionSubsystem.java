@@ -22,7 +22,7 @@ public class VisionSubsystem extends SubsystemBase {
     // These variables will store the latest data from the camera
     public boolean hasTarget = false;
     public double targetX = 0.0;
-    public static double targetY = 0.0;
+    public double targetY = 0.0;
     public int targetID = 0;
     private int pipelineIndex = 0;
     
@@ -55,6 +55,7 @@ public class VisionSubsystem extends SubsystemBase {
         runtime.reset();
     }
 
+
     @Override
     public void periodic() {
         // Get the latest status and result from the Limelight
@@ -73,6 +74,8 @@ public class VisionSubsystem extends SubsystemBase {
                 targetX = result.getTx();
                 targetY = result.getTy();
 
+                calculatePIDOutput(targetX);
+
                 // Access fiducial results
                 fiducialResults = result.getFiducialResults();
                 if (!fiducialResults.isEmpty()) {
@@ -87,6 +90,7 @@ public class VisionSubsystem extends SubsystemBase {
             hasTarget = false;
         }
     }
+
 
     public double getTargetX() {
         return targetX;
@@ -111,7 +115,7 @@ public class VisionSubsystem extends SubsystemBase {
      */
     public double calculatePIDOutput(double target) {
         if (hasTarget) {
-            double currentTx = -targetX; // Negative to match test file behavior
+            double currentTx = targetX;
             return pidfController.calculate(currentTx, target);
         }
         return 0.0;
@@ -188,4 +192,6 @@ public class VisionSubsystem extends SubsystemBase {
     public void stop() {
         limelight.stop();
     }
+
+    public void start(){limelight.start();}
 }
