@@ -22,18 +22,22 @@ public class RotCommand extends CommandBase{
     }
     */
 
+
     public void execute(){
         double joystickValue = joystickSupplier.get();
 
-        if(Math.abs(joystickValue) > 0.15) {
+        if(Math.abs(joystickValue) > 0.5) {
             double currentPos = rotSubsystem.rotate.getCurrentSetPoint();
             double increment = joystickValue * 15;
             rotSubsystem.rotate.goToPosition(currentPos + increment);
             rotSubsystem.rotate.periodic();
         }else{
-            rotSubsystem.rotate.setMotorsStop();
+            rotSubsystem.setRotateStop();
         }
     }
+
+
+
 
     public void end(boolean interrupted){
         rotSubsystem.rotate.setMotorsStop();
