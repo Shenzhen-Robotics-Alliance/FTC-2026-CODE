@@ -17,7 +17,7 @@ public class RotCommand extends CommandBase{
     }
 
     public void execute(){
-        super.execute();
+        rotSubsystem.rotate.periodic();
     }
 
     public void end(boolean interrupted){
