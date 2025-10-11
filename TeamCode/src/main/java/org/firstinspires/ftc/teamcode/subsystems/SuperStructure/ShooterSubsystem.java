@@ -11,7 +11,8 @@ public class ShooterSubsystem extends SubsystemBase {
         this.shooter = new LinearMotion(
                 "intake",
                 new DcMotor[]{hardwareMap.get(DcMotor.class,"ShooterMotor1"),
-                              hardwareMap.get(DcMotor.class,"ShooterMotor2")},
+//                              hardwareMap.get(DcMotor.class,"ShooterMotor2")
+                },
                 new boolean[]{false},
                 hardwareMap.get(DcMotor.class,"ShooterMotor1"),
                 false,

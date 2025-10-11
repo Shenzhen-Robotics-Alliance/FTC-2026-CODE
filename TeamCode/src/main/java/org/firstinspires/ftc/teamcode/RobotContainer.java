@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.commands.intakeCommands.IntakeStop;
 import org.firstinspires.ftc.teamcode.commands.intakeCommands.OuttakeContinueCommand;
 import org.firstinspires.ftc.teamcode.commands.shotCommands.RotCommand;
 import org.firstinspires.ftc.teamcode.commands.shotCommands.ShootCommand;
-import org.firstinspires.ftc.teamcode.commands.visionCommands.VisionCommands;
+import org.firstinspires.ftc.teamcode.commands.visionCommands.FollowCommand;
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.RotSubsystem;
@@ -46,7 +46,7 @@ public final class RobotContainer implements AutoCloseable {
 
     public final VisionSubsystem visionSubsystem;
 
-    public final VisionCommands visionCommands;
+    public final FollowCommand followCommand;
 
 
     // public final AprilTagVision vision;
@@ -71,7 +71,7 @@ public final class RobotContainer implements AutoCloseable {
         this.rotCommand = new RotCommand(rotSubsystem,joystickSupplier);
 
         this.visionSubsystem = new VisionSubsystem(hardwareMap);
-        this.visionCommands = new VisionCommands(visionSubsystem);
+        this.followCommand = new FollowCommand(visionSubsystem);
 
 
         this.shooterSubsystem = new ShooterSubsystem(hardwareMap);
