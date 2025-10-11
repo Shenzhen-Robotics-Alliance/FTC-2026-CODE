@@ -8,12 +8,14 @@ import org.firstinspires.ftc.teamcode.commands.intakeCommands.IntakeStop;
 import org.firstinspires.ftc.teamcode.commands.intakeCommands.OuttakeContinueCommand;
 import org.firstinspires.ftc.teamcode.commands.shotCommands.RotCommand;
 import org.firstinspires.ftc.teamcode.commands.shotCommands.ShootCommand;
+import org.firstinspires.ftc.teamcode.commands.visionCommands.VisionCommands;
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.RotSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MapleOdometerWheelsOdometry;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDriveSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
 import org.firstinspires.ftc.teamcode.utils.AllianceSide;
 
 import java.util.function.Supplier;
@@ -42,6 +44,10 @@ public final class RobotContainer implements AutoCloseable {
 
     public final ShootCommand shootCommand;
 
+    public final VisionSubsystem visionSubsystem;
+
+    public final VisionCommands visionCommands;
+
 
     // public final AprilTagVision vision;
     /** create all the subsystem with the hardware map */
@@ -64,6 +70,10 @@ public final class RobotContainer implements AutoCloseable {
         this.rotSubsystem = new RotSubsystem(hardwareMap);
         this.rotCommand = new RotCommand(rotSubsystem,joystickSupplier);
 
+        this.visionSubsystem = new VisionSubsystem(hardwareMap);
+        this.visionCommands = new VisionCommands(visionSubsystem);
+
+
         this.shooterSubsystem = new ShooterSubsystem(hardwareMap);
         this.shootCommand = new ShootCommand(shooterSubsystem);
 
@@ -71,6 +81,7 @@ public final class RobotContainer implements AutoCloseable {
         this.intakeContinueCommand = new IntakeContinueCommand(intakeSubsystem);
         this.intakeStop = new IntakeStop(intakeSubsystem);
         this.outtakeContinueCommand = new OuttakeContinueCommand(intakeSubsystem,shooterSubsystem);
+
     }
 
     @Override
