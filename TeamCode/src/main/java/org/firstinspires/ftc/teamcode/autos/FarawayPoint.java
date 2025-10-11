@@ -10,7 +10,7 @@ public class FarawayPoint implements Auto{
     public Command getAutonomousCommands(RobotContainer robotContainer) {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
 
-
+    return null;
 
     }
 }
