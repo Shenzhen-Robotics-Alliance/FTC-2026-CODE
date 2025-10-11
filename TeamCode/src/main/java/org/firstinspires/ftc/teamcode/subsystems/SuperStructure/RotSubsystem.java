@@ -26,6 +26,7 @@ public class RotSubsystem extends SubsystemBase {
         rotate.periodic();
     }
 
+
     public void setRotateStop(){
         rotate.setMotorsStop();
     }

@@ -22,6 +22,14 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
 
     private double setPoint;
 
+    /**
+     *  @param kG the percent motor power required to balance gravity, 0.0 if the linear motion stays still on its own
+     *  @param kV the velocity gain in motor power / mechanism velocity
+     *  (velocity is in position/second, where position is 0~1)
+     *  @param kP the proportion gain in motor power / position error (where position is 0~1)
+     *  @param kS the static gain, or the percent power required to move the mechanism
+     * */
+
     public LinearMotion(
             String name,
             DcMotor[] motors, boolean[] motorsReversed,

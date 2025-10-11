@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.commands.drive.JoystickDriveFactory;
+import org.firstinspires.ftc.teamcode.commands.shotCommands.RotCommand;
 import org.firstinspires.ftc.teamcode.utils.MapleJoystickDriveInput;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -43,11 +44,12 @@ public class TeleOpRobot extends Robot {
 
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.START).whenPressed(calibrateOdometry);
 
-        if(copilotGamePad.getLeftX()>0.15){
-            robotContainer.rotCommand.execute();
-        }else if (copilotGamePad.getLeftX()<=0.15){
-            robotContainer.rotSubsystem.setRotateStop();
-        }
+        robotContainer.rotSubsystem.setDefaultCommand(
+                new RotCommand(
+                        robotContainer.rotSubsystem,
+                        () -> copilotGamePad.getLeftX()
+                )
+        );
 
     }
 

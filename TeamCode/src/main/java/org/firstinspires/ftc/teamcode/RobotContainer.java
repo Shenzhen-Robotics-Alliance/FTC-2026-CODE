@@ -16,6 +16,8 @@ import org.firstinspires.ftc.teamcode.subsystems.drive.MapleOdometerWheelsOdomet
 import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDriveSubsystem;
 import org.firstinspires.ftc.teamcode.utils.AllianceSide;
 
+import java.util.function.Supplier;
+
 import edu.wpi.first.math.geometry.Pose2d;
 
 /**
@@ -35,6 +37,8 @@ public final class RobotContainer implements AutoCloseable {
     public final MapleOdometerWheelsOdometry odometry;
 
     public final ShooterSubsystem shooterSubsystem ;
+
+    private Supplier<Double> joystickSupplier;
 
     public final ShootCommand shootCommand;
 
@@ -58,7 +62,7 @@ public final class RobotContainer implements AutoCloseable {
         this.driveSubsystem = new MecanumDriveSubsystem(hardwareMap, odometry);
 
         this.rotSubsystem = new RotSubsystem(hardwareMap);
-        this.rotCommand = new RotCommand(rotSubsystem);
+        this.rotCommand = new RotCommand(rotSubsystem,joystickSupplier);
 
         this.shooterSubsystem = new ShooterSubsystem(hardwareMap);
         this.shootCommand = new ShootCommand(shooterSubsystem);
