@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.Robot;
+import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -47,11 +49,26 @@ public class TeleOpRobot extends Robot {
         robotContainer.rotSubsystem.setDefaultCommand(
                 new RotCommand(
                         robotContainer.rotSubsystem,
-                        () -> copilotGamePad.getLeftX()
+                        copilotGamePad::getLeftX
                 )
         );
 
+        //copilot use right bumper to control the intake
+        this.copilotGamePad.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
+                .toggleWhenPressed(
+                        new RunCommand(() -> robotContainer.intakeSubsystem.intake.runPower(0.8), robotContainer.intakeSubsystem),
+                        new InstantCommand(robotContainer.intakeSubsystem.intake::setMotorsStop, robotContainer.intakeSubsystem)
+                );
+
+        //copilot use left bumper to control outtake
+        this.copilotGamePad.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
+                .toggleWhenPressed(
+                        new RunCommand(() -> robotContainer.intakeSubsystem.intake.runPower(-0.8), robotContainer.intakeSubsystem),
+                        new InstantCommand(robotContainer.intakeSubsystem.intake::setMotorsStop, robotContainer.intakeSubsystem)
+                );
+
     }
+
 
 
     @Override

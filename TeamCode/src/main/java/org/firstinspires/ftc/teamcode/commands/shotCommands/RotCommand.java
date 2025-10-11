@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.RotSubsystem;
 import java.util.function.Supplier;
 
 public class RotCommand extends CommandBase{
-    private RotSubsystem rotSubsystem;
-    private Supplier<Double> joystickSupplier;
+    private final RotSubsystem rotSubsystem;
+    private final Supplier<Double> joystickSupplier;
 
     public RotCommand(RotSubsystem rotSubsystem, Supplier<Double> joystickSupplier){
         this.rotSubsystem = rotSubsystem;
@@ -27,7 +27,7 @@ public class RotCommand extends CommandBase{
 
         if(Math.abs(joystickValue) > 0.15) {
             double currentPos = rotSubsystem.rotate.getCurrentSetPoint();
-            double increment = joystickValue * 20;
+            double increment = joystickValue * 15;
             rotSubsystem.rotate.goToPosition(currentPos + increment);
             rotSubsystem.rotate.periodic();
         }else{

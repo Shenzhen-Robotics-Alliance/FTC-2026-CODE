@@ -4,8 +4,11 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.IntakeSubsystem;
 
+import java.util.function.Supplier;
+
 public class IntakeContinueCommand extends CommandBase {
     private IntakeSubsystem intakeSubsystem;
+    private Supplier<Double> button;
 
     public IntakeContinueCommand(IntakeSubsystem intakeSubsystem){
         this.intakeSubsystem = intakeSubsystem;
@@ -18,6 +21,17 @@ public class IntakeContinueCommand extends CommandBase {
     }
 
     public void execute(){
+
+        double buttonValue = button.get();
+
+        if(Math.abs(buttonValue) > 0.15) {
+            double currentPos = intakeSubsystem.intake.getCurrentSetPoint();
+            double increment = buttonValue * 15;
+            intakeSubsystem.intake.goToPosition(currentPos + increment);
+            intakeSubsystem.intake.periodic();
+        }else{
+            intakeSubsystem.intake.setMotorsStop();
+        }
         intakeSubsystem.periodic();
     }
 

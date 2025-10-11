@@ -22,6 +22,12 @@ public class IntakeSubsystem extends SubsystemBase{
         );
     }
 
+    public void perioic(){
+        intake.periodic();
+    }
+
+
+
     public void setStopIntake(){
         intake.setMotorsStop();
     }

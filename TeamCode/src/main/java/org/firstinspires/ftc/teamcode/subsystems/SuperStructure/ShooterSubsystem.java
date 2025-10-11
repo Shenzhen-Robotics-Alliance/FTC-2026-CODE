@@ -24,7 +24,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void periodic(){
-        super.periodic();
+        shooter.periodic();
     }
 
     public void setShooterStop(){
