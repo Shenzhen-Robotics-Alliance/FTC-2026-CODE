@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.subsystems.SuperStructure;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -10,11 +10,11 @@ public class ShooterSubsystem extends SubsystemBase {
     public ShooterSubsystem(HardwareMap hardwareMap){
         this.shooter = new LinearMotion(
                 "intake",
-                new DcMotor[]{hardwareMap.get(DcMotor.class,"ShooterMotor1"),
+                new DcMotorEx[]{hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
 //                              hardwareMap.get(DcMotor.class,"ShooterMotor2")
                 },
                 new boolean[]{false},
-                hardwareMap.get(DcMotor.class,"ShooterMotor1"),
+                hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
                 false,
                 1600, // 1600/2000 = 80%
                 0,
