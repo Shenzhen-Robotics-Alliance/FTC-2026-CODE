@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.commands.intakeCommands.IntakeContinueCommand;
 import org.firstinspires.ftc.teamcode.commands.intakeCommands.IntakeStop;
 import org.firstinspires.ftc.teamcode.commands.intakeCommands.OuttakeContinueCommand;
-import org.firstinspires.ftc.teamcode.commands.shotCommands.RotCommand;
+import org.firstinspires.ftc.teamcode.commands.shotCommands.ManualRotCommand;
 import org.firstinspires.ftc.teamcode.commands.shotCommands.ShootCommand;
 import org.firstinspires.ftc.teamcode.commands.visionCommands.FollowCommand;
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
@@ -34,7 +34,7 @@ public final class RobotContainer implements AutoCloseable {
     public final IntakeStop intakeStop;
     public final OuttakeContinueCommand outtakeContinueCommand;
     public final RotSubsystem rotSubsystem;
-    public final RotCommand rotCommand;
+    public final ManualRotCommand manualRotCommand;
 
     public final MapleOdometerWheelsOdometry odometry;
 
@@ -45,6 +45,8 @@ public final class RobotContainer implements AutoCloseable {
     public final ShootCommand shootCommand;
 
     public final VisionSubsystem visionSubsystem;
+
+   // public final InstantCommand instantCommand;
 
     public final FollowCommand followCommand;
 
@@ -68,7 +70,7 @@ public final class RobotContainer implements AutoCloseable {
         this.driveSubsystem = new MecanumDriveSubsystem(hardwareMap, odometry);
 
         this.rotSubsystem = new RotSubsystem(hardwareMap);
-        this.rotCommand = new RotCommand(rotSubsystem,joystickSupplier);
+        this.manualRotCommand = new ManualRotCommand(rotSubsystem,joystickSupplier);
 
         this.visionSubsystem = new VisionSubsystem(hardwareMap);
         this.followCommand = new FollowCommand(visionSubsystem);

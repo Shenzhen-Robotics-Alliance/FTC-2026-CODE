@@ -1,33 +1,45 @@
 package org.firstinspires.ftc.teamcode.subsystems.SuperStructure;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class RotSubsystem extends SubsystemBase {
-    public final LinearMotion rotate;
+    public final LinearMotion rotateMotion;
 
     public RotSubsystem(HardwareMap hardwareMap){
-        this.rotate = new LinearMotion(
+        this.rotateMotion = new LinearMotion(
                 "Rotate",
-                new DcMotor[]{hardwareMap.get(DcMotor.class,"Rot")},
+                new DcMotorEx[]{hardwareMap.get(DcMotorEx.class,"Rot")},
                 new boolean[]{false},
-                hardwareMap.get(DcMotor.class,"Rot"),
+                hardwareMap.get(DcMotorEx.class,"Rot"),
                 false,
-                1600, // 1600/2000 = 80%
+                1200, // 1200/2000
                 0,
-                0.02,
-                0,
-                0.01
+                0.8,
+                7.5,
+                0.4
         );
     }
 
     public void periodic(){
-        rotate.periodic();
+        rotateMotion.periodic();
     }
-
 
     public void setRotateStop(){
-        rotate.setMotorsStop();
+        rotateMotion.setMotorsStop();
     }
+
+    public void setRotateVelocity(double velocity) {
+        rotateMotion.setTargetVelocity(velocity);
+    }
+
+    public double getCurrentRotateVelocity() {
+        return rotateMotion.getCurrentVelocity();
+    }
+
+    public double getTargetRotateVelocity() {
+        return rotateMotion.getCurrentSetPoint();
+    }
+
 }

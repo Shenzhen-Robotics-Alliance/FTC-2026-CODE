@@ -8,7 +8,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.commands.drive.JoystickDriveFactory;
-import org.firstinspires.ftc.teamcode.commands.shotCommands.RotCommand;
+import org.firstinspires.ftc.teamcode.commands.shotCommands.ManualRotCommand;
 import org.firstinspires.ftc.teamcode.utils.MapleJoystickDriveInput;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -20,6 +20,9 @@ import edu.wpi.first.math.geometry.Pose2d;
 public class TeleOpRobot extends Robot {
     private final RobotContainer robotContainer;
     private final GamepadEx pilotGamePad, copilotGamePad;
+
+    private ManualRotCommand manualRotateCommand;
+
     private final Runnable calibrateOdometry;
     public TeleOpRobot(RobotContainer robotContainer, Gamepad pilotGamePad, Gamepad copilotGamePad) {
         super();
@@ -46,12 +49,13 @@ public class TeleOpRobot extends Robot {
 
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.START).whenPressed(calibrateOdometry);
 
-        robotContainer.rotSubsystem.setDefaultCommand(
-                new RotCommand(
-                        robotContainer.rotSubsystem,
-                        copilotGamePad::getLeftX
-                )
+        manualRotateCommand = new ManualRotCommand(
+                robotContainer.rotSubsystem,
+                copilotGamePad::getLeftX
         );
+
+        this.copilotGamePad.getGamepadButton(GamepadKeys.Button.B)
+                .whenPressed(manualRotateCommand);
 
         //copilot use right bumper to control the intake
         this.copilotGamePad.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
@@ -68,7 +72,6 @@ public class TeleOpRobot extends Robot {
                 );
 
     }
-
 
 
     @Override

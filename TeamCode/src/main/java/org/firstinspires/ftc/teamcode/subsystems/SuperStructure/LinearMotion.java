@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems.SuperStructure;
 
 import com.arcrobotics.ftclib.command.Subsystem;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
@@ -12,9 +13,9 @@ import edu.wpi.first.math.controller.PIDController;
 public class LinearMotion implements SimpleMechanism, Subsystem {
     public final String name;
 
-    private final DcMotor[] motors;
+    private final DcMotorEx[] motors;
     private final boolean[] motorsReversed;
-    private final DcMotor encoder;
+    private final DcMotorEx encoder;
     private final boolean encoderReversed;
     private final double maximumSpeed;
     private final PIDController controller;
@@ -32,8 +33,8 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
 
     public LinearMotion(
             String name,
-            DcMotor[] motors, boolean[] motorsReversed,
-            DcMotor encoder, boolean encoderReversed,
+            DcMotorEx[] motors, boolean[] motorsReversed,
+            DcMotorEx encoder, boolean encoderReversed,
             double maximumSpeed,
             double kG,double kV,double kS, double kP
     ){
@@ -56,9 +57,31 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
         encoder.setDirection(DcMotorSimple.Direction.FORWARD);
 
         previousSetPoint = setPoint = 0; // robot must be in starting configuration
+
+        if (this.encoder != null) {
+            this.encoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER); // 或根据需要设置为 STOP_AND_RESET_ENCODER
+            this.encoder.setDirection(encoderReversed ? DcMotorSimple.Direction.REVERSE : DcMotorSimple.Direction.FORWARD);
+        }
     }
+
     private double previousSetPoint;
     private double encoderZeroPosition = 0.0;
+
+    public void setTargetVelocity(double targetVelocity) {
+        this.setPoint = targetVelocity;
+    }
+
+    // Get current velocity from the encoder
+    public double getCurrentVelocity() {
+        if (encoder == null) {
+            // 如果没有专用编码器，可以使用第一个电机的编码器
+            return motors[0].getVelocity();
+            // 或者抛出错误或返回0，取决于你的设计
+        }
+        // getVelocity() returns ticks/second
+        return encoder.getVelocity(); // encoderReversed 已经在 setDirection 中处理
+    }
+
 
     public void periodic(){
 
