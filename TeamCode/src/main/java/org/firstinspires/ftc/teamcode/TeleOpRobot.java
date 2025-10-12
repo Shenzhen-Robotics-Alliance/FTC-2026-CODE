@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.commands.drive.JoystickDriveFactory;
 import org.firstinspires.ftc.teamcode.commands.shotCommands.ManualRotCommand;
+import org.firstinspires.ftc.teamcode.commands.shotCommands.AutoRotCommand;
 import org.firstinspires.ftc.teamcode.utils.MapleJoystickDriveInput;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -70,6 +71,8 @@ public class TeleOpRobot extends Robot {
                         new RunCommand(() -> robotContainer.intakeSubsystem.intake.runPower(-0.8), robotContainer.intakeSubsystem),
                         new InstantCommand(robotContainer.intakeSubsystem.intake::setMotorsStop, robotContainer.intakeSubsystem)
                 );
+        this.copilotGamePad.getGamepadButton(GamepadKeys.Button.A).
+                whenPressed(robotContainer.autoRotCommand);
 
     }
 
