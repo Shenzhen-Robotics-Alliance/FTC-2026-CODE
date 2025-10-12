@@ -28,7 +28,7 @@ public class AutoRotCommand extends CommandBase {
     public void execute(){
         double targetVelocity = tx/CameraHorizontalPOV* MAXIMUM_VELOCITY;
 
-        // 设置RotSubsystem的目标速度
+        //set velocity
         rotSubsystem.setRotateVelocity(targetVelocity);
     }
 

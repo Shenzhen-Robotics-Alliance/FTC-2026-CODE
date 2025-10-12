@@ -32,8 +32,7 @@ public class ManualRotCommand extends CommandBase{
         if (Math.abs(joystickValue) < MANUAL_DEADBAND) {
             joystickValue = 0;
         }
-
-        double targetVelocity = joystickValue * MAXIMUM_VELOCITY; // 假设负摇杆Y轴对应正速度
+        double targetVelocity = joystickValue * MAXIMUM_VELOCITY;
 
         //set Rotate velocity
         rotSubsystem.setRotateVelocity(targetVelocity);

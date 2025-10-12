@@ -72,14 +72,15 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
     }
 
     // Get current velocity from the encoder
+
     public double getCurrentVelocity() {
         if (encoder == null) {
             // using the first encoder
             return motors[0].getVelocity();
-            // 或者抛出错误或返回0，取决于你的设计
+            // return the first motor
         }
         // getVelocity() returns ticks/second
-        return encoder.getVelocity(); // encoderReversed 已经在 setDirection 中处理
+        return encoder.getVelocity();
     }
 
 
