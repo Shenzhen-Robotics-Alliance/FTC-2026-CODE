@@ -35,7 +35,7 @@ public class ManualRotCommand extends CommandBase{
 
         double targetVelocity = joystickValue * MAXIMUM_VELOCITY; // 假设负摇杆Y轴对应正速度
 
-        // 设置RotSubsystem的目标速度
+        //set Rotate velocity
         rotSubsystem.setRotateVelocity(targetVelocity);
     }
 
