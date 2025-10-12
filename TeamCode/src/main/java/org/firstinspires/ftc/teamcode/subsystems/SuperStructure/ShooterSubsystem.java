@@ -9,14 +9,15 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public ShooterSubsystem(HardwareMap hardwareMap){
         this.shooter = new LinearMotion(
-                "intake",
-                new DcMotorEx[]{hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
-//                              hardwareMap.get(DcMotor.class,"ShooterMotor2")
+                "shooter",
+                new DcMotorEx[]{
+                        hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
+                        hardwareMap.get(DcMotorEx.class,"ShooterMotor2")
                 },
-                new boolean[]{false},
+                new boolean[]{false,false},
                 hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
                 false,
-                1600, // 1600/2000 = 80%
+                1800, // 1800/2000
                 0,
                 0.02,
                 0,
@@ -30,6 +31,18 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void setShooterStop(){
         shooter.setMotorsStop();
+    }
+
+    public void setRotateVelocity(double velocity) {
+        shooter.setTargetVelocity(velocity);
+    }
+
+    public double getCurrentRotateVelocity() {
+        return shooter.getCurrentVelocity();
+    }
+
+    public double getTargetRotateVelocity() {
+        return shooter.getCurrentSetPoint();
     }
 
 }
