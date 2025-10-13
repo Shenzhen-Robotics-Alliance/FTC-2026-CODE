@@ -4,7 +4,6 @@ import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.RotSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
-
 public class AutoRotCommand extends CommandBase {
     private final RotSubsystem rotSubsystem;
     private final VisionSubsystem visionSubsystem;
@@ -28,7 +27,7 @@ public class AutoRotCommand extends CommandBase {
     public void execute(){
         double targetVelocity = tx/CameraHorizontalPOV* MAXIMUM_VELOCITY;
 
-        //set velocity
+        // Set targetVelocity of the rotSubsystem
         rotSubsystem.setRotateVelocity(targetVelocity);
     }
 
