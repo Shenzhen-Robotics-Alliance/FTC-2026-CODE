@@ -16,9 +16,9 @@ public class RotSubsystem extends SubsystemBase {
                 false,
                 1200, // 1200/2000
                 0,
-                0.8,
-                7.5,
-                0.4
+                0.02,
+                0,
+                0.01
         );
     }
 
