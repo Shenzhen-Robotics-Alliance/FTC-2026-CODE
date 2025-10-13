@@ -13,12 +13,6 @@ public class AutoRotCommand extends CommandBase {
 
     private double tx;
     private double ty;
-    private static double kP = 5;
-    private static double kI = 1;
-    private static double kD = 0.2;
-    private static double kF = 0.0;
-    private static double target = 0;
-    private PIDFController pidfController = new PIDFController(kP, kI, kD, kF);
 
     public AutoRotCommand(RotSubsystem rotSubsystem,VisionSubsystem visionSubsystem){
         this.rotSubsystem = rotSubsystem;
@@ -32,18 +26,14 @@ public class AutoRotCommand extends CommandBase {
     }
     @Override
     public void execute(){
+        visionSubsystem.periodic();
         tx = visionSubsystem.getTargetX();
-        if (tx>=1) {
-            double targetVelocity = (tx / CameraHorizontalPOV);
-            double power = -pidfController.calculate(targetVelocity,target);
+            double targetVelocity = (tx);
+            double power = visionSubsystem.calculatePIDOutput(targetVelocity);
 
 
             // Set targetVelocity of the rotSubsystem
             rotSubsystem.setManualRotPower(power);
-        }
-        else {
-            rotSubsystem.setRotateVelocity(0);
-        }
 
         }
 

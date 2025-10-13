@@ -74,7 +74,6 @@ public class VisionSubsystem extends SubsystemBase {
                 targetX = result.getTx();
                 targetY = result.getTy();
 
-                calculatePIDOutput(targetX);
 
                 // Access fiducial results
                 fiducialResults = result.getFiducialResults();
@@ -107,6 +106,7 @@ public class VisionSubsystem extends SubsystemBase {
     public boolean hasTarget(){
         return hasTarget;
     }
+    
 
     /**
      * Calculate PID output for target tracking
