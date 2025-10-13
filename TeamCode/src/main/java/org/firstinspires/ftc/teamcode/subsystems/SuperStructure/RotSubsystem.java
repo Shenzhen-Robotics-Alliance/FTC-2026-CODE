@@ -34,6 +34,10 @@ public class RotSubsystem extends SubsystemBase {
         rotateMotion.setTargetVelocity(velocity);
     }
 
+    public void setManualRotPower(double power){
+        rotateMotion.runPower(power);
+    }
+
     public double getCurrentRotateVelocity() {
         return rotateMotion.getCurrentVelocity();
     }
