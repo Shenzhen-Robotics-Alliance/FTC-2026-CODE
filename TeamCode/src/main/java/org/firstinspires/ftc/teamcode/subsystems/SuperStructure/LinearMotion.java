@@ -58,10 +58,12 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
 
         previousSetPoint = setPoint = 0; // robot must be in starting configuration
 
+        /**
         if (this.encoder != null) {
             this.encoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER); //  STOP_AND_RESET_ENCODER if need
             this.encoder.setDirection(encoderReversed ? DcMotorSimple.Direction.REVERSE : DcMotorSimple.Direction.FORWARD);
         }
+         */
     }
 
     private double previousSetPoint;
@@ -72,14 +74,15 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
     }
 
     // Get current velocity from the encoder
+
     public double getCurrentVelocity() {
         if (encoder == null) {
             // using the first encoder
             return motors[0].getVelocity();
-            // 或者抛出错误或返回0，取决于你的设计
+            // return the first motor
         }
         // getVelocity() returns ticks/second
-        return encoder.getVelocity(); // encoderReversed 已经在 setDirection 中处理
+        return encoder.getVelocity();
     }
 
 
