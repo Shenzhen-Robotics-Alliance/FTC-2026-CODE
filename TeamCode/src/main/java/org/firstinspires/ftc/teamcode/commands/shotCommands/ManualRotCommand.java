@@ -29,7 +29,7 @@ public class ManualRotCommand extends CommandBase{
         double joystickValue = joystickSupplier.get();
 
         //apply the deadBand
-        if (Math.abs(joystickValue) < MANUAL_DEADBAND) {
+        if (Math.abs(joystickValue) < MANUAL_DEADBAND && Math.abs(joystickValue) > 0.9) {
             joystickValue = 0;
         }
         double targetVelocity = joystickValue * 0.9;
