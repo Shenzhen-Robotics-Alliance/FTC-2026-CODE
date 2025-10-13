@@ -71,8 +71,9 @@ public class TeleOpRobot extends Robot {
                         new RunCommand(() -> robotContainer.intakeSubsystem.intake.runPower(-0.8), robotContainer.intakeSubsystem),
                         new InstantCommand(robotContainer.intakeSubsystem.intake::setMotorsStop, robotContainer.intakeSubsystem)
                 );
-        this.copilotGamePad.getGamepadButton(GamepadKeys.Button.A).
-                whenPressed(robotContainer.autoRotCommand);
+
+        this.copilotGamePad.getGamepadButton(GamepadKeys.Button.A)
+                        .whenPressed(robotContainer.autoRotCommand);
 
     }
 
