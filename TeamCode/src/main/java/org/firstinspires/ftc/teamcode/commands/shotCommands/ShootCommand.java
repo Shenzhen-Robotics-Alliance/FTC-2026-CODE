@@ -19,7 +19,7 @@ public class ShootCommand extends CommandBase {
 
     @Override
     public void execute(){
-        shooterSubsystem.periodic();
+        shooterSubsystem.setShootingVelocity(0.9);
     }
 
 

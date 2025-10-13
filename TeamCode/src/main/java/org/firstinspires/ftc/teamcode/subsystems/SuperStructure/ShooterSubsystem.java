@@ -36,9 +36,6 @@ public class ShooterSubsystem extends SubsystemBase {
     public void setShootingVelocity(double velocity){
         shooter.setTargetVelocity(velocity);
     }
-    public void setRotateVelocity(double velocity) {
-        shooter.setTargetVelocity(velocity);
-    }
 
     public double getCurrentRotateVelocity() {
         return shooter.getCurrentVelocity();
