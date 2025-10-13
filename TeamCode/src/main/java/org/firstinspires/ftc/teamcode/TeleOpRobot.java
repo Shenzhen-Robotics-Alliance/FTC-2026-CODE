@@ -71,7 +71,7 @@ public class TeleOpRobot extends Robot {
                         new InstantCommand(robotContainer.intakeSubsystem.intake::setMotorsStop, robotContainer.intakeSubsystem)
                 );
 
-        
+
 
     }
 
