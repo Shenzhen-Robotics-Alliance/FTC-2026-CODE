@@ -11,7 +11,7 @@ public class ManualRotCommand extends CommandBase{
     private final Supplier<Double> joystickSupplier;
     private final double MAXIMUM_VELOCITY = 1500; //1500/2000
 
-    private final double MANUAL_DEADBAND = 0.05;
+    private final double MANUAL_DEADBAND = 0.15;
 
     public ManualRotCommand(RotSubsystem rotSubsystem, Supplier<Double> joystickSupplier){
         this.rotSubsystem = rotSubsystem;
@@ -37,8 +37,6 @@ public class ManualRotCommand extends CommandBase{
         //set Rotate velocity
         rotSubsystem.setRotateVelocity(targetVelocity);
     }
-
-
 
     public void end(boolean interrupted){
         rotSubsystem.rotateMotion.setMotorsStop();
