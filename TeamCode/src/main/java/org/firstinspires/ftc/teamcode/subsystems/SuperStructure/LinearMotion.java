@@ -58,10 +58,12 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
 
         previousSetPoint = setPoint = 0; // robot must be in starting configuration
 
+        /**
         if (this.encoder != null) {
             this.encoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER); //  STOP_AND_RESET_ENCODER if need
             this.encoder.setDirection(encoderReversed ? DcMotorSimple.Direction.REVERSE : DcMotorSimple.Direction.FORWARD);
         }
+         */
     }
 
     private double previousSetPoint;
