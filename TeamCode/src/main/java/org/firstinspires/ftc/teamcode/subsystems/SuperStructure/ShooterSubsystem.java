@@ -19,9 +19,8 @@ public class ShooterSubsystem extends SubsystemBase {
                 false,
                 1800, // 1800/2000
                 0,
-                0.02,
-                0,
-                0.01
+                0.01,
+                0
         );
     }
 

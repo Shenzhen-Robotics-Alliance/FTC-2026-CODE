@@ -19,24 +19,21 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
     private final boolean encoderReversed;
     private final double maximumSpeed;
     private final PIDController controller;
-    private final double kG, kV, kS;
-
+    //private final double kG, kV, kS;
+    private final double kp, ki, kd;
     private double setPoint;
 
-    /**
-     *  @param kG the percent motor power required to balance gravity, 0.0 if the linear motion stays still on its own
-     *  @param kV the velocity gain in motor power / mechanism velocity
-     *  (velocity is in position/second, where position is 0~1)
-     *  @param kP the proportion gain in motor power / position error (where position is 0~1)
-     *  @param kS the static gain, or the percent power required to move the mechanism
-     * */
+
 
     public LinearMotion(
             String name,
             DcMotorEx[] motors, boolean[] motorsReversed,
             DcMotorEx encoder, boolean encoderReversed,
             double maximumSpeed,
-            double kG,double kV,double kS, double kP
+            double kP,
+            double kI,
+            double kD
+           // double kG,double kV,double kS, double kP
     ){
         this.name = name;
 
@@ -45,10 +42,11 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
         this.encoder = encoder;
         this.encoderReversed = encoderReversed;
         this.maximumSpeed = maximumSpeed;
+        this.kp = kP;
+        this.ki = kI;
+        this.kd = kD;
         this.controller = new PIDController(kP,0,0);
-        this.kG = kG;
-        this.kV = kV;
-        this.kS = kS;
+
 
         for (DcMotor motor:motors) {
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -92,12 +90,26 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
         double desiredVelocity = (setPoint - previousSetPoint) * SystemConstants.ROBOT_UPDATE_RATE_HZ;
 
         previousSetPoint = setPoint;
-        double feedForwardPower = desiredVelocity * kV
-                + Math.signum(desiredVelocity) * kS
-                + kG;
-        double feedBackPower = controller.calculate(currentPosition, setPoint);
+        double previousError = 0;
+        double integralSum = 0;
 
-        runPower(feedForwardPower + feedBackPower);
+        double error = setPoint - currentPosition;
+
+        //proportional term
+        double pTerm = error * kp;
+
+        // Integral Term
+        integralSum += error * SystemConstants.ROBOT_UPDATE_RATE_HZ;
+        double iTerm = integralSum * ki;
+
+        // D Term
+        // 4. Derivative Term
+        double derivative = (error - previousError) / SystemConstants.ROBOT_UPDATE_RATE_HZ;
+        double dTerm = derivative * kd;
+        previousError = error; // update
+
+        double totalPower = pTerm + iTerm + dTerm;
+        runPower(totalPower);
     }
 
     public void runPower(double power){

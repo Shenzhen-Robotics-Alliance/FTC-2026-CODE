@@ -14,8 +14,7 @@ public class RotSubsystem extends SubsystemBase {
                 new boolean[]{false},
                 hardwareMap.get(DcMotorEx.class,"Rot"),
                 false,
-                1200, // 1200/2000
-                0,
+                1800, // 1200/2000
                 0.02,
                 0,
                 0.01
