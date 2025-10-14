@@ -18,9 +18,9 @@ public class ShooterSubsystem extends SubsystemBase {
                 hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
                 false,
                 1800, // 1800/2000
-                0,
+                0.2,
                 0.01,
-                0
+                0.2
         );
     }
 

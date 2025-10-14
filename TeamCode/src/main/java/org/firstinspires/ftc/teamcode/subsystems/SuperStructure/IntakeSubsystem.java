@@ -17,7 +17,7 @@ public class IntakeSubsystem extends SubsystemBase{
                 1600, // 1600/2000 = 80%
                 0,
                 0.02,
-                0,
+                0
         );
     }
 

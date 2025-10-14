@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.commands.shotCommands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
-import com.arcrobotics.ftclib.controller.PIDFController;
 
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.RotSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
@@ -30,7 +29,6 @@ public class AutoRotCommand extends CommandBase {
         tx = visionSubsystem.getTargetX();
             double targetVelocity = (tx);
             double power = visionSubsystem.calculatePIDOutput(targetVelocity);
-
 
             // Set targetVelocity of the rotSubsystem
             rotSubsystem.setManualRotPower(power);
