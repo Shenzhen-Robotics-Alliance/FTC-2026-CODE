@@ -29,13 +29,13 @@ public class ManualRotCommand extends CommandBase{
         double joystickValue = joystickSupplier.get();
 
         //apply the deadBand
-        if (Math.abs(joystickValue) < MANUAL_DEADBAND && Math.abs(joystickValue) > 0.9) {
+        if (Math.abs(joystickValue) < MANUAL_DEADBAND ) {
             joystickValue = 0;
         }
-        double targetVelocity = joystickValue * 0.9;
+        double targetVelocity = joystickValue ;
 
         //set Rotate velocity
-        rotSubsystem.setManualRotPower(targetVelocity);
+        rotSubsystem.setRotateVelocity(targetVelocity);
     }
 
     public void end(boolean interrupted){

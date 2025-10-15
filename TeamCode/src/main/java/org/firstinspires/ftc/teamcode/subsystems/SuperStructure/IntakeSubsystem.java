@@ -14,14 +14,15 @@ public class IntakeSubsystem extends SubsystemBase{
                 new boolean[]{false},
                 hardwareMap.get(DcMotorEx.class,"Rot"),
                 false,
-                1600, // 1600/2000 = 80%
+                2000,
                 0,
                 0.02,
+                0,
                 0
         );
     }
 
-    public void perioic(){
+    public void periodic(){
         intake.periodic();
     }
 

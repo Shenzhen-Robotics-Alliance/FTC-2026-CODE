@@ -1,14 +1,13 @@
 package org.firstinspires.ftc.teamcode.subsystems.SuperStructure;
 
 import com.arcrobotics.ftclib.command.Subsystem;
+import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 import org.firstinspires.ftc.teamcode.utils.SuperStructure.SimpleMechanism;
-
-import edu.wpi.first.math.controller.PIDController;
 
 public class LinearMotion implements SimpleMechanism, Subsystem {
     public final String name;
@@ -18,12 +17,16 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
     private final DcMotorEx encoder;
     private final boolean encoderReversed;
     private final double maximumSpeed;
-    private final PIDController controller;
+    private final PIDFController controller;
     //private final double kG, kV, kS;
-    private final double kp, ki, kd;
+    private final double kp, ki, kd,kf;
     private double setPoint;
 
+    private double previousError = 0;
+    private double  integralSum = 0;
+    private double targetVelocity = 0;
 
+    private double previousSetPoint = 0;
 
     public LinearMotion(
             String name,
@@ -32,7 +35,8 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
             double maximumSpeed,
             double kP,
             double kI,
-            double kD
+            double kD,
+            double kF
            // double kG,double kV,double kS, double kP
     ){
         this.name = name;
@@ -45,7 +49,8 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
         this.kp = kP;
         this.ki = kI;
         this.kd = kD;
-        this.controller = new PIDController(kP,0,0);
+        this.kf = kF;
+        this.controller = new PIDFController(kP,0,0,0);
 
 
         for (DcMotor motor:motors) {
@@ -54,61 +59,61 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
         }
         encoder.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        previousSetPoint = setPoint = 0; // robot must be in starting configuration
+        this.targetVelocity = 0;  //initalize
 
-        /**
-        if (this.encoder != null) {
-            this.encoder.setMode(DcMotor.RunMode.RUN_USING_ENCODER); //  STOP_AND_RESET_ENCODER if need
-            this.encoder.setDirection(encoderReversed ? DcMotorSimple.Direction.REVERSE : DcMotorSimple.Direction.FORWARD);
-        }
-         */
     }
 
-    private double previousSetPoint;
+
     private double encoderZeroPosition = 0.0;
 
+    //(-1.0 to 1.0)
     public void setTargetVelocity(double targetVelocity) {
-        this.setPoint = targetVelocity;
+        this.targetVelocity = targetVelocity;
     }
 
     // Get current velocity from the encoder
 
     public double getCurrentVelocity() {
-        if (encoder == null) {
-            // using the first encoder
-            return motors[0].getVelocity();
-            // return the first motor
-        }
-        // getVelocity() returns ticks/second
-        return encoder.getVelocity();
+        double rawVelocity = encoder.getVelocity();
+        double normalizedVelocity = rawVelocity / maximumSpeed;
+        return encoderReversed ? -normalizedVelocity : normalizedVelocity;
     }
 
+    public void resetController() {
+        this.integralSum = 0;
+        this.previousError = 0;
+        this.targetVelocity = 0; // 将目标速度也设为0
+    }
 
     public void periodic(){
 
-        double currentPosition =(encoder.getCurrentPosition() - encoderZeroPosition) * (encoderReversed ? -1:1) / maximumSpeed;
-        double desiredVelocity = (setPoint - previousSetPoint) * SystemConstants.ROBOT_UPDATE_RATE_HZ;
+        double currentVelocity = getCurrentVelocity();
+      //  double desiredVelocity = (setPoint - previousSetPoint) * SystemConstants.ROBOT_UPDATE_RATE_HZ;
 
         previousSetPoint = setPoint;
-        double previousError = 0;
-        double integralSum = 0;
 
-        double error = setPoint - currentPosition;
+
+        double error = targetVelocity - currentVelocity;
 
         //proportional term
         double pTerm = error * kp;
 
         // Integral Term
-        integralSum += error * SystemConstants.ROBOT_UPDATE_RATE_HZ;
+        integralSum += error * (1.0 / SystemConstants.ROBOT_UPDATE_RATE_HZ);
         double iTerm = integralSum * ki;
 
         // D Term
         // 4. Derivative Term
-        double derivative = (error - previousError) / SystemConstants.ROBOT_UPDATE_RATE_HZ;
+        double derivative = (error - previousError) / (1.0 / SystemConstants.ROBOT_UPDATE_RATE_HZ);
         double dTerm = derivative * kd;
         previousError = error; // update
 
-        double totalPower = pTerm + iTerm + dTerm;
+        double fTerm = targetVelocity * kf;
+
+        double totalPower = pTerm + iTerm + dTerm + fTerm;
+
+        totalPower = Math.min(Math.max(totalPower, -1.0), 1.0);
+
         runPower(totalPower);
     }
 
@@ -132,4 +137,5 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
             motors[i].setPower(0);
         }
     }
+
 }

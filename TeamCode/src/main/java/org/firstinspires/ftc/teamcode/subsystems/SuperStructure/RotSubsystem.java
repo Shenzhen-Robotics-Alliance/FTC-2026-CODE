@@ -14,10 +14,11 @@ public class RotSubsystem extends SubsystemBase {
                 new boolean[]{false},
                 hardwareMap.get(DcMotorEx.class,"Rot"),
                 false,
-                1800, // 1200/2000
-                0.02,
+                2000,
+                0.5,
                 0,
-                0.01
+                0.2,
+                0
         );
     }
 
@@ -27,6 +28,7 @@ public class RotSubsystem extends SubsystemBase {
 
     public void setRotateStop(){
         rotateMotion.setMotorsStop();
+        rotateMotion.resetController();
     }
 
     public void setRotateVelocity(double velocity) {
