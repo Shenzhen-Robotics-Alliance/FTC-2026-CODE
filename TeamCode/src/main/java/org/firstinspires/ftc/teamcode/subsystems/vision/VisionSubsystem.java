@@ -110,13 +110,12 @@ public class VisionSubsystem extends SubsystemBase {
 
     /**
      * Calculate PID output for target tracking
-     * @param target The target position (usually 0.0 for center)
+     * @param currentTx The target position (usually 0.0 for center)
      * @return PID output power
      */
-    public double calculatePIDOutput(double target) {
+    public double calculatePIDOutput(double currentTx) {
         if (hasTarget) {
-            double currentTx = targetX;
-            return pidfController.calculate(currentTx, target);
+            return pidfController.calculate(currentTx, 0);
         }
         return 0.0;
     }

@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
 public class AutoRotCommand extends CommandBase {
     private final RotSubsystem rotSubsystem;
     private final VisionSubsystem visionSubsystem;
-    private final double MAXIMUM_VELOCITY = 1200.0; //1500/2000
+    private final double MAXIMUM_VELOCITY = 2000; //1500/2000
     private double CameraHorizontalPOV = 20;//54.5/2
 
     private double tx;
@@ -24,17 +24,19 @@ public class AutoRotCommand extends CommandBase {
         rotSubsystem.setRotateStop();
     }
     @Override
-    public void execute(){
+    public void execute() {
         visionSubsystem.periodic();
-        tx = visionSubsystem.getTargetX();
-            double targetVelocity = (tx);
-            double power = visionSubsystem.calculatePIDOutput(targetVelocity);
+        if (visionSubsystem.hasTarget) {
+            tx = visionSubsystem.getTargetX();
+            double targetVelocity = (tx / CameraHorizontalPOV);
 
             // Set targetVelocity of the rotSubsystem
-            rotSubsystem.setManualRotPower(power);
-
+            rotSubsystem.setRotateVelocity(targetVelocity);
         }
-
+        else {
+            rotSubsystem.setRotateStop();
+        }
+    }
     public void end(boolean interrupted){
         rotSubsystem.rotateMotion.setMotorsStop();
     }

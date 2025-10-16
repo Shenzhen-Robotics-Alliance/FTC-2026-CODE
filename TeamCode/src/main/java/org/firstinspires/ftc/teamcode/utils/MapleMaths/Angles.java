@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.utils.MapleMaths;
 
+import java.lang.annotation.Target;
+
 public class Angles {
     /**
      * simplify an angle into the range 0-360 degrees
@@ -39,5 +41,17 @@ public class Angles {
      */
     public static double findMidPoint(double rotation1, double rotation2) {
         return simplifyAngle(rotation1 + getActualDifference(rotation1, rotation2));
+    }
+
+    /**
+     *
+     * @param targetAngle angle to target
+     * @param targetHeight
+     * @return target distance
+     */
+    public static double getTargetDistance(double targetAngle,double targetHeight){
+        double targetRadius = targetAngle*(Math.PI/180);
+        return (targetHeight) / Math.tan(targetAngle);
+
     }
 }
