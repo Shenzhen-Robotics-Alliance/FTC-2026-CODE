@@ -33,4 +33,31 @@ public class ShootCommand extends CommandBase {
         return false;
     }
 
+    /**
+    public Command shootFarContinuously(){
+        SequentialCommandGroup sequence = new SequentialCommandGroup();
+        sequence.addRequirements(shooterSubsystem);
+
+        //initialize the motors and servos
+        sequence.addCommands(
+                shooterSubsystem.setHoldBallAngle()
+                        .alongWith(shooterSubsystem.shooterStop()
+         ));
+
+        //enable the servo after the motors execute
+        sequence.addCommands(shooterSubsystem.shooterFarLaunch());
+
+        //enable the servo
+        sequence.addCommands(new ConditionalCommand(
+                shooterSubsystem.setShootingAngle(),
+                shooterSubsystem.setHoldBallAngle(),
+                () -> shooterSubsystem.isReadyToLaunch()
+        ));
+
+        return sequence;
+    }
+*/
+
+
 }
+
