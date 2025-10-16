@@ -27,12 +27,8 @@ public class VisionSubsystem extends SubsystemBase {
     private int pipelineIndex = 0;
     
     // PID Controller for target tracking
-    public static double kP = 0.05;
-    public static double kI = 0.1;
-    public static double kD = 0.002;
-    public static double kF = 0.0;
-    private PIDFController pidfController = new PIDFController(kP, kI, kD, kF);
-    
+
+
     // Additional data from Limelight
     private Pose3D botpose;
     private double captureLatency = 0.0;
@@ -106,19 +102,13 @@ public class VisionSubsystem extends SubsystemBase {
     public boolean hasTarget(){
         return hasTarget;
     }
-    
+
 
     /**
      * Calculate PID output for target tracking
      * @param currentTx The target position (usually 0.0 for center)
      * @return PID output power
      */
-    public double calculatePIDOutput(double currentTx) {
-        if (hasTarget) {
-            return pidfController.calculate(currentTx, 0);
-        }
-        return 0.0;
-    }
 
     /**
      * Get the robot's pose from the Limelight
