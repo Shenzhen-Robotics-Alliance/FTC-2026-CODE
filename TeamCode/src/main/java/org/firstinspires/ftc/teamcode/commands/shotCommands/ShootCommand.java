@@ -33,7 +33,7 @@ public class ShootCommand extends CommandBase {
         return false;
     }
 
-    /**
+/**
     public Command shootFarContinuously(){
         SequentialCommandGroup sequence = new SequentialCommandGroup();
         sequence.addRequirements(shooterSubsystem);
@@ -49,15 +49,40 @@ public class ShootCommand extends CommandBase {
 
         //enable the servo
         sequence.addCommands(new ConditionalCommand(
-                shooterSubsystem.setShootingAngle(),
+                shooterSubsystem.setFarShootingAngle(),
                 shooterSubsystem.setHoldBallAngle(),
-                () -> shooterSubsystem.isReadyToLaunch()
+                () -> shooterSubsystem.isReadyToFarLaunch()
         ));
 
         return sequence;
     }
-*/
+
+    public Command shootShortContinuously(){
+        SequentialCommandGroup sequence = new SequentialCommandGroup();
+        sequence.addRequirements(shooterSubsystem);
+
+        //initialize the motors and servos
+        sequence.addCommands(
+                shooterSubsystem.setHoldBallAngle()
+                        .alongWith(shooterSubsystem.shooterStop())
+        );
+
+        //enable the motors before enabling the servos
+        sequence.addCommands(shooterSubsystem.shooterShortLaunch());
+
+        //enable the servo
+        sequence.addCommands(shooterSubsystem.setShortShootingAngle());
+
+        sequence.addCommands(new ConditionalCommand(
+                shooterSubsystem.setShortShootingAngle(),
+                shooterSubsystem.setHoldBallAngle(),
+                () -> shooterSubsystem.isReadyToShortLaunch()
+        ));
 
 
+        return sequence;
+    }
+、
+ */
 }
 
