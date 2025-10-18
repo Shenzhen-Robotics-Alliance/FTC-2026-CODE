@@ -1,14 +1,19 @@
 package org.firstinspires.ftc.teamcode.subsystems.vision;
 
+import static org.firstinspires.ftc.teamcode.utils.MapleMaths.Angles.getTargetDistance;
+
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.LLResultTypes;
 import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.sun.tools.javac.code.Attribute;
+import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.teamcode.utils.MapleMaths.Angles;
+
 import java.util.List;
 
 
@@ -34,6 +39,7 @@ public class VisionSubsystem extends SubsystemBase {
     private double captureLatency = 0.0;
     private double targetingLatency = 0.0;
     private double parseLatency = 0.0;
+    public double Distance;
     private LLStatus status;
     private List<LLResultTypes.FiducialResult> fiducialResults;
     private ElapsedTime runtime = new ElapsedTime(ElapsedTime.Resolution.MILLISECONDS);
@@ -69,6 +75,7 @@ public class VisionSubsystem extends SubsystemBase {
                 hasTarget = true;
                 targetX = result.getTx();
                 targetY = result.getTy();
+                Distance = getTargetDistance(targetY+SystemConstants.CAMERA_ANGLE_DEGREE, SystemConstants.TARGET_HIGHT_CM)-SystemConstants.CAMERA_HIEHT_CM;
 
 
                 // Access fiducial results

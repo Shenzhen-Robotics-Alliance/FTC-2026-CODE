@@ -9,11 +9,11 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public class testShooter extends OpMode {
     private DcMotor shooter1;
     private DcMotor shooter2;
-   // private DcMotor rot;
+//    private DcMotor rot;
 
     @Override
     public void init() {
-     //   rot = hardwareMap.get(DcMotor.class,"rot");
+//        rot = hardwareMap.get(DcMotor.class,"rot");
         shooter1 = hardwareMap.get(DcMotor.class,"shooter1"); //port0 shooter1 forward
         shooter1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         shooter1.setDirection(DcMotorSimple.Direction.FORWARD);
