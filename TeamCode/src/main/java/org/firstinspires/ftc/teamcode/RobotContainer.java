@@ -46,6 +46,8 @@ public final class RobotContainer implements AutoCloseable {
 
     public final ShootCommand shootCommand;
 
+   // public final Command Shoot
+
     public final VisionSubsystem visionSubsystem;
 
    // public final InstantCommand instantCommand;

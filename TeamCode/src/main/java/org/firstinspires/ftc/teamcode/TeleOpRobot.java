@@ -75,9 +75,13 @@ public class TeleOpRobot extends Robot {
                         new InstantCommand(robotContainer.intakeSubsystem.intake::setMotorsStop, robotContainer.intakeSubsystem)
                 );
 
-        //pilot use the left trigger to control the shooter
+        //pilot use the left trigger to control the shooter to shoot the short
         new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5).whenActive(
-                robotContainer.shootCommand);
+                robotContainer.shootCommand.shootShortContinuously());
+
+        //pilot use the right trigger to control the shooter to shoot the far one
+        new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5).whenActive(
+                robotContainer.shootCommand.shootFarContinuously());
 
     }
 

@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode.commands.shotCommands;
 
+import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandBase;
+import com.arcrobotics.ftclib.command.ConditionalCommand;
+import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.ShooterSubsystem;
 
@@ -17,11 +20,12 @@ public class ShootCommand extends CommandBase {
         shooterSubsystem.setShooterStop();
     }
 
+    /**
     @Override
     public void execute(){
         shooterSubsystem.setShootingVelocity(0.9);
     }
-
+*/
 
     @Override
     public void end(boolean interrupted){
@@ -33,7 +37,7 @@ public class ShootCommand extends CommandBase {
         return false;
     }
 
-/**
+
     public Command shootFarContinuously(){
         SequentialCommandGroup sequence = new SequentialCommandGroup();
         sequence.addRequirements(shooterSubsystem);
@@ -82,7 +86,6 @@ public class ShootCommand extends CommandBase {
 
         return sequence;
     }
-、
- */
+
 }
 
