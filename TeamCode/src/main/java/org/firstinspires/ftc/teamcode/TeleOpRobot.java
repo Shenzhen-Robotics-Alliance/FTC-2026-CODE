@@ -40,7 +40,7 @@ public class TeleOpRobot extends Robot {
     private void configureKeyBindings() {
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).whenHeld(JoystickDriveFactory.joystickDrive(
                 robotContainer.driveSubsystem,
-                MapleJoystickDriveInput.leftHandedJoystick(pilotGamePad),
+                  MapleJoystickDriveInput.leftHandedJoystick(pilotGamePad),
                 () -> true));
 
         robotContainer.driveSubsystem.setDefaultCommand(JoystickDriveFactory.joystickDrive(

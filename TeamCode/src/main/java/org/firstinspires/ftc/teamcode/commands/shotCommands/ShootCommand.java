@@ -20,12 +20,10 @@ public class ShootCommand extends CommandBase {
         shooterSubsystem.setShooterStop();
     }
 
-    /**
     @Override
     public void execute(){
         shooterSubsystem.setShootingVelocity(0.9);
     }
-*/
 
     @Override
     public void end(boolean interrupted){
