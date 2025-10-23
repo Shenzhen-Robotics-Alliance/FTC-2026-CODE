@@ -24,9 +24,9 @@ public class ShooterSubsystem extends SubsystemBase {
                 hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
                 false,
                 2000,
-                0.8,
-                0,
-                0,
+                0.2,
+                0.01,
+                0.2,
                 0
         );
          this.shootServo = hardwareMap.get(Servo.class,"shootServo");
@@ -54,16 +54,16 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public boolean isReadyToFarLaunch(){
-        return shooter.getCurrentVelocity() > 0.5 ? true : false;
+        return shooter.getCurrentVelocity() > 0.9 ? true : false;
     }
 
     public boolean isReadyToShortLaunch(){
-        return shooter.getCurrentVelocity() > 0.3 ? true : false;
+        return shooter.getCurrentVelocity() > 0.7 ? true : false;
 
     }
 
     public Command setFarShootingAngle(){
-          return new InstantCommand(() -> shootServo.setPosition(1));
+          return new InstantCommand(() -> shootServo.setPosition(0.5));
     }
 
     public Command setHoldBallAngle(){
@@ -77,7 +77,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
     public Command setShortShootingAngle(){
-        return new InstantCommand(() -> shootServo.setPosition(1));
+        return new InstantCommand(() -> shootServo.setPosition(0.5));
     }
 
 }
