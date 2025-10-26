@@ -18,7 +18,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 "shooter",
                 new DcMotorEx[]{
                         hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
-                        hardwareMap.get(DcMotorEx.class,"ShooterMotor2")
+//                        hardwareMap.get(DcMotorEx.class,"ShooterMotor2")
                 },
                 new boolean[]{false,false},
                 hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
@@ -63,7 +63,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public Command setFarShootingAngle(){
-          return new InstantCommand(() -> shootServo.setPosition(0.5));
+          return new InstantCommand(() -> shootServo.setPosition(1));
     }
 
     public Command setHoldBallAngle(){
@@ -77,7 +77,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
     public Command setShortShootingAngle(){
-        return new InstantCommand(() -> shootServo.setPosition(0.5));
+        return new InstantCommand(() -> shootServo.setPosition(1));
     }
 
 }
