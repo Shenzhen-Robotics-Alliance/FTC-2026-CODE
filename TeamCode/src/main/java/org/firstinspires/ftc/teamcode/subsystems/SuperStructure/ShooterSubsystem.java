@@ -63,11 +63,11 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public Command setFarShootingAngle(){
-          return new InstantCommand(() -> shootServo.setPosition(0.5));
+          return new InstantCommand(() -> shootServo.setPosition(0));
     }
 
     public Command setHoldBallAngle(){
-        return new InstantCommand(() -> shootServo.setPosition(0));
+        return new InstantCommand(() -> shootServo.setPosition(1));
     }
 
 
