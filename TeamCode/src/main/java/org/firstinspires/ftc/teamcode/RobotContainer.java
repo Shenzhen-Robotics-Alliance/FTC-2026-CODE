@@ -46,11 +46,9 @@ public final class RobotContainer implements AutoCloseable {
 
     public final ShootCommand shootCommand;
 
-   // public final Command Shoot
 
     public final VisionSubsystem visionSubsystem;
 
-   // public final InstantCommand instantCommand;
 
     public final FollowCommand followCommand;
 
@@ -82,6 +80,7 @@ public final class RobotContainer implements AutoCloseable {
 
         this.shooterSubsystem = new ShooterSubsystem(hardwareMap);
         this.shootCommand = new ShootCommand(shooterSubsystem);
+
 
         this.intakeSubsystem = new IntakeSubsystem(hardwareMap);
         this.intakeContinueCommand = new IntakeContinueCommand(intakeSubsystem);

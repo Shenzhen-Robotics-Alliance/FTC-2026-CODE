@@ -25,8 +25,8 @@ public class ShooterSubsystem extends SubsystemBase {
                 false,
                 2000,
                 0.2,
-                0.01,
-                0.2,
+                0.001,
+                0.02,
                 0
         );
          this.shootServo = hardwareMap.get(Servo.class,"shootServo");
@@ -50,7 +50,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
     
     public Command shooterFarLaunch(){
-        return new RunCommand(() -> shooter.setTargetVelocity(2000));
+        return new RunCommand(() -> shooter.setTargetVelocity(1500));
     }
 
     public boolean isReadyToFarLaunch(){
@@ -58,7 +58,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public boolean isReadyToShortLaunch(){
-        return shooter.getCurrentVelocity() > 0.7 ? true : false;
+        return shooter.getCurrentVelocity() > 0.6 ? true : false;
 
     }
 
@@ -72,7 +72,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
     public Command shooterShortLaunch(){
-        return new RunCommand(() -> shooter.setTargetVelocity(1500));
+        return new RunCommand(() -> shooter.setTargetVelocity(1000));
     }
 
 

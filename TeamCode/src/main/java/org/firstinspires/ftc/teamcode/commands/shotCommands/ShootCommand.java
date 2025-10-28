@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.commands.shotCommands;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandBase;
+import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.ShooterSubsystem;
@@ -30,6 +32,7 @@ public class ShootCommand extends CommandBase {
     @Override
     public void end(boolean interrupted){
         shooterSubsystem.shooter.setMotorsStop();
+        shooterSubsystem.setHoldBallAngle();
     }
 
     @Override
@@ -57,7 +60,6 @@ public class ShootCommand extends CommandBase {
                 shooterSubsystem.setHoldBallAngle(),
                 () -> shooterSubsystem.isReadyToFarLaunch()
         ));
-
         return sequence;
     }
 
@@ -82,9 +84,17 @@ public class ShootCommand extends CommandBase {
                 shooterSubsystem.setHoldBallAngle(),
                 () -> shooterSubsystem.isReadyToShortLaunch()
         ));
-
-
         return sequence;
+    }
+    public static void emergencyStop(Command sequence) {
+        if (sequence != null && sequence.isScheduled()) {
+            CommandScheduler.getInstance().cancel(sequence);
+        }
+    }
+
+    public void stopNow() {
+        shooterSubsystem.shooter.setMotorsStop();
+        shooterSubsystem.setHoldBallAngle();
     }
 
 }

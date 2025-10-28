@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.Robot;
 import com.arcrobotics.ftclib.command.RunCommand;
@@ -10,7 +12,9 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.commands.drive.JoystickDriveFactory;
 import org.firstinspires.ftc.teamcode.commands.shotCommands.ManualRotCommand;
+import org.firstinspires.ftc.teamcode.commands.shotCommands.ShootCommand;
 import org.firstinspires.ftc.teamcode.utils.MapleJoystickDriveInput;
+import com.arcrobotics.ftclib.command.Command;
 
 import edu.wpi.first.math.geometry.Pose2d;
 
@@ -25,6 +29,7 @@ public class TeleOpRobot extends Robot {
     private ManualRotCommand manualRotateCommand;
 
     private final Runnable calibrateOdometry;
+    private com.arcrobotics.ftclib.command.Command activeSequence = null;
     public TeleOpRobot(RobotContainer robotContainer, Gamepad pilotGamePad, Gamepad copilotGamePad) {
         super();
         this.robotContainer = robotContainer;
@@ -76,15 +81,28 @@ public class TeleOpRobot extends Robot {
                 );
 
         //pilot use the left trigger to control the shooter to shoot the short
+
         new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5).whenActive(
-                robotContainer.shootCommand.shootShortContinuously());
+                () -> {
+                    activeSequence = robotContainer.shootCommand.shootShortContinuously();
+                    activeSequence.schedule();
+                });
 
         //pilot use the right trigger to control the shooter to shoot the far one
         new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5).whenActive(
-                robotContainer.shootCommand.shootFarContinuously());
+                () -> {
+                    activeSequence = robotContainer.shootCommand.shootShortContinuously();
+                    activeSequence.schedule();
+                });
+        //Y e-stop the shooter
+        this.pilotGamePad.getGamepadButton(GamepadKeys.Button.Y)
+                .whenPressed(robotContainer.shootCommand::stopNow);
+        // X forced stop the shooter
+
+        this.pilotGamePad.getGamepadButton(GamepadKeys.Button.X)
+                .whenPressed(() -> ShootCommand.emergencyStop(activeSequence));
 
     }
-
 
     @Override
     public void reset() {

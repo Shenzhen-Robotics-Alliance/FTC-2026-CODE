@@ -18,7 +18,7 @@ public class DriveTrainConstants {
         BACK_RIGHT_MOTOR_NAME = "backRight";
 
     public static final String
-            CENTER_ODOMETER_WHEEL_NAME = "frontRight",
+            CENTER_ODOMETER_WHEEL_NAME = "frontLeft",
             LEFT_ODOMETER_WHEEL_NAME = "backLeft",
             RIGHT_ODOMETER_WHEEL_NAME = "backRight";
 
@@ -29,14 +29,14 @@ public class DriveTrainConstants {
     public static final boolean RIGHT_ODOMETER_WHEEL_INVERTED = false;
 
     public static final double
-            FRONT_LEFT_MOTOR_DIRECTION = 1,
-            FRONT_RIGHT_MOTOR_DIRECTION = -1,
+            FRONT_LEFT_MOTOR_DIRECTION = -1,
+            FRONT_RIGHT_MOTOR_DIRECTION = 1,
             BACK_LEFT_MOTOR_DIRECTION = -1,
             BACK_RIGHT_MOTOR_DIRECTION = -1;
 
     public static final IMU.Parameters IMU_PARAMS = new IMU.Parameters(new RevHubOrientationOnRobot(
-            RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
-            RevHubOrientationOnRobot.UsbFacingDirection.UP
+            RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
+            RevHubOrientationOnRobot.UsbFacingDirection.RIGHT
     ));
 
     public static final double ODOMETER_ENCODER_TICKS_PER_REVOLUTION = 2000; // 2048 ticks mag encoder
@@ -44,8 +44,8 @@ public class DriveTrainConstants {
 
 
     //need changes
-    public static final double ODOMETER_WHEELS_TRACK_WIDTH_METERS = 0.289; //0.215
-    public static final double ODOMETER_CENTER_WHEELS_OFFSET = -0.076; //
+    public static final double ODOMETER_WHEELS_TRACK_WIDTH_METERS = 0.212; //0.215
+    public static final double ODOMETER_CENTER_WHEELS_OFFSET = -0.0744; //
 
     public static final double CHASSIS_WIDTH_METERS = 0.305;
     public static final double CHASSIS_LENGTH_METERS = 0.4;
@@ -56,5 +56,5 @@ public class DriveTrainConstants {
             new Translation2d(-CHASSIS_LENGTH_METERS /2, CHASSIS_WIDTH_METERS / 2),
             new Translation2d(-CHASSIS_LENGTH_METERS /2, -CHASSIS_WIDTH_METERS / 2));
 
-    public static final double MAX_VELOCITY_METERS_PER_SECOND = 2.56, MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = Math.toRadians(360);
+    public static final double MAX_VELOCITY_METERS_PER_SECOND = 1, MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = Math.toRadians(90);
 }
