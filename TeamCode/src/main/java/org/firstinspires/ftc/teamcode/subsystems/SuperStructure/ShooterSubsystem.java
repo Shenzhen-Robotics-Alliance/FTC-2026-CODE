@@ -34,8 +34,6 @@ public class ShooterSubsystem extends SubsystemBase {
                 0
         );
         this.shootServo = hardwareMap.get(Servo.class,"shootServo");
-
-
     }
 
     public void periodic() {
@@ -66,6 +64,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public boolean isReadyToFarLaunch(){
         return shooter.getCurrentVelocity() > 0.9 ? true : false;
     }
+
 
     public boolean isReadyToShortLaunch(){
         return shooter.getCurrentVelocity() > 0.6 ? true : false;

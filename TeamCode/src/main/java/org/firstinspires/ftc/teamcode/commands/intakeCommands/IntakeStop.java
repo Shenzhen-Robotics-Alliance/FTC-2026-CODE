@@ -15,15 +15,20 @@ public class IntakeStop extends CommandBase {
     @Override
     public void initialize(){
         intakeSubsystem.intake.setMotorsStop();
+        intakeSubsystem.setStopAngle();
     }
 
     public void execute(){
         intakeSubsystem.intake.setMotorsStop();
+        intakeSubsystem.setStopAngle();
+
     }
 
     @Override
     public void end(boolean interrupted){
         intakeSubsystem.intake.setMotorsStop();
+        intakeSubsystem.setStopAngle();
+
     }
 
     @Override

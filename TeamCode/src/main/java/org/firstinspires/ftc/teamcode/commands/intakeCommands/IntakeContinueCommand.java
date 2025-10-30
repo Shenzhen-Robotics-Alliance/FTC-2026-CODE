@@ -27,9 +27,11 @@ public class IntakeContinueCommand extends CommandBase {
         if(Math.abs(buttonValue) > 0.15) {
             double currentPos = intakeSubsystem.intake.getCurrentSetPoint();
             double increment = buttonValue * 15;
+            intakeSubsystem.setIntakeAngle();
             intakeSubsystem.intake.goToPosition(currentPos + increment);
             intakeSubsystem.intake.periodic();
         }else{
+            intakeSubsystem.setStopAngle();
             intakeSubsystem.intake.setMotorsStop();
         }
         intakeSubsystem.periodic();

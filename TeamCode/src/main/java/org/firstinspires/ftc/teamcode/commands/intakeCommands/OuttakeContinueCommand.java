@@ -20,10 +20,12 @@ public class OuttakeContinueCommand extends CommandBase {
     public void initialize(){
         intakeSubsystem.intake.setMotorsStop();
         shooterSubsystem.shooter.setMotorsStop();
+        intakeSubsystem.setStopAngle();
     }
 
     @Override
     public void execute(){
+        intakeSubsystem.setIntakeAngle();
         intakeSubsystem.periodic();
         shooterSubsystem.periodic();
     }
@@ -32,6 +34,7 @@ public class OuttakeContinueCommand extends CommandBase {
     public void end(boolean interrupted){
         intakeSubsystem.intake.setMotorsStop();
         shooterSubsystem.shooter.setMotorsStop();
+        intakeSubsystem.setStopIntake();
     }
 
     @Override
