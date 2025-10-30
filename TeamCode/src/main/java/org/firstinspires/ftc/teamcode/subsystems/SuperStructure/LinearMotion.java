@@ -137,5 +137,29 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
             motors[i].setPower(0);
         }
     }
+    public double getTargetVelocity() {
+        return targetVelocity;
+    }
+
+    public double getCurrentVelocityRaw() {
+        return encoder.getVelocity(); // original RPM
+    }
+
+    public double getVelocityError() {
+        return targetVelocity - getCurrentVelocity();
+    }
+
+    public double getOutputPower() {
+        // 计算当前所有马达的平均功率
+        double total = 0;
+        for (DcMotorEx motor : motors) {
+            total += motor.getPower();
+        }
+        return total / motors.length;
+    }
+
+    public double getPosition() {
+        return encoder.getCurrentPosition();
+    }
 
 }

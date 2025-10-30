@@ -91,16 +91,10 @@ public class TeleOpRobot extends Robot {
         //pilot use the right trigger to control the shooter to shoot the far one
         new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5).whenActive(
                 () -> {
-                    activeSequence = robotContainer.shootCommand.shootShortContinuously();
+                    activeSequence = robotContainer.shootCommand.shootFarContinuously();
                     activeSequence.schedule();
                 });
-        //Y e-stop the shooter
-        this.pilotGamePad.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(robotContainer.shootCommand::stopNow);
-        // X forced stop the shooter
 
-        this.pilotGamePad.getGamepadButton(GamepadKeys.Button.X)
-                .whenPressed(() -> ShootCommand.emergencyStop(activeSequence));
 
     }
 
