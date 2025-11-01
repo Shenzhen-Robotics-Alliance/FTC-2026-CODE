@@ -54,7 +54,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public Command shooterStop(){
-        return new InstantCommand(() -> shooter.setMotorsStop());
+        return new InstantCommand(shooter::setMotorsStop);
     }
 
     public Command shooterFarLaunch(){
@@ -62,12 +62,11 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public boolean isReadyToFarLaunch(){
-        return shooter.getCurrentVelocity() > 0.9 ? true : false;
+        return shooter.getCurrentVelocity() > 0.9;
     }
 
-
     public boolean isReadyToShortLaunch(){
-        return shooter.getCurrentVelocity() > 0.6 ? true : false;
+        return shooter.getCurrentVelocity() > 0.6;
 
     }
 
@@ -79,11 +78,9 @@ public class ShooterSubsystem extends SubsystemBase {
         return new InstantCommand(() -> shootServo.setPosition(0.5));
     }
 
-
     public Command shooterShortLaunch(){
         return new RunCommand(() -> shooter.setTargetVelocity(0.3));
     }
-
 
     public Command setShortShootingAngle(){
         return new InstantCommand(() -> shootServo.setPosition(1));
@@ -91,4 +88,5 @@ public class ShooterSubsystem extends SubsystemBase {
 //    public void setShooterVelocityRPM(double rpm) {
 //        shooter.setTargetVelocity(rpm / 2000); // 1500 / 2600 = 0.577
 //    }
+
 }

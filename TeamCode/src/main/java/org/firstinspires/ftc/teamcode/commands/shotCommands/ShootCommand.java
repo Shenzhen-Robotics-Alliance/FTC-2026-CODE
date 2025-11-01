@@ -86,15 +86,15 @@ public class ShootCommand extends CommandBase {
         ));
         return sequence;
     }
-    public static void emergencyStop(Command sequence) {
-        if (sequence != null && sequence.isScheduled()) {
-            CommandScheduler.getInstance().cancel(sequence);
-        }
-    }
 
-    public void stopNow() {
-        shooterSubsystem.shooter.setMotorsStop();
-        shooterSubsystem.setHoldBallAngle();
+    public Command shootStop(){
+        SequentialCommandGroup sequence = new SequentialCommandGroup();
+        sequence.addRequirements(shooterSubsystem);
+
+        sequence.addCommands(shooterSubsystem.shooterStop());
+        sequence.addCommands(shooterSubsystem.setHoldBallAngle());
+
+        return sequence;
     }
 
 }

@@ -28,9 +28,6 @@ public class TeleOpRobot extends Robot {
     private final GamepadEx pilotGamePad, copilotGamePad;
 
     private ManualRotCommand manualRotateCommand;
-    private IntakeContinueCommand intakeOn;
-    private InstantCommand intakeOff;
-    private IntakeContinueCommand intakeContinuous;
 
     private final Runnable calibrateOdometry;
     private com.arcrobotics.ftclib.command.Command activeSequence = null;
@@ -39,11 +36,6 @@ public class TeleOpRobot extends Robot {
         this.robotContainer = robotContainer;
         this.pilotGamePad = new GamepadEx(pilotGamePad);
         this.copilotGamePad = new GamepadEx(copilotGamePad);
-        intakeOn = new IntakeContinueCommand(robotContainer.intakeSubsystem);
-        intakeOff = new InstantCommand(
-                () -> robotContainer.intakeSubsystem.setStopIntake(),
-                robotContainer.intakeSubsystem
-        );
 
         this.calibrateOdometry = () -> robotContainer.driveSubsystem.setPose(new Pose2d());
         calibrateOdometry.run();
@@ -79,31 +71,31 @@ public class TeleOpRobot extends Robot {
         //pilot use right bumper to control the intake
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .toggleWhenPressed(
-                        new RunCommand(() -> robotContainer.intakeSubsystem.setIntakeAngle(), robotContainer.intakeSubsystem),
-                        new InstantCommand(robotContainer.intakeSubsystem.intake::setMotorsStop, robotContainer.intakeSubsystem)
+                        new RunCommand(robotContainer.intakeSubsystem::setIntakeAngle, robotContainer.intakeSubsystem),
+                        new InstantCommand(robotContainer.intakeSubsystem::setStopAngle, robotContainer.intakeSubsystem)
                 );
 
         //pilot use left bumper to control outtake
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .toggleWhenPressed(
-                        new RunCommand(() -> robotContainer.intakeSubsystem.setOuttakeAngle(), robotContainer.intakeSubsystem),
-                        new InstantCommand(robotContainer.intakeSubsystem.intake::setMotorsStop, robotContainer.intakeSubsystem)
+                        new RunCommand(robotContainer.intakeSubsystem::setOuttakeAngle, robotContainer.intakeSubsystem),
+                        new InstantCommand(robotContainer.intakeSubsystem::setStopAngle, robotContainer.intakeSubsystem)
                 );
 
         //pilot use the left trigger to control the shooter to shoot the short
+        new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5)
+                .toggleWhenActive(
+                         robotContainer.shootCommand.shootShortContinuously(),
+                        robotContainer.shootCommand.shootStop()
+                );
 
-        new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5).whenActive(
-                () -> {
-                    activeSequence = robotContainer.shootCommand.shootShortContinuously();
-                    activeSequence.schedule();
-                });
 
         //pilot use the right trigger to control the shooter to shoot the far one
-        new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5).whenActive(
-                () -> {
-                    activeSequence = robotContainer.shootCommand.shootFarContinuously();
-                    activeSequence.schedule();
-                });
+        new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)
+                .toggleWhenActive(
+                robotContainer.shootCommand.shootFarContinuously(),
+                robotContainer.shootCommand.shootStop()
+        );
 
 
     }

@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems.SuperStructure;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -37,16 +38,16 @@ public class IntakeSubsystem extends SubsystemBase{
     }
 
     //correct it according to the real situation
-    public void setIntakeAngle(){
-      intakeServo.setPosition(0);
+    public Command setIntakeAngle(){
+        return new RunCommand(() -> intakeServo.setPosition(1));
     }
 
-    public void setOuttakeAngle(){
-       intakeServo.setPosition(1);
+    public Command setOuttakeAngle(){
+        return new RunCommand(() -> intakeServo.setPosition(-1));
     }
 
-    public void setStopAngle(){
-        intakeServo.setPosition(0.5);
+    public Command setStopAngle(){
+       return new InstantCommand(()->intakeServo.setPosition(0));
     }
 
 }
