@@ -11,7 +11,6 @@ import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.teamcode.commands.drive.JoystickDriveFactory;
-import org.firstinspires.ftc.teamcode.commands.intakeCommands.IntakeContinueCommand;
 import org.firstinspires.ftc.teamcode.commands.shotCommands.ManualRotCommand;
 import org.firstinspires.ftc.teamcode.commands.shotCommands.ShootCommand;
 import org.firstinspires.ftc.teamcode.utils.MapleJoystickDriveInput;
@@ -28,9 +27,6 @@ public class TeleOpRobot extends Robot {
     private final GamepadEx pilotGamePad, copilotGamePad;
 
     private ManualRotCommand manualRotateCommand;
-    private IntakeContinueCommand intakeOn;
-    private InstantCommand intakeOff;
-    private IntakeContinueCommand intakeContinuous;
 
     private final Runnable calibrateOdometry;
     private com.arcrobotics.ftclib.command.Command activeSequence = null;
@@ -39,15 +35,9 @@ public class TeleOpRobot extends Robot {
         this.robotContainer = robotContainer;
         this.pilotGamePad = new GamepadEx(pilotGamePad);
         this.copilotGamePad = new GamepadEx(copilotGamePad);
-        intakeOn = new IntakeContinueCommand(robotContainer.intakeSubsystem);
-        intakeOff = new InstantCommand(
-                () -> robotContainer.intakeSubsystem.setStopIntake(),
-                robotContainer.intakeSubsystem
-        );
 
         this.calibrateOdometry = () -> robotContainer.driveSubsystem.setPose(new Pose2d());
         calibrateOdometry.run();
-
         configureKeyBindings();
     }
 
