@@ -51,9 +51,6 @@ public class ShootCommand extends CommandBase {
                         .alongWith(shooterSubsystem.shooterStop()
          ));
 
-        //enable the servo after the motors execute
-        sequence.addCommands(shooterSubsystem.shooterFarLaunch());
-
         //enable the servo
         sequence.addCommands(new ConditionalCommand(
                 shooterSubsystem.setFarShootingAngle(),
@@ -75,9 +72,6 @@ public class ShootCommand extends CommandBase {
 
         //enable the motors before enabling the servos
         sequence.addCommands(shooterSubsystem.shooterShortLaunch());
-
-        //enable the servo
-        sequence.addCommands(shooterSubsystem.setShortShootingAngle());
 
         sequence.addCommands(new ConditionalCommand(
                 shooterSubsystem.setShortShootingAngle(),
