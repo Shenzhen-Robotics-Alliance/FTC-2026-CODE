@@ -25,7 +25,7 @@ public class OuttakeContinueCommand extends CommandBase {
 
     @Override
     public void execute(){
-        intakeSubsystem.setIntakeAngle();
+        intakeSubsystem.setOuttakeAngle();
         intakeSubsystem.periodic();
         shooterSubsystem.periodic();
     }

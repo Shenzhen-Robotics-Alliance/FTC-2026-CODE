@@ -72,7 +72,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public Command setFarShootingAngle(){
-        return new InstantCommand(() -> shootServo.setPosition(0));
+        return new InstantCommand(() -> shootServo.setPosition(1));
     }
 
     public Command setHoldBallAngle(){
@@ -86,7 +86,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
     public Command setShortShootingAngle(){
-        return new InstantCommand(() -> shootServo.setPosition(0));
+        return new InstantCommand(() -> shootServo.setPosition(1));
     }
 //    public void setShooterVelocityRPM(double rpm) {
 //        shooter.setTargetVelocity(rpm / 2000); // 1500 / 2600 = 0.577

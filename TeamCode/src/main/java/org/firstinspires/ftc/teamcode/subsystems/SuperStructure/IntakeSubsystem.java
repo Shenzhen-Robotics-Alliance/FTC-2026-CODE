@@ -42,7 +42,7 @@ public class IntakeSubsystem extends SubsystemBase{
     }
 
     public void setOuttakeAngle(){
-       intakeServo.setPosition(-1);
+       intakeServo.setPosition(1);
     }
 
     public void setStopAngle(){
