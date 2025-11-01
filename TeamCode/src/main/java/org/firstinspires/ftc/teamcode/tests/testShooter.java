@@ -29,16 +29,27 @@ public class testShooter extends OpMode {
         final double rotPower = gamepad1.left_stick_x;
         telemetry.addData("velovity",shooter1.getVelocity());
 
-        if(gamepad1.a){
-            shooter1.setPower(0.8);
+
+        if(shooter1.getVelocity()<3000){
+
 //            shooter2.setPower(0.7);
-            telemetry.addData("velovity",shooter1.getVelocity());
+
             shooter1.getVelocity();
+            if (gamepad1.a){
+                shooter1.setPower(1);
+            }
+            else {
+                shooter1.setPower(0);}
+
         }else if(gamepad1.b){
             shooter1.setPower(0);
 //            shooter2.setPower(0);
         }
+        else {
+            shooter1.setPower(0);
+        }
     }
 }
+
 
 

@@ -12,6 +12,7 @@ public class IntakeContinueCommand extends CommandBase {
 
     public IntakeContinueCommand(IntakeSubsystem intakeSubsystem){
         this.intakeSubsystem = intakeSubsystem;
+        this.button = button;
         addRequirements(intakeSubsystem);
     }
 
