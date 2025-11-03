@@ -18,7 +18,7 @@ public class IntakeSubsystem extends SubsystemBase{
                 "intake",
                 new DcMotorEx[]{hardwareMap.get(DcMotorEx.class,"IntakeMotor")},
                 new boolean[]{false},
-                hardwareMap.get(DcMotorEx.class,"Rot"),
+                hardwareMap.get(DcMotorEx.class,"Intake"),
                 false,
                 2000,
                 0,
