@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.arcrobotics.ftclib.command.FunctionalCommand;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.commands.intakeCommands.IntakeCommand;
 import org.firstinspires.ftc.teamcode.commands.intakeCommands.IntakeContinueCommand;
 import org.firstinspires.ftc.teamcode.commands.intakeCommands.IntakeStop;
 import org.firstinspires.ftc.teamcode.commands.intakeCommands.OuttakeContinueCommand;
@@ -31,9 +32,10 @@ public final class RobotContainer implements AutoCloseable {
 
     public final MecanumDriveSubsystem driveSubsystem;
     public final IntakeSubsystem intakeSubsystem;
-    public final IntakeContinueCommand intakeContinueCommand;
-    public final IntakeStop intakeStop;
-    public final OuttakeContinueCommand outtakeContinueCommand;
+    //public final IntakeContinueCommand intakeContinueCommand;
+    //public final IntakeStop intakeStop;
+    //public final OuttakeContinueCommand outtakeContinueCommand;
+    public final IntakeCommand intakeCommand;
     public final RotSubsystem rotSubsystem;
     public final ManualRotCommand manualRotCommand;
     public final AutoRotCommand autoRotCommand;
@@ -45,7 +47,6 @@ public final class RobotContainer implements AutoCloseable {
     private Supplier<Double> joystickSupplier;
 
     public final ShootCommand shootCommand;
-
 
     public final VisionSubsystem visionSubsystem;
 
@@ -84,9 +85,13 @@ public final class RobotContainer implements AutoCloseable {
 
 
         this.intakeSubsystem = new IntakeSubsystem(hardwareMap);
+        this.intakeCommand = new IntakeCommand(intakeSubsystem);
+
+        /**
         this.intakeContinueCommand = new IntakeContinueCommand(intakeSubsystem);
         this.intakeStop = new IntakeStop(intakeSubsystem);
         this.outtakeContinueCommand = new OuttakeContinueCommand(intakeSubsystem,shooterSubsystem);
+         */
 
     }
 

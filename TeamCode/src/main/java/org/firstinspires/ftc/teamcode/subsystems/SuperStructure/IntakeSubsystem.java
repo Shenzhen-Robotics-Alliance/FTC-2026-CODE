@@ -50,4 +50,15 @@ public class IntakeSubsystem extends SubsystemBase{
        return new InstantCommand(()->intakeServo.setPosition(0));
     }
 
+    public Command enableIntakeMotor(){
+        return new RunCommand(() -> intake.setTargetVelocity(0.8));
+    }
+
+    public Command enableOuttakeMotor(){
+        return new RunCommand(() -> intake.setTargetVelocity(-0.8));
+    }
+
+    public Command enableStopMotor(){
+        return new RunCommand(() -> intake.setTargetVelocity(0));
+    }
 }

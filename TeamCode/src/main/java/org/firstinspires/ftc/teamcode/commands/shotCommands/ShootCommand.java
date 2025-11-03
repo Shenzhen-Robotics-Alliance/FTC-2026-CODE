@@ -51,6 +51,9 @@ public class ShootCommand extends CommandBase {
                         .alongWith(shooterSubsystem.shooterStop()
          ));
 
+        //enable the motors for far launch
+        sequence.addCommands(shooterSubsystem.shooterFarLaunch());
+
         //enable the servo
         sequence.addCommands(new ConditionalCommand(
                 shooterSubsystem.setFarShootingAngle(),

@@ -20,6 +20,7 @@ public class IntakeContinueCommand extends CommandBase {
         intakeSubsystem.intake.setMotorsStop();
     }
 
+    /**
     public void execute(){
 
         double buttonValue = button.get();
@@ -36,6 +37,7 @@ public class IntakeContinueCommand extends CommandBase {
         }
         intakeSubsystem.periodic();
     }
+   */
 
     public void end(boolean interrupted){
         intakeSubsystem.intake.setMotorsStop();

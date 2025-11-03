@@ -71,15 +71,15 @@ public class TeleOpRobot extends Robot {
         //pilot use right bumper to control the intake
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .toggleWhenPressed(
-                        new RunCommand(robotContainer.intakeSubsystem::setIntakeAngle, robotContainer.intakeSubsystem),
-                        new InstantCommand(robotContainer.intakeSubsystem::setStopAngle, robotContainer.intakeSubsystem)
+                        new RunCommand((Runnable) robotContainer.intakeCommand.intakeContinuously(), robotContainer.intakeSubsystem),
+                        new InstantCommand((Runnable) robotContainer.intakeCommand.stopIntake(), robotContainer.intakeSubsystem)
                 );
 
         //pilot use left bumper to control outtake
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .toggleWhenPressed(
-                        new RunCommand(robotContainer.intakeSubsystem::setOuttakeAngle, robotContainer.intakeSubsystem),
-                        new InstantCommand(robotContainer.intakeSubsystem::setStopAngle, robotContainer.intakeSubsystem)
+                        new RunCommand((Runnable) robotContainer.intakeCommand.outtakeContinuously(), robotContainer.intakeSubsystem),
+                        new InstantCommand((Runnable) robotContainer.intakeCommand.stopIntake(),robotContainer.intakeSubsystem)
                 );
 
         //pilot use the left trigger to control the shooter to shoot the short
