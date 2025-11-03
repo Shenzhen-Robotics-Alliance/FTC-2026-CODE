@@ -79,7 +79,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public Command shooterShortLaunch(){
-        return new RunCommand(() -> shooter.setTargetVelocity(0.3));
+        return new RunCommand(() -> shooter.setTargetVelocity(0.5));
     }
 
     public Command setShortShootingAngle(){

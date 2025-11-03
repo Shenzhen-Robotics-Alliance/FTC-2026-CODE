@@ -1,3 +1,4 @@
+/**
 package org.firstinspires.ftc.teamcode.commands.intakeCommands;
 
 import com.arcrobotics.ftclib.command.CommandBase;
@@ -7,6 +8,7 @@ import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.IntakeSubsystem;
 import java.util.function.Supplier;
 
 public class IntakeContinueCommand extends CommandBase {
+
     private IntakeSubsystem intakeSubsystem;
     private Supplier<Double> button;
 
@@ -37,7 +39,7 @@ public class IntakeContinueCommand extends CommandBase {
         }
         intakeSubsystem.periodic();
     }
-   */
+
 
     public void end(boolean interrupted){
         intakeSubsystem.intake.setMotorsStop();
@@ -49,3 +51,4 @@ public class IntakeContinueCommand extends CommandBase {
     }
 
 }
+*/
