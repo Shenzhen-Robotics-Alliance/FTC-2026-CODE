@@ -4,9 +4,9 @@ import com.arcrobotics.ftclib.command.FunctionalCommand;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.commands.intakeCommands.IntakeCommand;
-import org.firstinspires.ftc.teamcode.commands.intakeCommands.IntakeContinueCommand;
-import org.firstinspires.ftc.teamcode.commands.intakeCommands.IntakeStop;
-import org.firstinspires.ftc.teamcode.commands.intakeCommands.OuttakeContinueCommand;
+//import org.firstinspires.ftc.teamcode.commands.intakeCommands.IntakeContinueCommand;
+//import org.firstinspires.ftc.teamcode.commands.intakeCommands.IntakeStop;
+//import org.firstinspires.ftc.teamcode.commands.intakeCommands.OuttakeContinueCommand;
 import org.firstinspires.ftc.teamcode.commands.shotCommands.AutoRotCommand;
 import org.firstinspires.ftc.teamcode.commands.shotCommands.ManualRotCommand;
 import org.firstinspires.ftc.teamcode.commands.shotCommands.ShootCommand;
@@ -77,7 +77,7 @@ public final class RobotContainer implements AutoCloseable {
         this.rotSubsystem = new RotSubsystem(hardwareMap);
         rotSubsystem.register();
         this.manualRotCommand = new ManualRotCommand(rotSubsystem,joystickSupplier);
-        this.autoRotCommand = new AutoRotCommand(rotSubsystem,visionSubsystem);
+        this.autoRotCommand = new AutoRotCommand(rotSubsystem,visionSubsystem,side);
 
         this.shooterSubsystem = new ShooterSubsystem(hardwareMap);
         shooterSubsystem.register();

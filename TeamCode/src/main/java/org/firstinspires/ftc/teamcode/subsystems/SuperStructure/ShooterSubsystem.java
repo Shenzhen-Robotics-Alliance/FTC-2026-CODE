@@ -28,9 +28,9 @@ public class ShooterSubsystem extends SubsystemBase {
                 hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
                 false,
                 2600,
-                0.5,
+                3,
                 0,
-                0,
+                0.003,
                 0
         );
         this.shootServo = hardwareMap.get(Servo.class,"shootServo");
@@ -44,6 +44,9 @@ public class ShooterSubsystem extends SubsystemBase {
         telemetry.addData("Vel Error", "%.0f RPM", shooter.getVelocityError()); //* 2000
         telemetry.addData("Output Power", "%.3f", shooter.getOutputPower());
         telemetry.addData("Encoder Pos", "%.0f", shooter.getPosition());
+        telemetry.addData("===== SHOOTER STATUS =====", "");
+        telemetry.addData("ready to short shoot?",isReadyToShortLaunch());
+        telemetry.addData("ready to far shoot?",isReadyToFarLaunch());
     }
     public void setShooterStop(){
         shooter.setMotorsStop();
@@ -58,7 +61,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public Command shooterFarLaunch(){
-        return new RunCommand(() -> shooter.setTargetVelocity(0.8));
+        return new RunCommand(() -> shooter.setTargetVelocity(1.5));
     }
 
     public boolean isReadyToFarLaunch(){
@@ -79,7 +82,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public Command shooterShortLaunch(){
-        return new RunCommand(() -> shooter.setTargetVelocity(0.5));
+        return new RunCommand(() -> shooter.setTargetVelocity(0.9));
     }
 
     public Command setShortShootingAngle(){

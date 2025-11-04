@@ -33,6 +33,22 @@ public class ManualRotCommand extends CommandBase{
             joystickValue = 0;
         }
         double targetVelocity = joystickValue ;
+//        double pos = rotSubsystem.getCurrentPosition();
+//        if (Math.abs(pos) > ROT_SOFT_LIMIT)
+//        {
+//            if (pos < -ROT_SOFT_LIMIT && targetVelocity > 0)
+//            {
+//                rotSubsystem.setRotateVelocity(0);
+//            } else if (pos > ROT_SOFT_LIMIT && targetVelocity < 0)
+//            {
+//                rotSubsystem.setRotateVelocity(0);
+//            } else {
+//                rotSubsystem.setRotateVelocity(
+//                        pos > 0 ? -1 : 1
+//                );
+//
+//            }
+//        }
 
         //set Rotate velocity
         rotSubsystem.setRotateVelocity(targetVelocity);
