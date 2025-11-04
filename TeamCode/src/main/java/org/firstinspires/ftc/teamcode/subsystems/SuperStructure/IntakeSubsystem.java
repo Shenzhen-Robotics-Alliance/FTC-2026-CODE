@@ -18,11 +18,11 @@ public class IntakeSubsystem extends SubsystemBase{
                 "intake",
                 new DcMotorEx[]{hardwareMap.get(DcMotorEx.class,"IntakeMotor")},
                 new boolean[]{false},
-                hardwareMap.get(DcMotorEx.class,"Intake"),
+                hardwareMap.get(DcMotorEx.class,"IntakeMotor"),
                 false,
                 2000,
+                5,
                 0,
-                0.02,
                 0,
                 0
         );
@@ -45,19 +45,19 @@ public class IntakeSubsystem extends SubsystemBase{
     }
 
     public Command setOuttakeAngle(){
-        return new RunCommand(() -> intakeServo.setPosition(-1));
+        return new RunCommand(() -> intakeServo.setPosition(0));
     }
 
     public Command setStopAngle(){
-       return new InstantCommand(()->intakeServo.setPosition(0));
+       return new InstantCommand(()->intakeServo.setPosition(0.5));
     }
 
     public Command enableIntakeMotor(){
-        return new RunCommand(() -> intake.setTargetVelocity(0.8));
+        return new RunCommand(() -> intake.setTargetVelocity(-0.8));
     }
 
     public Command enableOuttakeMotor(){
-        return new RunCommand(() -> intake.setTargetVelocity(-0.8));
+        return new RunCommand(() -> intake.setTargetVelocity(0.8));
     }
 
     public Command enableStopMotor(){
