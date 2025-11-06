@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.autos;
 
+import static org.firstinspires.ftc.teamcode.autos.AutoUtils.scoreShortBallsPose;
+
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
@@ -43,9 +45,37 @@ public class ShortPoint implements Auto{
         // Step 0: Reset Odometry
         sequence.addCommands(new InstantCommand(() -> robotContainer.driveSubsystem.setPose(new Pose2d())));
 
-        // <-- Step 1: Score preloaded Balls -->
-       sequence.addCommands();
+        // <-- Step 1: Score preloaded Balls and shoot -->
+       sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer));
 
+        // <-- Step 2:  Intake and score the first three Balls -->
+        Command driveToFirstLine = robotContainer.driveSubsystem.followPath(
+               new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(45)),
+                new Translation2d[]{new Translation2d(0.5,0.5)},
+                new Pose2d(Positions.LINE_1_RIGhT_BALL,Rotation2d.fromDegrees(90)),
+                Rotation2d.fromDegrees(45),
+                0.5
+        );
+        sequence.addCommands(driveToFirstLine);
+
+        sequence.addCommands(AutoUtils.driveToIntakeContinuousLy(robotContainer));
+
+        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer));
+
+
+        // <-- Step 2:  Intake and score the Second three Balls -->
+        Command driveToSecondLine = robotContainer.driveSubsystem.followPath(
+                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(45)),
+                new Translation2d[]{new Translation2d(0.5,0.5)},
+                new Pose2d(Positions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
+                Rotation2d.fromDegrees(45),
+                0.5
+                );
+        sequence.addCommands(driveToSecondLine);
+
+        sequence.addCommands(AutoUtils.driveToIntakeContinuousLy(robotContainer));
+
+        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer));
 
 
 

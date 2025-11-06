@@ -39,7 +39,6 @@ public class IntakeSubsystem extends SubsystemBase{
 
     //correct it according to the real situation
 
-
     public Command setIntakeAngle(){
         return new RunCommand(() -> intakeServo.setPosition(1));
     }

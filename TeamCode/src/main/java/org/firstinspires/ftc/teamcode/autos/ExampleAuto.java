@@ -1,3 +1,4 @@
+/**
 package org.firstinspires.ftc.teamcode.autos;
 
 
@@ -6,6 +7,7 @@ import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.RobotContainer;
+import org.firstinspires.ftc.teamcode.autos.Auto;
 import org.firstinspires.ftc.teamcode.commands.drive.FollowPathCommand;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -86,3 +88,4 @@ public class ExampleAuto implements Auto {
         return sequence;
     }
 }
+*/

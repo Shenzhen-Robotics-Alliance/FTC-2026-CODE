@@ -25,6 +25,7 @@ import java.util.function.Supplier;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
@@ -170,13 +171,31 @@ public interface HolonomicDriveSubsystem extends Subsystem {
     }
 
 
-    default Command followPath(Pose2d[] wayPoints, Rotation2d desiredRotation, double speedMultiplier) {
-        List<Pose2d> wayPointsList = new ArrayList<>(Arrays.asList(wayPoints));
+    default Command followPath(Pose2d startingPoint, Translation2d[] interiorWayPoints, Pose2d endingPoint, Rotation2d desiredRotation, double speedMultiplier) {
         return new FollowPathCommand(
-                TrajectoryGenerator.generateTrajectory(wayPointsList, trajectoryConfig),
+                TrajectoryGenerator.generateTrajectory(
+                        startingPoint,
+                        Arrays.asList(interiorWayPoints),
+                        endingPoint,
+                        trajectoryConfig),
                 speedMultiplier,
                 this,
                 desiredRotation,
-                0);
+                0)
+                .whenFinished(this::stop);
     }
+
+    default Command followStraightLine(Translation2d startingPoint, Translation2d endingPoint, Rotation2d desiredRotation, double speedMultiplier) {
+        Rotation2d direction = endingPoint.minus(startingPoint).getAngle();
+        Translation2d midPoint = startingPoint.plus(
+                endingPoint.minus(startingPoint).div(2));
+
+        return followPath(
+                new Pose2d(startingPoint, direction),
+                new Translation2d[]{midPoint},
+                new Pose2d(endingPoint, direction),
+                desiredRotation,
+                speedMultiplier);
+    }
+
 }
