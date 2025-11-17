@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-@TeleOp(name = "MotorsMatch")
+@TeleOp(name = "test")
 public class SimpleMovementTest extends OpMode {
     private DcMotor frontLeft, frontRight, backLeft, backRight;
     private double kP =0 ;

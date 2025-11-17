@@ -9,12 +9,13 @@ import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
     public final LinearMotion shooter;
 
-    public final Servo shootServo;
+    public final Servo shootServo1;
+
+    public final Servo shootServo2;
 
 
     public ShooterSubsystem(HardwareMap hardwareMap){
@@ -24,16 +25,17 @@ public class ShooterSubsystem extends SubsystemBase {
                         hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
 //                        hardwareMap.get(DcMotorEx.class,"ShooterMotor2")
                 },
-                new boolean[]{false},
+                new boolean[]{true},
                 hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
-                false,
-                2600,
+                true,
+                2500,
                 3,
                 0,
                 0.003,
                 0
         );
-        this.shootServo = hardwareMap.get(Servo.class,"shootServo");
+        this.shootServo1 = hardwareMap.get(Servo.class,"shootServo1");
+        this.shootServo2 = hardwareMap.get(Servo.class, "shootServo2");
     }
 
     public void periodic() {
@@ -61,32 +63,35 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public Command shooterFarLaunch(){
-        return new RunCommand(() -> shooter.setTargetVelocity(1.5));
+        return new RunCommand(() -> shooter.setTargetVelocity(1));
     }
 
     public boolean isReadyToFarLaunch(){
-        return shooter.getCurrentVelocity() > 0.9;
+        return shooter.getCurrentVelocity() > 0.95;
     }
 
     public boolean isReadyToShortLaunch(){
-        return shooter.getCurrentVelocity() > 0.6;
+        return shooter.getCurrentVelocity() > 0.8;
 
     }
 
     public Command setFarShootingAngle(){
-        return new InstantCommand(() -> shootServo.setPosition(1));
+        return new InstantCommand(() -> shootServo1.setPosition(1));
+//        new InstantCommand(() -> shootServo2.setPosition(1));
     }
 
     public Command setHoldBallAngle(){
-        return new InstantCommand(() -> shootServo.setPosition(0.5));
+        return new InstantCommand(() -> shootServo1.setPosition(0.5));
+//        new InstantCommand(()-> shootServo2.setPosition(0.5));
     }
 
     public Command shooterShortLaunch(){
-        return new RunCommand(() -> shooter.setTargetVelocity(0.9));
+        return new RunCommand(() -> shooter.setTargetVelocity(0.7));
     }
 
     public Command setShortShootingAngle(){
-        return new InstantCommand(() -> shootServo.setPosition(1));
+        return new InstantCommand(() -> shootServo1.setPosition(1));
+//        new InstantCommand(() -> shootServo2.setPosition(1));
     }
 //    public void setShooterVelocityRPM(double rpm) {
 //        shooter.setTargetVelocity(rpm / 2000); // 1500 / 2600 = 0.577

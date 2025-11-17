@@ -28,12 +28,12 @@ public class RotSubsystem extends SubsystemBase {
 
     public void periodic() {
         rotateMotion.periodic();
-//        telemetry.addData("=========Rotate=========", "");
-//        telemetry.addData("Target Vel", "%.0f RPM", rotateMotion.getTargetVelocity()); //* 2000
-//        telemetry.addData("Current Vel", "%.0f RPM", rotateMotion.getCurrentVelocityRaw());
-//        telemetry.addData("Vel Error", "%.0f RPM", rotateMotion.getVelocityError()); //* 2000
-//        telemetry.addData("Output Power", "%.3f", rotateMotion.getOutputPower());
-//        telemetry.addData("Encoder Pos", "%.0f", rotateMotion.getPosition());
+        telemetry.addData("=========Rotate=========", "");
+        telemetry.addData("Target Vel", "%.0f RPM", rotateMotion.getTargetVelocity()); //* 2000
+        telemetry.addData("Current Vel", "%.0f RPM", rotateMotion.getCurrentVelocityRaw());
+        telemetry.addData("Vel Error", "%.0f RPM", rotateMotion.getVelocityError()); //* 2000
+        telemetry.addData("Output Power", "%.3f", rotateMotion.getOutputPower());
+        telemetry.addData("Encoder Pos", "%.0f", rotateMotion.getPosition());
         double pos = rotateMotion.getPosition();
         double targetVel = rotateMotion.getTargetVelocity();
 
@@ -51,6 +51,7 @@ public class RotSubsystem extends SubsystemBase {
             }
         }
     }
+
 
     public void setRotateStop(){
         rotateMotion.setMotorsStop();
@@ -78,5 +79,6 @@ public class RotSubsystem extends SubsystemBase {
     public void gotoPosition(double setpoint){
         rotateMotion.goToPosition(setpoint);
     }
+
 
 }

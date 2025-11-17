@@ -14,7 +14,7 @@ public class TeleOpRed extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         final TeleOpRobot robot = new TeleOpRobot(
                 new RobotContainer(hardwareMap, AllianceSide.RED),
-                gamepad1, gamepad2
+                gamepad1,gamepad2
         );
 
         OpModeUtils.runTeleOp(robot, this);

@@ -1,3 +1,4 @@
+/**
 package org.firstinspires.ftc.teamcode.codeEntrances;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -20,3 +21,4 @@ public class ExampleAutoRed extends LinearOpMode {
         OpModeUtils.runAutoMode(robot, this);
     }
 }
+*/

@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.ShooterSubsystem;
 
@@ -41,47 +42,58 @@ public class ShootCommand extends CommandBase {
     }
 
 
-    public Command shootFarContinuously(){
-        SequentialCommandGroup sequence = new SequentialCommandGroup();
-        sequence.addRequirements(shooterSubsystem);
+//    public Command shootFarContinuously(){
+//        SequentialCommandGroup sequence = new SequentialCommandGroup();
+//        sequence.addRequirements(shooterSubsystem);
+//
+//        //initialize the motors and servos
+//        sequence.addCommands(
+//                shooterSubsystem.setHoldBallAngle()
+//                        .alongWith(shooterSubsystem.shooterStop()
+//         ));
+//
+//        //enable the motors for far launch
+//        sequence.addCommands(shooterSubsystem.shooterFarLaunch());
+//
+//        //enable the servo
+//        sequence.addCommands(new ConditionalCommand(
+//                shooterSubsystem.setFarShootingAngle(),
+//                shooterSubsystem.setHoldBallAngle(),
+//                () -> shooterSubsystem.isReadyToFarLaunch()
+//        ));
+//        return sequence;
+//    }
+public Command shootFarContinuously() {
+    return new SequentialCommandGroup(
+            // 初始化
+            shooterSubsystem.setHoldBallAngle()
+                    .alongWith(shooterSubsystem.shooterStop()),
 
-        //initialize the motors and servos
-        sequence.addCommands(
-                shooterSubsystem.setHoldBallAngle()
-                        .alongWith(shooterSubsystem.shooterStop()
-         ));
+            shooterSubsystem.shooterFarLaunch().withTimeout((long) 3.0),
 
-        //enable the motors for far launch
-        sequence.addCommands(shooterSubsystem.shooterFarLaunch());
+            new WaitUntilCommand(shooterSubsystem::isReadyToFarLaunch)
+                    .withTimeout((long)2.0)
+                    .andThen(shooterSubsystem.setFarShootingAngle()),
 
-        //enable the servo
-        sequence.addCommands(new ConditionalCommand(
-                shooterSubsystem.setFarShootingAngle(),
-                shooterSubsystem.setHoldBallAngle(),
-                () -> shooterSubsystem.isReadyToFarLaunch()
-        ));
-        return sequence;
-    }
+            // 射完回中
+            new InstantCommand(() -> shooterSubsystem.setHoldBallAngle())
+    );
+}
 
     public Command shootShortContinuously(){
-        SequentialCommandGroup sequence = new SequentialCommandGroup();
-        sequence.addRequirements(shooterSubsystem);
-
-        //initialize the motors and servos
-        sequence.addCommands(
+        return new SequentialCommandGroup(
                 shooterSubsystem.setHoldBallAngle()
-                        .alongWith(shooterSubsystem.shooterStop())
+                        .alongWith(shooterSubsystem.shooterStop()),
+
+                shooterSubsystem.shooterShortLaunch().withTimeout((long) 3.0),
+
+                new WaitUntilCommand(shooterSubsystem::isReadyToShortLaunch)
+                        .withTimeout((long)2.0)
+                        .andThen(shooterSubsystem.setShortShootingAngle()),
+
+
+                new InstantCommand(() -> shooterSubsystem.setHoldBallAngle())
         );
-
-        //enable the motors before enabling the servos
-        sequence.addCommands(shooterSubsystem.shooterShortLaunch());
-
-        sequence.addCommands(new ConditionalCommand(
-                shooterSubsystem.setShortShootingAngle(),
-                shooterSubsystem.setHoldBallAngle(),
-                () -> shooterSubsystem.isReadyToShortLaunch()
-        ));
-        return sequence;
     }
 
     public Command shootStop(){

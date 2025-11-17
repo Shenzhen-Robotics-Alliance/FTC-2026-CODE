@@ -10,7 +10,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 public class AutoUtils {
-    public static final Pose2d scoreShortBallsPose = new Pose2d(0, 0, Rotation2d.fromDegrees(45));
+    public static final Pose2d scoreShortBallsPose = new Pose2d(-0.63, 0.33, Rotation2d.fromDegrees(40));
     public static final Pose2d scoreLongBallsPose = new Pose2d(0, 0, Rotation2d.fromDegrees(45));
 
 

@@ -18,25 +18,25 @@ public class DriveTrainConstants {
         BACK_RIGHT_MOTOR_NAME = "backRight";
 
     public static final String
-            CENTER_ODOMETER_WHEEL_NAME = "frontLeft",
-            LEFT_ODOMETER_WHEEL_NAME = "backLeft",
-            RIGHT_ODOMETER_WHEEL_NAME = "backRight";
+            CENTER_ODOMETER_WHEEL_NAME = "backLeft",
+            LEFT_ODOMETER_WHEEL_NAME = "frontLeft",
+            RIGHT_ODOMETER_WHEEL_NAME = "frontRight";
 
     /* if the RAW encoder reading is POSITIVE when moving to the left, false; other wise, true */
     public static final boolean CENTER_ODOMETER_WHEEL_INVERTED = true;
     /* if the RAW encoder reading is POSITIVE when moving front, false; other wise, true */
     public static final boolean LEFT_ODOMETER_WHEEL_INVERTED = true;
-    public static final boolean RIGHT_ODOMETER_WHEEL_INVERTED = false;
+    public static final boolean RIGHT_ODOMETER_WHEEL_INVERTED = true;
 
     public static final double
             FRONT_LEFT_MOTOR_DIRECTION = -1,
-            FRONT_RIGHT_MOTOR_DIRECTION = 1,
+            FRONT_RIGHT_MOTOR_DIRECTION = -1,
             BACK_LEFT_MOTOR_DIRECTION = -1,
-            BACK_RIGHT_MOTOR_DIRECTION = -1;
+            BACK_RIGHT_MOTOR_DIRECTION = 1;
 
     public static final IMU.Parameters IMU_PARAMS = new IMU.Parameters(new RevHubOrientationOnRobot(
-            RevHubOrientationOnRobot.LogoFacingDirection.FORWARD,
-            RevHubOrientationOnRobot.UsbFacingDirection.RIGHT
+            RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD,
+            RevHubOrientationOnRobot.UsbFacingDirection.LEFT
     ));
 
     public static final double ODOMETER_ENCODER_TICKS_PER_REVOLUTION = 2000; // 2048 ticks mag encoder
@@ -44,8 +44,8 @@ public class DriveTrainConstants {
 
 
     //need changes
-    public static final double ODOMETER_WHEELS_TRACK_WIDTH_METERS = 0.212; //0.215
-    public static final double ODOMETER_CENTER_WHEELS_OFFSET = -0.0744; //
+    public static final double ODOMETER_WHEELS_TRACK_WIDTH_METERS = 0.2882; //0.215
+    public static final double ODOMETER_CENTER_WHEELS_OFFSET = 0.0355; //
 
     public static final double CHASSIS_WIDTH_METERS = 0.305;
     public static final double CHASSIS_LENGTH_METERS = 0.4;
