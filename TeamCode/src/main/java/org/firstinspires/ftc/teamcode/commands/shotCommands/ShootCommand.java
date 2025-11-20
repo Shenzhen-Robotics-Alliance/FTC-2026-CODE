@@ -86,7 +86,6 @@ public class ShootCommand extends CommandBase {
 
         return sequence;
 
-
     }
 
 

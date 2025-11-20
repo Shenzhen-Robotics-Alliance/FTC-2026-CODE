@@ -83,18 +83,14 @@ public class TeleOpRobot extends Robot {
         //pilot use the left trigger to control the shooter to shoot the short
         new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5)
                 .toggleWhenActive(
-                        robotContainer.shootCommand.shootShortContinuously(),
-                        robotContainer.shootCommand.shootStop()
+                        robotContainer.shootCommand.shootShortContinuously()
                 );
 
         //pilot use the right trigger to control the shooter to shoot the far one
         new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)
                 .toggleWhenActive(
-                robotContainer.shootCommand.shootFarContinuously(),
-                robotContainer.shootCommand.shootStop()
+                robotContainer.shootCommand.shootFarContinuously()
         );
-
-
     }
 
     @Override
