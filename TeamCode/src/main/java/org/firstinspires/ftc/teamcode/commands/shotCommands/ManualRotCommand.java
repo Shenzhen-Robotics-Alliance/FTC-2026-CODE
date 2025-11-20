@@ -19,7 +19,6 @@ public class ManualRotCommand extends CommandBase{
         addRequirements(rotSubsystem);
     }
 
-
     public void initialize(){
         rotSubsystem.setRotateStop();
     }

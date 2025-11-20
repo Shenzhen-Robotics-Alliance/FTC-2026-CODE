@@ -37,8 +37,6 @@ public class IntakeSubsystem extends SubsystemBase{
         intake.setMotorsStop();
     }
 
-    //correct it according to the real situation
-
     public Command setIntakeAngle(){
         return new RunCommand(() -> intakeServo.setPosition(0));
     }

@@ -15,9 +15,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public final Servo shootServo1;
 
-  //  public final Servo shootServo2;
-
-
     public ShooterSubsystem(HardwareMap hardwareMap){
         this.shooter = new LinearMotion(
                 "shooter",
@@ -35,7 +32,6 @@ public class ShooterSubsystem extends SubsystemBase {
                 0
         );
         this.shootServo1 = hardwareMap.get(Servo.class,"shootServo1");
-      //  this.shootServo2 = hardwareMap.get(Servo.class, "shootServo2");
     }
 
     public void periodic() {
@@ -54,14 +50,16 @@ public class ShooterSubsystem extends SubsystemBase {
         shooter.setMotorsStop();
     }
 
+    /**
     public void setShootingVelocity(double velocity){
         shooter.setTargetVelocity(velocity);
     }
 
+    /**
     public Command shooterStop(){
         return new InstantCommand(shooter::setMotorsStop);
     }
-
+*/
     public Command shooterFarLaunch(){
         return new RunCommand(() -> shooter.setTargetVelocity(0.8));
     }

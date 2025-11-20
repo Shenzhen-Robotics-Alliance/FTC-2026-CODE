@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.CommandScheduler;
 import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.InstantCommand;
+import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
@@ -46,7 +47,7 @@ public class ShootCommand extends CommandBase {
     return new SequentialCommandGroup(
             // 初始化
             shooterSubsystem.setHoldBallAngle()
-                    .alongWith(shooterSubsystem.shooterStop()),
+                    .alongWith(shooterSubsystem.setShootingMotorStop()),
 
             shooterSubsystem.shooterFarLaunch().withTimeout((long) 3.0),
 
@@ -62,7 +63,7 @@ public class ShootCommand extends CommandBase {
     public Command shootShortContinuously(){
         return new SequentialCommandGroup(
                 shooterSubsystem.setHoldBallAngle()
-                        .alongWith(shooterSubsystem.shooterStop()),
+                        .alongWith(shooterSubsystem.setShootingMotorStop()),
 
                 shooterSubsystem.shooterShortLaunch().withTimeout((long) 3.0),
 
@@ -76,13 +77,16 @@ public class ShootCommand extends CommandBase {
     }
 
     public Command shootStop(){
+
         SequentialCommandGroup sequence = new SequentialCommandGroup();
         sequence.addRequirements(shooterSubsystem);
 
-        sequence.addCommands(shooterSubsystem.setShootingMotorStop());
-        sequence.addCommands(shooterSubsystem.setHoldBallAngle());
+        sequence.addCommands(shooterSubsystem.setShootingMotorStop()
+                .alongWith(shooterSubsystem.setHoldBallAngle()));
 
         return sequence;
+
+
     }
 
 
