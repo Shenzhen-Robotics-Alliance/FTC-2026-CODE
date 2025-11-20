@@ -29,7 +29,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
                 true,
                 2500,
-                3,
+                0.5,
                 0,
                 0.003,
                 0
