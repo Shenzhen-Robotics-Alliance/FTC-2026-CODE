@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems.SuperStructure;
-
+//2,=========shooterSubsystem==========
 import static org.firstinspires.ftc.teamcode.constants.SystemConstants.telemetry;
 
 import com.arcrobotics.ftclib.command.Command;
@@ -15,7 +15,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public final Servo shootServo1;
 
-    public final Servo shootServo2;
+  //  public final Servo shootServo2;
 
 
     public ShooterSubsystem(HardwareMap hardwareMap){
@@ -35,7 +35,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 0
         );
         this.shootServo1 = hardwareMap.get(Servo.class,"shootServo1");
-        this.shootServo2 = hardwareMap.get(Servo.class, "shootServo2");
+      //  this.shootServo2 = hardwareMap.get(Servo.class, "shootServo2");
     }
 
     public void periodic() {
@@ -63,38 +63,40 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public Command shooterFarLaunch(){
-        return new RunCommand(() -> shooter.setTargetVelocity(1));
+        return new RunCommand(() -> shooter.setTargetVelocity(0.8));
     }
 
     public boolean isReadyToFarLaunch(){
-        return shooter.getCurrentVelocity() > 0.95;
+        return shooter.getCurrentVelocity() > 0.75;
     }
 
     public boolean isReadyToShortLaunch(){
-        return shooter.getCurrentVelocity() > 0.8;
+        return shooter.getCurrentVelocity() > 0.4;
 
     }
 
     public Command setFarShootingAngle(){
-        return new InstantCommand(() -> shootServo1.setPosition(1));
-//        new InstantCommand(() -> shootServo2.setPosition(1));
-    }
+        return new InstantCommand(() ->
+            shootServo1.setPosition(0));
+        }
 
     public Command setHoldBallAngle(){
-        return new InstantCommand(() -> shootServo1.setPosition(0.5));
-//        new InstantCommand(()-> shootServo2.setPosition(0.5));
+        return new InstantCommand(() ->
+            shootServo1.setPosition(0.5)
+        );
     }
 
     public Command shooterShortLaunch(){
-        return new RunCommand(() -> shooter.setTargetVelocity(0.7));
+        return new RunCommand(() -> shooter.setTargetVelocity(0.5));
     }
 
     public Command setShortShootingAngle(){
-        return new InstantCommand(() -> shootServo1.setPosition(1));
-//        new InstantCommand(() -> shootServo2.setPosition(1));
+        return new InstantCommand(() ->
+            shootServo1.setPosition(0)
+        );
     }
-//    public void setShooterVelocityRPM(double rpm) {
-//        shooter.setTargetVelocity(rpm / 2000); // 1500 / 2600 = 0.577
-//    }
 
+    public Command setShootingMotorStop(){
+        return new RunCommand(() -> shooter.setTargetVelocity(0));
+    }
 }

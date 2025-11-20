@@ -36,7 +36,6 @@ public class IntakeCommand extends CommandBase{
 
         //init
 
-
         //enable the intake servo
         sequence.addCommands(intakeSubsystem.setIntakeAngle()
                 .alongWith(intakeSubsystem.enableIntakeMotor()));
@@ -65,6 +64,10 @@ public class IntakeCommand extends CommandBase{
                 .alongWith(intakeSubsystem.enableStopMotor()));
 
         return sequence;
+    }
+
+    public void eStop(){
+        intakeSubsystem.setStopIntake();
     }
 
 

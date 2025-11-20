@@ -73,6 +73,4 @@ public class AutoRotCommand extends CommandBase {
 
     public boolean isFinished(){
         return false;
-    }
-
-}
+    }}

@@ -1,5 +1,5 @@
 package org.firstinspires.ftc.teamcode.commands.shotCommands;
-
+//=========1,shootCommand============
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.CommandScheduler;
@@ -42,28 +42,7 @@ public class ShootCommand extends CommandBase {
     }
 
 
-//    public Command shootFarContinuously(){
-//        SequentialCommandGroup sequence = new SequentialCommandGroup();
-//        sequence.addRequirements(shooterSubsystem);
-//
-//        //initialize the motors and servos
-//        sequence.addCommands(
-//                shooterSubsystem.setHoldBallAngle()
-//                        .alongWith(shooterSubsystem.shooterStop()
-//         ));
-//
-//        //enable the motors for far launch
-//        sequence.addCommands(shooterSubsystem.shooterFarLaunch());
-//
-//        //enable the servo
-//        sequence.addCommands(new ConditionalCommand(
-//                shooterSubsystem.setFarShootingAngle(),
-//                shooterSubsystem.setHoldBallAngle(),
-//                () -> shooterSubsystem.isReadyToFarLaunch()
-//        ));
-//        return sequence;
-//    }
-public Command shootFarContinuously() {
+    public Command shootFarContinuously() {
     return new SequentialCommandGroup(
             // 初始化
             shooterSubsystem.setHoldBallAngle()
@@ -77,8 +56,8 @@ public Command shootFarContinuously() {
 
             // 射完回中
             new InstantCommand(() -> shooterSubsystem.setHoldBallAngle())
-    );
-}
+        );
+    }
 
     public Command shootShortContinuously(){
         return new SequentialCommandGroup(
@@ -100,11 +79,13 @@ public Command shootFarContinuously() {
         SequentialCommandGroup sequence = new SequentialCommandGroup();
         sequence.addRequirements(shooterSubsystem);
 
-        sequence.addCommands(shooterSubsystem.shooterStop());
+        sequence.addCommands(shooterSubsystem.setShootingMotorStop());
         sequence.addCommands(shooterSubsystem.setHoldBallAngle());
 
         return sequence;
     }
+
+
 
 }
 

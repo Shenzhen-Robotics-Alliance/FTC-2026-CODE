@@ -15,7 +15,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 
 
 /**
- * base on the red alliance field
+ * base on the blue alliance field
  * Using the TeleOP mode to measure the point and change the current one into correct one
  */
 final class Positions {
@@ -63,7 +63,7 @@ public class ShortPoint implements Auto{
         sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer));
 
 
-        // <-- Step 2:  Intake and score the Second three Balls -->
+        // <-- Step 3:  Intake and score the Second three Balls -->
         Command driveToSecondLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(40)),
                 new Translation2d[]{new Translation2d(0.5,0.5)},

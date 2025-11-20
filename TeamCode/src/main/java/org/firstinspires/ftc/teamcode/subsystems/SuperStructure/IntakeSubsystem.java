@@ -26,7 +26,7 @@ public class IntakeSubsystem extends SubsystemBase{
                 0,
                 0
         );
-        this.intakeServo = hardwareMap.get(Servo.class,"intakeServo");
+        this.intakeServo = hardwareMap.get(Servo.class,"IntakeServo");
     }
 
     public void periodic(){
@@ -40,11 +40,11 @@ public class IntakeSubsystem extends SubsystemBase{
     //correct it according to the real situation
 
     public Command setIntakeAngle(){
-        return new RunCommand(() -> intakeServo.setPosition(1));
+        return new RunCommand(() -> intakeServo.setPosition(0));
     }
 
     public Command setOuttakeAngle(){
-        return new RunCommand(() -> intakeServo.setPosition(0));
+        return new RunCommand(() -> intakeServo.setPosition(1));
     }
 
     public Command setStopAngle(){

@@ -11,5 +11,6 @@ import org.firstinspires.ftc.teamcode.RobotContainer;
 public interface Auto {
     Command getAutonomousCommands(RobotContainer robotContainer);
 
+
     default void beforeStartPeriodic() {}
 }

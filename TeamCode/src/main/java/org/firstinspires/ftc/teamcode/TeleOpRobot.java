@@ -47,32 +47,38 @@ public class TeleOpRobot extends Robot {
                 MapleJoystickDriveInput.leftHandedJoystick(pilotGamePad),
                 () -> true));
 
+        //pilot use the Button start to reset the encoder
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.START).whenPressed(calibrateOdometry);
 
+        //manual use LeftX control the Rotate
         manualRotateCommand = new ManualRotCommand(
                 robotContainer.rotSubsystem,
                 copilotGamePad::getLeftX
         );
 
+        //copilot use the B to get the manual Rotate
         this.copilotGamePad.getGamepadButton(GamepadKeys.Button.B)
                 .whenPressed(manualRotateCommand);
 
+        //copilot press the A to control the auto Rotate
         this.copilotGamePad.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(robotContainer.autoRotCommand);
 
-        //pilot use right bumper to control the intake
+        //pilot use right bumper to control the outtake
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .toggleWhenActive(
                         robotContainer.intakeCommand.intakeContinuously(),
                         robotContainer.intakeCommand.stopIntake()
                 );
 
-        //pilot use left bumper to control outtake
+        //pilot use left bumper to control intake
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .toggleWhenActive(
                         robotContainer.intakeCommand.outtakeContinuously(),
                         robotContainer.intakeCommand.stopIntake()
                 );
+        //pilot use X button to E-stop the shooter
+        this.pilotGamePad.getGamepadButton(GamepadKeys.Button.X).whenPressed(robotContainer.shootCommand.shootStop());
 
         //pilot use the left trigger to control the shooter to shoot the short
         new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5)
@@ -80,7 +86,6 @@ public class TeleOpRobot extends Robot {
                         robotContainer.shootCommand.shootShortContinuously(),
                         robotContainer.shootCommand.shootStop()
                 );
-
 
         //pilot use the right trigger to control the shooter to shoot the far one
         new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)
