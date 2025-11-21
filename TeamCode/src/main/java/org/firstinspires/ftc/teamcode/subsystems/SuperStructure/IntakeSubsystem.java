@@ -12,7 +12,6 @@ public class IntakeSubsystem extends SubsystemBase{
     public final LinearMotion intake;
     public final Servo intakeServo;
 
-
     public IntakeSubsystem(HardwareMap hardwareMap) {
         this.intake = new LinearMotion(
                 "intake",

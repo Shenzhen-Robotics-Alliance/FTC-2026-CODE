@@ -13,8 +13,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class ShooterSubsystem extends SubsystemBase {
     public final LinearMotion shooter;
 
-    public final Servo shootServo1;
-
     public ShooterSubsystem(HardwareMap hardwareMap){
         this.shooter = new LinearMotion(
                 "shooter",
@@ -31,7 +29,6 @@ public class ShooterSubsystem extends SubsystemBase {
                 0.003,
                 0
         );
-        this.shootServo1 = hardwareMap.get(Servo.class,"shootServo1");
     }
 
     public void periodic() {
@@ -63,28 +60,13 @@ public class ShooterSubsystem extends SubsystemBase {
 
     }
 
-    public Command setFarShootingAngle(){
-        return new InstantCommand(() ->
-            shootServo1.setPosition(0));
-        }
-
-    public Command setHoldBallAngle(){
-        return new InstantCommand(() ->
-            shootServo1.setPosition(0.5)
-        );
-    }
-
     public Command shooterShortLaunch(){
         return new RunCommand(() -> shooter.setTargetVelocity(0.5));
     }
 
-    public Command setShortShootingAngle(){
-        return new InstantCommand(() ->
-            shootServo1.setPosition(0)
-        );
-    }
+
 
     public Command setShootingMotorStop(){
-        return new RunCommand(() -> shooter.setTargetVelocity(0));
+        return new InstantCommand(() -> shooter.setTargetVelocity(0));
     }
 }

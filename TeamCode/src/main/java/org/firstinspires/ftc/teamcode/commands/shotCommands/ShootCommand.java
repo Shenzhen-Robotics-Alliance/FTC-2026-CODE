@@ -2,82 +2,53 @@ package org.firstinspires.ftc.teamcode.commands.shotCommands;
 //=========1,shootCommand============
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandBase;
-import com.arcrobotics.ftclib.command.CommandScheduler;
-import com.arcrobotics.ftclib.command.ConditionalCommand;
-import com.arcrobotics.ftclib.command.InstantCommand;
-import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
-import com.arcrobotics.ftclib.command.WaitUntilCommand;
+import com.arcrobotics.ftclib.command.Subsystem;
 
+import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.PreShooterSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.ShooterSubsystem;
 
 public class ShootCommand extends CommandBase {
     private ShooterSubsystem shooterSubsystem;
+    private PreShooterSubsystem preShooterSubsystem;
 
-    public ShootCommand(ShooterSubsystem shooterSubsystem){
+    public ShootCommand(ShooterSubsystem shooterSubsystem,PreShooterSubsystem preShooterSubsystem){
         this.shooterSubsystem = shooterSubsystem;
+        this.preShooterSubsystem = preShooterSubsystem;
         addRequirements(shooterSubsystem);
-    }
-
-    @Override
-    public void initialize() {
-        shooterSubsystem.setShooterStop();
-    }
-
-    @Override
-    public void end(boolean interrupted){
-        shooterSubsystem.setShooterStop();
-        shooterSubsystem.setHoldBallAngle();
-    }
-
-    @Override
-    public boolean isFinished(){
-        return false;
     }
 
 
     public Command shootFarContinuously() {
-    return new SequentialCommandGroup(
-            // 初始化
-            shooterSubsystem.setHoldBallAngle()
-                    .alongWith(shooterSubsystem.setShootingMotorStop()),
+        SequentialCommandGroup sequence = new SequentialCommandGroup();
+        sequence.addRequirements(shooterSubsystem);
 
-            shooterSubsystem.shooterFarLaunch().withTimeout((long) 3.0),
+        sequence.addCommands(shooterSubsystem.shooterFarLaunch());
 
-            new WaitUntilCommand(shooterSubsystem::isReadyToFarLaunch)
-                    .withTimeout((long)2.0)
-                    .andThen(shooterSubsystem.setFarShootingAngle()),
+        sequence.addCommands(shooterSubsystem.isReadyToFarLaunch() ? preShooterSubsystem.setShootingAngle() : preShooterSubsystem.setPreventAngle());
 
-            // 射完回中
-            new InstantCommand(() -> shooterSubsystem.setHoldBallAngle())
-        );
+        return sequence;
     }
 
     public Command shootShortContinuously(){
-        return new SequentialCommandGroup(
-                shooterSubsystem.setHoldBallAngle()
-                        .alongWith(shooterSubsystem.setShootingMotorStop()),
+        SequentialCommandGroup sequence = new SequentialCommandGroup();
+        sequence.addRequirements(shooterSubsystem);
 
-                shooterSubsystem.shooterShortLaunch().withTimeout((long) 3.0),
+        sequence.addCommands(shooterSubsystem.shooterShortLaunch());
 
-                new WaitUntilCommand(shooterSubsystem::isReadyToShortLaunch)
-                        .withTimeout((long)2.0)
-                        .andThen(shooterSubsystem.setShortShootingAngle()),
+        sequence.addCommands(shooterSubsystem.isReadyToShortLaunch() ? preShooterSubsystem.setShootingAngle() : preShooterSubsystem.setPreventAngle());
 
-                new InstantCommand(() -> shooterSubsystem.setHoldBallAngle())
-        );
+        return sequence;
     }
 
     public Command shootStop(){
-
         SequentialCommandGroup sequence = new SequentialCommandGroup();
         sequence.addRequirements(shooterSubsystem);
 
         sequence.addCommands(shooterSubsystem.setShootingMotorStop()
-                .alongWith(shooterSubsystem.setHoldBallAngle()));
+                .alongWith(preShooterSubsystem.setStopPreShooter()));
 
         return sequence;
-
     }
 }
 

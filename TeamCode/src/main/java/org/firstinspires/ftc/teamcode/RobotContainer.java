@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.commands.shotCommands.ShootCommand;
 import org.firstinspires.ftc.teamcode.commands.visionCommands.FollowCommand;
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.IntakeSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.PreShooterSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.RotSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.ShooterSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.drive.MapleOdometerWheelsOdometry;
@@ -32,9 +33,9 @@ public final class RobotContainer implements AutoCloseable {
 
     public final MecanumDriveSubsystem driveSubsystem;
     public final IntakeSubsystem intakeSubsystem;
-    //public final IntakeContinueCommand intakeContinueCommand;
-    //public final IntakeStop intakeStop;
-    //public final OuttakeContinueCommand outtakeContinueCommand;
+    public final PreShooterSubsystem preShooterSubsystem;
+    public final ShooterSubsystem shooterSubsystem ;
+
     public final IntakeCommand intakeCommand;
     public final RotSubsystem rotSubsystem;
     public final ManualRotCommand manualRotCommand;
@@ -42,7 +43,6 @@ public final class RobotContainer implements AutoCloseable {
 
     public final MapleOdometerWheelsOdometry odometry;
 
-    public final ShooterSubsystem shooterSubsystem ;
 
     private Supplier<Double> joystickSupplier;
 
@@ -71,6 +71,8 @@ public final class RobotContainer implements AutoCloseable {
 
         this.driveSubsystem = new MecanumDriveSubsystem(hardwareMap, odometry);
 
+        this.preShooterSubsystem = new PreShooterSubsystem(hardwareMap);
+
         this.visionSubsystem = new VisionSubsystem(hardwareMap);
         this.followCommand = new FollowCommand(visionSubsystem);
 
@@ -81,17 +83,12 @@ public final class RobotContainer implements AutoCloseable {
 
         this.shooterSubsystem = new ShooterSubsystem(hardwareMap);
         shooterSubsystem.register();
-        this.shootCommand = new ShootCommand(shooterSubsystem);
+        this.shootCommand = new ShootCommand(shooterSubsystem,preShooterSubsystem);
 
 
         this.intakeSubsystem = new IntakeSubsystem(hardwareMap);
-        this.intakeCommand = new IntakeCommand(intakeSubsystem);
+        this.intakeCommand = new IntakeCommand(intakeSubsystem,preShooterSubsystem);
 
-        /**
-        this.intakeContinueCommand = new IntakeContinueCommand(intakeSubsystem);
-        this.intakeStop = new IntakeStop(intakeSubsystem);
-        this.outtakeContinueCommand = new OuttakeContinueCommand(intakeSubsystem,shooterSubsystem);
-         */
 
     }
 
