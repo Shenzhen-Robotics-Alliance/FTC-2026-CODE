@@ -15,19 +15,19 @@ public class PreShooterSubsystem {
 
     public Command setShootingAngle(){
         return new InstantCommand(() ->
-                preShooter.setPosition(1));
+                preShooter.setPosition(0.5));
     }
-
 
     public Command setStopPreShooter(){
         return new InstantCommand(() ->
-                preShooter.setPosition(0.5)
-        );
+                preShooter.setPosition(0));
     }
+
+
 
     public Command setPreventAngle(){
         return new InstantCommand(() ->
-                preShooter.setPosition(0)
+                preShooter.setPosition(-0.5)
         );
     }
 
