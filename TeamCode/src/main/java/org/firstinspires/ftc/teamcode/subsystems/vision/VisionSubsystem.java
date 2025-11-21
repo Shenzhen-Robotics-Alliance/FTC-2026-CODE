@@ -94,14 +94,6 @@ public class VisionSubsystem extends SubsystemBase {
     }
 
 
-    public double getTargetX() {
-        return targetX;
-    }
-
-    public double getTargetY() {
-        return targetY;
-    }
-
     public int getTargetID() {
         return targetID;
     }

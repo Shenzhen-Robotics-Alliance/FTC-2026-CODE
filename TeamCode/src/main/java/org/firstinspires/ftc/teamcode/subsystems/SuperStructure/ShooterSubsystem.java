@@ -57,6 +57,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public boolean isReadyToShortLaunch(){
         return shooter.getCurrentVelocity() > 0.4;
+
     }
 
     public Command shooterShortLaunch(){

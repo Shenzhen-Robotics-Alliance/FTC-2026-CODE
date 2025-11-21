@@ -5,7 +5,7 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.RotSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
 import org.firstinspires.ftc.teamcode.utils.AllianceSide;
-import com.arcrobotics.ftclib.command.ConditionalCommand;
+import static org.firstinspires.ftc.teamcode.constants.SystemConstants.telemetry;
 public class AutoRotCommand extends CommandBase {
     private final RotSubsystem rotSubsystem;
     private final VisionSubsystem visionSubsystem;
@@ -16,6 +16,7 @@ public class AutoRotCommand extends CommandBase {
     private int BLUE_TARGET = 20;
     private int RED_TARGET = 24;
     private int TARGET_ID = 0;
+    private double Target_Distance = 0;
 
 
     public AutoRotCommand(RotSubsystem rotSubsystem, VisionSubsystem visionSubsystem,AllianceSide side){
@@ -32,18 +33,22 @@ public class AutoRotCommand extends CommandBase {
     @Override
     public void initialize(){
         visionSubsystem.start();
-//添加範圍條件判斷（5°-15°
     }
     @Override
     public void execute() {
         visionSubsystem.periodic();
-        tx = visionSubsystem.getTargetX();
-        if (visionSubsystem.hasTarget && Math.abs(tx)>=2) {
-            double targetVelocity = (tx / CameraHorizontalPOV);
+        tx = visionSubsystem.targetX;
+        Target_Distance = visionSubsystem.Distance;
+        telemetry.addData("Target_Distance","%.3f",Target_Distance);
+
+        double targetVelocity = (tx / CameraHorizontalPOV);
+        if (visionSubsystem.hasTarget && Math.abs(tx)<7) {
             // Set targetVelocity of the rotSubsystem
-            rotSubsystem.setRotateVelocity(targetVelocity);
-        }
-        else {
+            rotSubsystem.setRotateVelocity(targetVelocity*1.5);
+        } else if (visionSubsystem.hasTarget && Math.abs(tx)>=7) {
+            rotSubsystem.setRotateVelocity(targetVelocity*0.9);
+
+        } else {
             rotSubsystem.setRotateStop();
         }
     }
