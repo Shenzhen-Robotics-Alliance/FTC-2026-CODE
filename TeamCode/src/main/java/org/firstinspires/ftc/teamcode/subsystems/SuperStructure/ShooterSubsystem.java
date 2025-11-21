@@ -50,16 +50,6 @@ public class ShooterSubsystem extends SubsystemBase {
         shooter.setMotorsStop();
     }
 
-    /**
-    public void setShootingVelocity(double velocity){
-        shooter.setTargetVelocity(velocity);
-    }
-
-    /**
-    public Command shooterStop(){
-        return new InstantCommand(shooter::setMotorsStop);
-    }
-*/
     public Command shooterFarLaunch(){
         return new RunCommand(() -> shooter.setTargetVelocity(0.8));
     }

@@ -66,9 +66,4 @@ public class IntakeCommand extends CommandBase{
         return sequence;
     }
 
-    public void eStop(){
-        intakeSubsystem.setStopIntake();
-    }
-
-
 }

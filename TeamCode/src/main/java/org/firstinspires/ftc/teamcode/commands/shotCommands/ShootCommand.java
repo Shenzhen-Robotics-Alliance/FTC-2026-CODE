@@ -20,20 +20,13 @@ public class ShootCommand extends CommandBase {
     }
 
     @Override
-    public void initialize(){
+    public void initialize() {
         shooterSubsystem.setShooterStop();
     }
 
-    /**
-    @Override
-    public void execute(){
-        shooterSubsystem.setShootingVelocity(0.9);
-    }
-*/
-
     @Override
     public void end(boolean interrupted){
-        shooterSubsystem.shooter.setMotorsStop();
+        shooterSubsystem.setShooterStop();
         shooterSubsystem.setHoldBallAngle();
     }
 
@@ -71,7 +64,6 @@ public class ShootCommand extends CommandBase {
                         .withTimeout((long)2.0)
                         .andThen(shooterSubsystem.setShortShootingAngle()),
 
-
                 new InstantCommand(() -> shooterSubsystem.setHoldBallAngle())
         );
     }
@@ -87,8 +79,5 @@ public class ShootCommand extends CommandBase {
         return sequence;
 
     }
-
-
-
 }
 
