@@ -9,8 +9,7 @@ import com.arcrobotics.ftclib.command.ConditionalCommand;
 public class AutoRotCommand extends CommandBase {
     private final RotSubsystem rotSubsystem;
     private final VisionSubsystem visionSubsystem;
-    private final double MAXIMUM_VELOCITY = 2000; //1500/2000
-    private double CameraHorizontalPOV = 20;//54.5/2
+    private double CameraHorizontalPOV = 30;//54.5/2
 
     private double tx;
     private double ty;
@@ -33,33 +32,14 @@ public class AutoRotCommand extends CommandBase {
     @Override
     public void initialize(){
         visionSubsystem.start();
-        rotSubsystem.setRotateStop();
-
+//添加範圍條件判斷（5°-15°
     }
     @Override
     public void execute() {
         visionSubsystem.periodic();
-        if (visionSubsystem.hasTarget && visionSubsystem.getTargetID() == TARGET_ID) {
-            tx = visionSubsystem.getTargetX();
+        tx = visionSubsystem.getTargetX();
+        if (visionSubsystem.hasTarget && Math.abs(tx)>=2) {
             double targetVelocity = (tx / CameraHorizontalPOV);
-
-//            double pos = rotSubsystem.getCurrentPosition();
-
-//            if (Math.abs(pos) > ROT_SOFT_LIMIT)
-//            {
-//                if (pos < -ROT_SOFT_LIMIT && targetVelocity > 0)
-//                {
-//                    rotSubsystem.setRotateVelocity(0);
-//                } else if (pos > ROT_SOFT_LIMIT && targetVelocity < 0)
-//                {
-//                    rotSubsystem.setRotateVelocity(0);
-//                } else {
-//                    rotSubsystem.setRotateVelocity(
-//                            pos > 0 ? -1 : 1
-//                    );
-//
-//                }
-//            };
             // Set targetVelocity of the rotSubsystem
             rotSubsystem.setRotateVelocity(targetVelocity);
         }
