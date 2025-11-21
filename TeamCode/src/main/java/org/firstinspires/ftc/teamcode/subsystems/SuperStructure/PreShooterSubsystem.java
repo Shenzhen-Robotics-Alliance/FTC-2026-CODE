@@ -29,6 +29,6 @@ public class PreShooterSubsystem {
         return new InstantCommand(() ->
                 preShooter.setPosition(-1)
         );
-
     }
+
 }
