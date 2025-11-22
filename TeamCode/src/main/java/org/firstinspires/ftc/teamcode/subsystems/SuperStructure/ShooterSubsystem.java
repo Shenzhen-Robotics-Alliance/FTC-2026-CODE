@@ -24,7 +24,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
                 true,
                 2500,
-                0.5,
+                0.8,
                 0,
                 0.003,
                 0
@@ -52,11 +52,11 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public boolean isReadyToFarLaunch(){
-        return shooter.getCurrentVelocity() > 0.2;
+        return shooter.getCurrentVelocityRaw() > 200                ;
     }
 
     public boolean isReadyToShortLaunch(){
-        return shooter.getCurrentVelocity() > 0.1;
+        return shooter.getCurrentVelocityRaw() > 100;
     }
 
     public Command shooterShortLaunch(){
