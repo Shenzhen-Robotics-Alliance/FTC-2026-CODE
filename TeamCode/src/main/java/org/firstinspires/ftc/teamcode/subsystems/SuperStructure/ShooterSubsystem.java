@@ -52,11 +52,11 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public boolean isReadyToFarLaunch(){
-        return shooter.getCurrentVelocity() > 0.5;
+        return shooter.getCurrentVelocity() > 0.2;
     }
 
     public boolean isReadyToShortLaunch(){
-        return shooter.getCurrentVelocity() > 0.3;
+        return shooter.getCurrentVelocity() > 0.1;
     }
 
     public Command shooterShortLaunch(){

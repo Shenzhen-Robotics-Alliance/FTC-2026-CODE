@@ -24,9 +24,9 @@ public class ShootCommand extends CommandBase {
         sequence.addRequirements(shooterSubsystem);
 
         sequence.addCommands(shooterSubsystem.shooterFarLaunch()
-                .alongWith(shooterSubsystem.isReadyToFarLaunch() ? preShooterSubsystem.setShootingAngle() : preShooterSubsystem.setPreventAngle()));
-
-     //   sequence.addCommands(shooterSubsystem.isReadyToFarLaunch() ? preShooterSubsystem.setShootingAngle() : preShooterSubsystem.setPreventAngle());
+                .alongWith(shooterSubsystem.isReadyToFarLaunch()
+                        ? preShooterSubsystem.setShootingAngle()
+                        : preShooterSubsystem.setPreventAngle()));
 
         return sequence;
     }
@@ -36,7 +36,9 @@ public class ShootCommand extends CommandBase {
         sequence.addRequirements(shooterSubsystem);
 
         sequence.addCommands(shooterSubsystem.shooterShortLaunch()
-                .alongWith(shooterSubsystem.isReadyToShortLaunch() ? preShooterSubsystem.setShootingAngle() : preShooterSubsystem.setPreventAngle()));
+                .alongWith(shooterSubsystem.isReadyToShortLaunch()
+                        ? preShooterSubsystem.setShootingAngle()
+                        : preShooterSubsystem.setPreventAngle()));
 
         return sequence;
     }
