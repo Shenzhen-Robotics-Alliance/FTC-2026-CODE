@@ -18,7 +18,6 @@ public class ShooterSubsystem extends SubsystemBase {
                 "shooter",
                 new DcMotorEx[]{
                         hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
-//                        hardwareMap.get(DcMotorEx.class,"ShooterMotor2")
                 },
                 new boolean[]{true},
                 hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
@@ -42,6 +41,9 @@ public class ShooterSubsystem extends SubsystemBase {
         telemetry.addData("===== SHOOTER STATUS =====", "");
         telemetry.addData("ready to short shoot?",isReadyToShortLaunch());
         telemetry.addData("ready to far shoot?",isReadyToFarLaunch());
+
+
+
     }
     public void setShooterStop(){
         shooter.setMotorsStop();
@@ -56,7 +58,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public boolean isReadyToShortLaunch(){
-        return shooter.getCurrentVelocityRaw() > 100;
+        return shooter.getCurrentVelocityRaw() > 1000;
     }
 
     public Command shooterShortLaunch(){

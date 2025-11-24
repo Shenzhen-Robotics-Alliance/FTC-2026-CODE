@@ -37,7 +37,6 @@ public class RotSubsystem extends SubsystemBase {
         double pos = rotateMotion.getPosition();
         double targetVel = rotateMotion.getTargetVelocity();
 
-
         if (Math.abs(pos) > ROT_SOFT_LIMIT) {
             if (pos < -ROT_SOFT_LIMIT && targetVel > 0) {
                 rotateMotion.runPower(0);

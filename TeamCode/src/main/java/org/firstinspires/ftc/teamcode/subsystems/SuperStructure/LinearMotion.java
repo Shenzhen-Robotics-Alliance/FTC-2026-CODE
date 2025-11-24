@@ -92,7 +92,6 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
 
         previousSetPoint = setPoint;
 
-
         double error = targetVelocity - currentVelocity;
 
         //proportional term
@@ -158,6 +157,7 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
         return total / motors.length;
     }
 
+    //for rotate
     public double getPosition() {
         return encoder.getCurrentPosition();
     }

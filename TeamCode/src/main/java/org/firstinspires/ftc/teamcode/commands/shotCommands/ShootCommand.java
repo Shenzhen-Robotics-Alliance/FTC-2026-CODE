@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode.commands.shotCommands;
 //=========1,shootCommand============
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandBase;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.Subsystem;
+import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.PreShooterSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.ShooterSubsystem;
@@ -26,21 +28,20 @@ public class ShootCommand extends CommandBase {
         sequence.addCommands(shooterSubsystem.shooterFarLaunch()
                 .alongWith(shooterSubsystem.isReadyToFarLaunch()
                         ? preShooterSubsystem.setShootingAngle()
-                        : preShooterSubsystem.setStopPreShooter()));
+                        : preShooterSubsystem.setPreventAngle()));
 
         return sequence;
     }
 
-    public Command shootShortContinuously(){
-        SequentialCommandGroup sequence = new SequentialCommandGroup();
-        sequence.addRequirements(shooterSubsystem);
+    public Command shootShortContinuously() {
+        return new ParallelCommandGroup(
+                shooterSubsystem.shooterShortLaunch(),
 
-        sequence.addCommands(shooterSubsystem.shooterShortLaunch()
-                .alongWith(shooterSubsystem.isReadyToShortLaunch()
-                        ? preShooterSubsystem.setShootingAngle()
-                        : preShooterSubsystem.setStopPreShooter()));
-
-        return sequence;
+                new SequentialCommandGroup(
+                        new WaitUntilCommand(shooterSubsystem::isReadyToShortLaunch),
+                        preShooterSubsystem.setShootingAngle()
+                )
+        );
     }
 
     public Command shootStop(){
