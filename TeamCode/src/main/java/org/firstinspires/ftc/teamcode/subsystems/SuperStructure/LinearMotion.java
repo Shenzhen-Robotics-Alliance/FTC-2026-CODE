@@ -82,7 +82,7 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
     public void resetController() {
         this.integralSum = 0;
         this.previousError = 0;
-        this.targetVelocity = 0; // 将目标速度也设为0
+        this.targetVelocity = 0;
     }
 
     public void periodic(){
@@ -148,14 +148,7 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
         return targetVelocity - getCurrentVelocity();
     }
 
-    public double getOutputPower() {
-        // 计算当前所有马达的平均功率
-        double total = 0;
-        for (DcMotorEx motor : motors) {
-            total += motor.getPower();
-        }
-        return total / motors.length;
-    }
+
 
     //for rotate
     public double getPosition() {
