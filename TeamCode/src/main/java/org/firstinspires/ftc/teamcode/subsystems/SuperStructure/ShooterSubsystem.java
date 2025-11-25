@@ -22,7 +22,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 new boolean[]{true},
                 hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
                 true,
-                2500,
+                3070,
                 0.8,
                 0,
                 0.003,
@@ -39,33 +39,37 @@ public class ShooterSubsystem extends SubsystemBase {
         telemetry.addData("Output Power", "%.3f", shooter.getOutputPower());
         telemetry.addData("Encoder Pos", "%.0f", shooter.getPosition());
         telemetry.addData("===== SHOOTER STATUS =====", "");
-        telemetry.addData("ready to short shoot?",isReadyToShortLaunch());
-        telemetry.addData("ready to far shoot?",isReadyToFarLaunch());
-
+        telemetry.addData("ready to short shoot?",isReadyToFixShortLaunch());
+        telemetry.addData("ready to far shoot?",isReadyToFixFarLaunch());
 
 
     }
-    public void setShooterStop(){
-        shooter.setMotorsStop();
-    }
 
-    public Command shooterFarLaunch(){
+
+    // <Fixed Point shoot in both Short and Far Point>
+
+    public Command shooterFixFarLaunch(){
         return new RunCommand(() -> shooter.setTargetVelocity(0.8));
     }
 
-    public boolean isReadyToFarLaunch(){
+    public boolean isReadyToFixFarLaunch(){
         return shooter.getCurrentVelocityRaw() > 200                ;
     }
 
-    public boolean isReadyToShortLaunch(){
+    public boolean isReadyToFixShortLaunch(){
         return shooter.getCurrentVelocityRaw() > 1000;
     }
 
-    public Command shooterShortLaunch(){
+    public Command shooterFixShortLaunch(){
         return new RunCommand(() -> shooter.setTargetVelocity(0.5));
     }
+
+    //<Shoot as the odometry>
+
 
     public Command setShootingMotorStop(){
         return new RunCommand(() -> shooter.setTargetVelocity(0));
     }
+
+
 }

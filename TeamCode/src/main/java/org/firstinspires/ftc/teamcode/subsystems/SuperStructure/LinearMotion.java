@@ -25,7 +25,6 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
     private double previousError = 0;
     private double  integralSum = 0;
     private double targetVelocity = 0;
-
     private double previousSetPoint = 0;
 
     public LinearMotion(
@@ -37,7 +36,6 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
             double kI,
             double kD,
             double kF
-           // double kG,double kV,double kS, double kP
     ){
         this.name = name;
 
@@ -72,7 +70,6 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
     }
 
     // Get current velocity from the encoder
-
     public double getCurrentVelocity() {
         double rawVelocity = encoder.getVelocity();
         double normalizedVelocity = rawVelocity / maximumSpeed;
@@ -88,7 +85,8 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
     public void periodic(){
 
         double currentVelocity = getCurrentVelocity();
-      //  double desiredVelocity = (setPoint - previousSetPoint) * SystemConstants.ROBOT_UPDATE_RATE_HZ;
+
+        //  double desiredVelocity = (setPoint - previousSetPoint) * SystemConstants.ROBOT_UPDATE_RATE_HZ;
 
         previousSetPoint = setPoint;
 

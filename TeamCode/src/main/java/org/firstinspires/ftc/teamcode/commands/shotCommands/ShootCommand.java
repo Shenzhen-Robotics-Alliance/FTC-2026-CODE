@@ -21,24 +21,24 @@ public class ShootCommand extends CommandBase {
     }
 
 
-    public Command shootFarContinuously() {
+    public Command fixShootFarContinuously() {
         SequentialCommandGroup sequence = new SequentialCommandGroup();
         sequence.addRequirements(shooterSubsystem);
 
-        sequence.addCommands(shooterSubsystem.shooterFarLaunch()
-                .alongWith(shooterSubsystem.isReadyToFarLaunch()
+        sequence.addCommands(shooterSubsystem.shooterFixFarLaunch()
+                .alongWith(shooterSubsystem.isReadyToFixFarLaunch()
                         ? preShooterSubsystem.setShootingAngle()
                         : preShooterSubsystem.setPreventAngle()));
 
         return sequence;
     }
 
-    public Command shootShortContinuously() {
+    public Command fixShootShortContinuously() {
         return new ParallelCommandGroup(
-                shooterSubsystem.shooterShortLaunch(),
+                shooterSubsystem.shooterFixShortLaunch(),
 
                 new SequentialCommandGroup(
-                        new WaitUntilCommand(shooterSubsystem::isReadyToShortLaunch),
+                        new WaitUntilCommand(shooterSubsystem::isReadyToFixShortLaunch),
                         preShooterSubsystem.setShootingAngle()
                 )
         );

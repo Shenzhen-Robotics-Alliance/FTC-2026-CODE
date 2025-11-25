@@ -77,20 +77,19 @@ public class TeleOpRobot extends Robot {
                         robotContainer.intakeCommand.outtakeContinuously(),
                         robotContainer.intakeCommand.stopIntake()
                 );
-        //pilot use X button to E-stop the shooter
-        this.pilotGamePad.getGamepadButton(GamepadKeys.Button.X).whenPressed(robotContainer.shootCommand.shootStop());
+
 
         //pilot use the left trigger to control the shooter to shoot the short
         new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5)
                 .toggleWhenActive(
-                        robotContainer.shootCommand.shootShortContinuously(),
+                        robotContainer.shootCommand.fixShootShortContinuously(),
                         robotContainer.shootCommand.shootStop()
                 );
 
         //pilot use the right trigger to control the shooter to shoot the far one
         new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)
                 .toggleWhenActive(
-                robotContainer.shootCommand.shootFarContinuously(),
+                robotContainer.shootCommand.fixShootFarContinuously(),
                         robotContainer.shootCommand.shootStop()
         );
     }
