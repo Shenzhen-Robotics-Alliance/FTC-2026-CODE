@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.Robot;
+import com.arcrobotics.ftclib.command.SelectCommand;
 import com.arcrobotics.ftclib.command.button.Trigger;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -9,6 +12,8 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import org.firstinspires.ftc.teamcode.commands.drive.JoystickDriveFactory;
 import org.firstinspires.ftc.teamcode.commands.shotCommands.ManualRotCommand;
 import org.firstinspires.ftc.teamcode.utils.MapleJoystickDriveInput;
+
+import java.util.HashMap;
 
 import edu.wpi.first.math.geometry.Pose2d;
 
@@ -23,6 +28,10 @@ public class TeleOpRobot extends Robot {
     private ManualRotCommand manualRotateCommand;
 
     private final Runnable calibrateOdometry;
+
+    //State machine to make sure if AutoShootingMode
+    private boolean isAutoShootingMode = false;
+
     public TeleOpRobot(RobotContainer robotContainer, Gamepad pilotGamePad, Gamepad copilotGamePad) {
         super();
         this.robotContainer = robotContainer;
@@ -37,6 +46,8 @@ public class TeleOpRobot extends Robot {
 
 
     private void configureKeyBindings() {
+
+        // <-- pilot control the chassis -->
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.RIGHT_STICK_BUTTON).whenHeld(JoystickDriveFactory.joystickDrive(
                 robotContainer.driveSubsystem,
                 MapleJoystickDriveInput.leftHandedJoystick(pilotGamePad),
@@ -50,7 +61,9 @@ public class TeleOpRobot extends Robot {
         //pilot use the Button start to reset the encoder
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.START).whenPressed(calibrateOdometry);
 
-        //manual use LeftX control the Rotate
+        /**
+         *  <-- copilot and pilot control the rotate -->
+         */
         manualRotateCommand = new ManualRotCommand(
                 robotContainer.rotSubsystem,
                 copilotGamePad::getLeftX
@@ -64,7 +77,11 @@ public class TeleOpRobot extends Robot {
         this.copilotGamePad.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(robotContainer.autoRotCommand);
 
-        //pilot use right bumper to control the outtake
+
+        /**
+         *  <-- pilot control the intake and outtake -->
+         *  pilot use right bumper to control the outtake
+         */
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .toggleWhenActive(
                         robotContainer.intakeCommand.intakeContinuously(),
@@ -78,7 +95,45 @@ public class TeleOpRobot extends Robot {
                         robotContainer.intakeCommand.stopIntake()
                 );
 
+        /**
+         * <-- copilot and pilot control the intake and outtake -->
+         *  copilot pressed the left trigger to enter the Fixed Point
+         *  Copilot pressed the right trigger to enter the Auto Point Shooting
+         */
 
+        new Trigger(() -> copilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5)
+                .whenActive(() -> isAutoShootingMode = false);
+
+        new Trigger(() -> copilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)
+                .whenActive(() -> isAutoShootingMode = true);
+
+        //When the robot situated at auto state, pilot press the left trigger enter the auto, or fixed point
+        new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5)
+                .toggleWhenActive(
+                        new SelectCommand(
+                                new HashMap<Object, Command>() {{
+                                    put(false, robotContainer.shootCommand.fixShootShortContinuously());
+                                    put(true, robotContainer.shootCommand.shootAutoVelocity());
+                                }},
+                                () -> isAutoShootingMode
+                        ),
+                        robotContainer.shootCommand.shootStop()
+                );
+
+        //When the robot situated at auto left trigger enter the auto, or fixed point
+        new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)
+                .toggleWhenActive(
+                        new SelectCommand(
+                                new HashMap<Object, Command>() {{
+                                    put(false, robotContainer.shootCommand.fixShootFarContinuously());
+                                    put(true, new InstantCommand());
+                                }},
+                                () -> isAutoShootingMode
+                        ),
+                        robotContainer.shootCommand.shootStop()
+                );
+
+/**
         //pilot use the left trigger to control the shooter to shoot the short
         new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5)
                 .toggleWhenActive(
@@ -92,6 +147,8 @@ public class TeleOpRobot extends Robot {
                 robotContainer.shootCommand.fixShootFarContinuously(),
                         robotContainer.shootCommand.shootStop()
         );
+ */
+
     }
 
     @Override

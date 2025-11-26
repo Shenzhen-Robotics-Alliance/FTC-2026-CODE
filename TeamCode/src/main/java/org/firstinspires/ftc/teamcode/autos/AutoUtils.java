@@ -24,7 +24,7 @@ public class AutoUtils {
         );
         sequence.addCommands(moveToShortScoringBalls);
 
-        sequence.addCommands(robotContainer.shootCommand.shootShortContinuously());
+        sequence.addCommands(robotContainer.shootCommand.fixShootShortContinuously());
 
         return sequence;
     }
@@ -39,7 +39,7 @@ public class AutoUtils {
         );
         sequence.addCommands(moveToFarScoringBalls);
 
-        sequence.addCommands(robotContainer.shootCommand.shootFarContinuously());
+        sequence.addCommands(robotContainer.shootCommand.fixShootFarContinuously());
 
         return sequence;
     }
