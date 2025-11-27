@@ -9,21 +9,16 @@ import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.PreShooterSubsys
 
 public class IntakeCommand extends CommandBase{
     private final IntakeSubsystem intakeSubsystem;
-    private final PreShooterSubsystem preShooterSubsystem;
 
-    public IntakeCommand(IntakeSubsystem intakeSubsystem,PreShooterSubsystem preShooterSubsystem) {
+    public IntakeCommand(IntakeSubsystem intakeSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
-        this.preShooterSubsystem = preShooterSubsystem;
     }
 
     public Command intakeContinuously(){
         SequentialCommandGroup sequence = new SequentialCommandGroup();
         sequence.addRequirements(intakeSubsystem);
 
-        //enable the intake servo
-        sequence.addCommands(intakeSubsystem.setIntakeAngle()
-                .alongWith(intakeSubsystem.enableIntakeMotor())
-                .alongWith(preShooterSubsystem.setPreventAngle()));
+        sequence.addCommands(intakeSubsystem.enableIntakeMotor());
 
         return sequence;
     }
@@ -32,11 +27,7 @@ public class IntakeCommand extends CommandBase{
         SequentialCommandGroup sequence = new SequentialCommandGroup();
         sequence.addRequirements(intakeSubsystem);
 
-        //enable the servo
-        sequence.addCommands(intakeSubsystem.setOuttakeAngle()
-                .alongWith(intakeSubsystem.enableOuttakeMotor())
-                .alongWith(preShooterSubsystem.setPreventAngle())
-        );
+        sequence.addCommands(intakeSubsystem.enableOuttakeMotor());
 
         return sequence;
     }
@@ -45,11 +36,7 @@ public class IntakeCommand extends CommandBase{
         SequentialCommandGroup sequence = new SequentialCommandGroup();
         sequence.addRequirements(intakeSubsystem);
 
-        //stop both the servo and motor
-        sequence.addCommands(intakeSubsystem.setStopAngle()
-                .alongWith(intakeSubsystem.enableStopMotor())
-                .alongWith(preShooterSubsystem.setStopPreShooter())
-        );
+        sequence.addCommands(intakeSubsystem.enableStopMotor());
 
         return sequence;
     }

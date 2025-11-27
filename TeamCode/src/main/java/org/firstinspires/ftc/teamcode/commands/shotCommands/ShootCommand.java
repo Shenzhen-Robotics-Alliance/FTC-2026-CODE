@@ -41,15 +41,14 @@ public class ShootCommand extends CommandBase {
 
     // <Fixed Point Shooting in both Far and Short point>
     public Command fixShootFarContinuously() {
-        SequentialCommandGroup sequence = new SequentialCommandGroup();
-        sequence.addRequirements(shooterSubsystem);
+        return new ParallelCommandGroup(
+                shooterSubsystem.shooterFixFarLaunch(),
 
-        sequence.addCommands(shooterSubsystem.shooterFixFarLaunch()
-                .alongWith(shooterSubsystem.isReadyToFixFarLaunch()
-                        ? preShooterSubsystem.setShootingAngle()
-                        : preShooterSubsystem.setPreventAngle()));
-
-        return sequence;
+                new SequentialCommandGroup(
+                        new WaitUntilCommand(shooterSubsystem::isReadyToFixFarLaunch),
+                        preShooterSubsystem.setShootingAngle()
+                )
+        );
     }
 
     public Command fixShootShortContinuously() {

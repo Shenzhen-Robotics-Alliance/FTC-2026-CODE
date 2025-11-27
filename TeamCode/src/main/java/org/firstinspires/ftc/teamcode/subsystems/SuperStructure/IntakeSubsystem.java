@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class IntakeSubsystem extends SubsystemBase{
     public final LinearMotion intake;
-    public final Servo intakeServo;
 
     public IntakeSubsystem(HardwareMap hardwareMap) {
         this.intake = new LinearMotion(
@@ -25,27 +24,10 @@ public class IntakeSubsystem extends SubsystemBase{
                 0,
                 0
         );
-        this.intakeServo = hardwareMap.get(Servo.class,"IntakeServo");
     }
 
     public void periodic(){
         intake.periodic();
-    }
-
-    public void setStopIntake(){
-        intake.setMotorsStop();
-    }
-
-    public Command setIntakeAngle(){
-        return new RunCommand(() -> intakeServo.setPosition(0));
-    }
-
-    public Command setOuttakeAngle(){
-        return new RunCommand(() -> intakeServo.setPosition(1));
-    }
-
-    public Command setStopAngle(){
-       return new InstantCommand(()->intakeServo.setPosition(0.5));
     }
 
     public Command enableIntakeMotor(){

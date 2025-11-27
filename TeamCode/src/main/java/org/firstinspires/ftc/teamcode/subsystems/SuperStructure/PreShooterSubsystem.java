@@ -24,10 +24,5 @@ public class PreShooterSubsystem {
                 preShooter.setPosition(0.5));
     }
 
-    public Command setPreventAngle(){
-        return new RunCommand(() ->
-                preShooter.setPosition(1)
-        );
-    }
-
+    
 }

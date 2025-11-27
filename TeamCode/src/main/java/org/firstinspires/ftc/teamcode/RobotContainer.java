@@ -87,7 +87,7 @@ public final class RobotContainer implements AutoCloseable {
 
 
         this.intakeSubsystem = new IntakeSubsystem(hardwareMap);
-        this.intakeCommand = new IntakeCommand(intakeSubsystem,preShooterSubsystem);
+        this.intakeCommand = new IntakeCommand(intakeSubsystem);
 
 
     }
