@@ -13,22 +13,23 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class ShooterSubsystem extends SubsystemBase {
     public final LinearMotion shooter;
 
-    private final double MOTOR_CPR = 103.6; //counts per revolution
-    private final double MAX_TICKS_PER_SEC = 3073; //Ticks/Sec: (1780 * 103.6) / 60 ≈ 3073
-    private final double TOLERANCE_RPM = 50.0;
+    private final double MOTOR_CPR = 104; //counts per revolution
+    private final double MAX_TICKS_PER_SEC = 1500; //Ticks/Sec: (1780 * 103.6) / 60 ≈ 3073
+    private final double TOLERANCE_RPM = 50;
     private final double TOLERANCE_TICKS = (TOLERANCE_RPM * MOTOR_CPR) / 60.0;
-
-
+    private double targetTPS = 0;
+    private double currentTPS = 0;
+    private double MotorScale = 2.3;
 
     public ShooterSubsystem(HardwareMap hardwareMap){
         this.shooter = new LinearMotion(
                 "shooter",
                 new DcMotorEx[]{
-                        hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
+                        hardwareMap.get(DcMotorEx.class,"ShooterMotor"),
                 },
                 new boolean[]{true},
-                hardwareMap.get(DcMotorEx.class,"ShooterMotor1"),
-                true,
+                hardwareMap.get(DcMotorEx.class,"ShooterMotor"),
+                false,
                 MAX_TICKS_PER_SEC,
                 0.8,
                 0,
@@ -40,9 +41,10 @@ public class ShooterSubsystem extends SubsystemBase {
     public void periodic() {
         shooter.periodic();
         telemetry.addData("=== SHOOTER ===", "");
-        telemetry.addData("Target Vel", "%.0f RPM", shooter.getTargetVelocity()); //* 2000
-        telemetry.addData("Current Vel", "%.0f RPM", shooter.getCurrentVelocityRaw());
-        telemetry.addData("Vel Error", "%.0f RPM", shooter.getVelocityError()); //* 2000
+        telemetry.addData("Target Vel", "%.0f RPM", shooter.getTargetVelocity());
+        telemetry.addData("Vel TPS", "%.0f tick/s", this.targetTPS);
+        telemetry.addData("Current TPS", "%.0f tick/s", this.currentTPS);
+
         telemetry.addData("Encoder Pos", "%.0f", shooter.getPosition());
         telemetry.addData("===== SHOOTER STATUS =====", "");
         telemetry.addData("ready to short shoot?",isReadyToFixShortLaunch());
@@ -54,22 +56,18 @@ public class ShooterSubsystem extends SubsystemBase {
     public void setTargetRPM(double rpm) {
         //limit control motor
         double clampedRPM = Math.min(rpm, 1780.0);
-
         //Translate rpm to Ticks/Sec
-        double targetTPS = (clampedRPM * MOTOR_CPR) / 60.0;
+        targetTPS = (clampedRPM * MOTOR_CPR) / 60.0;
 
         //normalized to (0.0 - 1.0)
-        double normalized = targetTPS / MAX_TICKS_PER_SEC;
+        double normalized =targetTPS*MotorScale/ MAX_TICKS_PER_SEC;
 
         shooter.setTargetVelocity(Math.max(0, normalized));
     }
 
     public boolean isAtTargetSpeed() {
         // get Ticks/Sec
-        double currentTPS = shooter.getCurrentVelocityRaw();
-
-        double targetTPS = shooter.getTargetVelocity() * MAX_TICKS_PER_SEC;
-
+        currentTPS = shooter.getCurrentVelocityRaw();
         return Math.abs(currentTPS - targetTPS) < TOLERANCE_TICKS;
     }
 
@@ -80,27 +78,19 @@ public class ShooterSubsystem extends SubsystemBase {
 
     //<Fixed Point shoot in both Short and Far Point>
     public Command shooterFixFarLaunch(){
-        return new RunCommand(() -> setTargetRPM(1500));
+        return new RunCommand(() -> setTargetRPM(800));
     }
 
     public Command shooterFixShortLaunch(){
-        return new RunCommand(() -> setTargetRPM(1200));
+        return new RunCommand(() -> setTargetRPM(550));
     }
 
     public boolean isReadyToFixFarLaunch(){
         return isAtTargetSpeed();
     }
 
-    public boolean isReadyToFixShortLaunch(){
+    public boolean isReadyToFixShortLaunch() {
         return isAtTargetSpeed();
     }
-
-    
     //<Shoot as the odometry>
-
-
-
-
-
-
 }

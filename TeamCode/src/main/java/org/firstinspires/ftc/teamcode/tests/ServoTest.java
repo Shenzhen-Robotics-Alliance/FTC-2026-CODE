@@ -20,14 +20,14 @@ public class ServoTest extends OpMode {
     @Override
     public void loop() {
         if (gamepad1.a) {
-            servo1.setPosition(0.5);
+            servo1.setPosition(0.58);//close
             servo2.setPosition(0.5);
         } else if (gamepad1.b) {
             servo1.setPosition(0);
             servo2.setPosition(0);
         }
         else if (gamepad1.x){
-            servo1.setPosition(1);
+            servo1.setPosition(0.655);//open
             servo2.setPosition(1);
         }
     }

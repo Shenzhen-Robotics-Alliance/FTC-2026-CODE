@@ -5,6 +5,7 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.RotSubsystem;
 
 import java.util.function.Supplier;
+import static org.firstinspires.ftc.teamcode.constants.SystemConstants.ROT_INIT_POSITION;
 
 public class ManualRotCommand extends CommandBase{
     private final RotSubsystem rotSubsystem;

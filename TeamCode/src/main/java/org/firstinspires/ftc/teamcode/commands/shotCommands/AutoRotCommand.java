@@ -16,6 +16,7 @@ public class AutoRotCommand extends CommandBase {
     private int BLUE_TARGET = 20;
     private int RED_TARGET = 24;
     private int TARGET_ID = 0;
+    private int Current_ID =0;
     private double Target_Distance = 0;
 
 
@@ -39,17 +40,19 @@ public class AutoRotCommand extends CommandBase {
         visionSubsystem.periodic();
         tx = visionSubsystem.targetX;
         Target_Distance = visionSubsystem.Distance;
+        Current_ID = visionSubsystem.CurrentID;
+
+        telemetry.addData("==============Vision==================","");
         telemetry.addData("Target_Distance","%.3f",Target_Distance);
+        telemetry.addData("Target_ID",this.TARGET_ID);
+        telemetry.addData("Current_ID",this.Current_ID);
 
         double targetVelocity = (tx / CameraHorizontalPOV);
-        if (visionSubsystem.hasTarget && Math.abs(tx)<7) {
-            // Set targetVelocity of the rotSubsystem
-            rotSubsystem.setRotateVelocity(targetVelocity*1.5);
-        } else if (visionSubsystem.hasTarget && Math.abs(tx)>=7) {
-            rotSubsystem.setRotateVelocity(targetVelocity*0.9);
-
-        } else {
-            rotSubsystem.setRotateStop();
+        if (Current_ID == TARGET_ID) {
+            rotSubsystem.setRotateVelocity(
+                    visionSubsystem.hasTarget ? targetVelocity * (Math.abs(tx) < 5 ? 1.5 : 0.9)
+                            : 0
+            );
         }
     }
     public void end(boolean interrupted){

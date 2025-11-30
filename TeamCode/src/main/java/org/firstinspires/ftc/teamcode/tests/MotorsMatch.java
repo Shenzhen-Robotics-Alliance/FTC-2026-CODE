@@ -10,10 +10,10 @@ public class MotorsMatch extends OpMode {
 
     @Override
     public void init() {
-        mot0 = hardwareMap.get(DcMotor.class, "mot0"); //frontRight
-        mot1 = hardwareMap.get(DcMotor.class, "mot1"); //frontLeft
-        mot2 = hardwareMap.get(DcMotor.class, "mot2"); //backLeft
-        mot3 = hardwareMap.get(DcMotor.class, "mot3"); //backRight reverse
+        mot0 = hardwareMap.get(DcMotor.class, "mot0"); //Front left
+        mot1 = hardwareMap.get(DcMotor.class, "mot1"); //Back left
+        mot2 = hardwareMap.get(DcMotor.class, "mot2"); //Front Right
+        mot3 = hardwareMap.get(DcMotor.class, "mot3"); //Back right
 
         mot0.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         mot1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);

@@ -139,7 +139,7 @@ public class LinearMotion implements SimpleMechanism, Subsystem {
     }
 
     public double getCurrentVelocityRaw() {
-        return encoder.getVelocity(); // original RPM
+        return encoder.getVelocity();
     }
 
     public double getVelocityError() {

@@ -21,18 +21,18 @@ import edu.wpi.first.math.geometry.Translation3d;
 final class Positions {
     public static final Translation2d START_POINT = new Translation2d(0, 0);
     public static final Rotation2d START_FACING = Rotation2d.fromDegrees(0);
-    public static final Translation2d SHOOTING_POINT = new Translation2d(-0.46, 0.73);
-    public static final Rotation2d SHOOTING_FACING = Rotation2d.fromDegrees(40);
+    public static final Translation2d SHOOTING_POINT = new Translation2d(-0.56, -0.94);
+    public static final Rotation2d SHOOTING_FACING = Rotation2d.fromDegrees(-50);
     public static final Rotation2d INTAKE_FACING = Rotation2d.fromDegrees(-90);
-    public static final Translation2d LINE_1_LEFT_BALL = new Translation2d(-0.73, 0.47);
-    public static final Translation2d LINE_1_MID_BALL = new Translation2d(-0.75, 0.25);
-    public static final Translation2d LINE_1_RIGHT_BALL = new Translation2d(-0.74, 0.05);
-    public static final Translation2d LINE_2_LEFT_BALL = new Translation2d(-1.36, 0.44);
-    public static final Translation2d LINE_2_MID_BALL = new Translation2d(-1.35, 0.33);
-    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d(-1.36, 0.22);
-    public static final Translation2d LINE_3_LEFT_BALL = new Translation2d(0, 0);
-    public static final Translation2d LINE_3_MID_BALL = new Translation2d(0, 0);
-    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0, 0);
+    public static final Translation2d LINE_1_LEFT_BALL = new Translation2d(-0.73, -0.47);
+    public static final Translation2d LINE_1_MID_BALL = new Translation2d(-0.77, -0.53);
+    public static final Translation2d LINE_1_RIGHT_BALL = new Translation2d(-0.78, -0.67);
+    public static final Translation2d LINE_2_LEFT_BALL = new Translation2d(-1.36, -0.47);
+    public static final Translation2d LINE_2_MID_BALL = new Translation2d(-1.35, -0.51);
+    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d(-1.36, -0.67);
+    public static final Translation2d LINE_3_LEFT_BALL = new Translation2d(-1.70, -0.33);
+    public static final Translation2d LINE_3_MID_BALL = new Translation2d(-1.73, -0.46);
+    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(-1.75, -0.52);
 }
 
 

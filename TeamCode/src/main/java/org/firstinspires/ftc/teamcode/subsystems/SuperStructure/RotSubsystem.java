@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.subsystems.SuperStructure;
 
 import static org.firstinspires.ftc.teamcode.constants.SystemConstants.ROT_SOFT_LIMIT;
 import static org.firstinspires.ftc.teamcode.constants.SystemConstants.telemetry;
-
+import static org.firstinspires.ftc.teamcode.constants.SystemConstants.ROT_INIT_POSITION;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -18,7 +18,7 @@ public class RotSubsystem extends SubsystemBase {
                 new boolean[]{false},
                 hardwareMap.get(DcMotorEx.class,"Rot"),
                 false,
-                2000,
+                2500,
                 0.25,
                 0,
                 0.005,
@@ -26,21 +26,22 @@ public class RotSubsystem extends SubsystemBase {
         );
     }
 
+
     public void periodic() {
         rotateMotion.periodic();
         telemetry.addData("=========Rotate=========", "");
         telemetry.addData("Target Vel", "%.0f RPM", rotateMotion.getTargetVelocity()); //* 2000
         telemetry.addData("Current Vel", "%.0f RPM", rotateMotion.getCurrentVelocityRaw());
         telemetry.addData("Vel Error", "%.0f RPM", rotateMotion.getVelocityError()); //* 2000
-        telemetry.addData("Output Power", "%.3f", rotateMotion.getOutputPower());
         telemetry.addData("Encoder Pos", "%.0f", rotateMotion.getPosition());
+        telemetry.addData("init position", "%.0f", rotateMotion.getCurrentSetPoint());
         double pos = rotateMotion.getPosition();
         double targetVel = rotateMotion.getTargetVelocity();
 
-        if (Math.abs(pos) > ROT_SOFT_LIMIT) {
-            if (pos < -ROT_SOFT_LIMIT && targetVel > 0) {
+        if (Math.abs(pos) > ROT_SOFT_LIMIT+ROT_INIT_POSITION) {
+            if (pos < -ROT_SOFT_LIMIT+ROT_INIT_POSITION && targetVel > 0) {
                 rotateMotion.runPower(0);
-            } else if (pos > ROT_SOFT_LIMIT && targetVel < 0) {
+            } else if (pos > ROT_SOFT_LIMIT+ROT_INIT_POSITION && targetVel < 0) {
                 rotateMotion.runPower(0);
             } else {
                 rotateMotion.setTargetVelocity(
@@ -74,9 +75,6 @@ public class RotSubsystem extends SubsystemBase {
     }
     public double getCurrentPosition(){
         return rotateMotion.getPosition();
-    }
-    public void gotoPosition(double setpoint){
-        rotateMotion.goToPosition(setpoint);
     }
 
 
