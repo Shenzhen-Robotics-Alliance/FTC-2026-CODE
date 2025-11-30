@@ -19,7 +19,7 @@ public class IntakeSubsystem extends SubsystemBase{
                 hardwareMap.get(DcMotorEx.class,"IntakeMotor"),
                 false,
                 2000,
-                5,
+                5,  //0
                 0,
                 0,
                 0

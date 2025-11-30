@@ -14,7 +14,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public final LinearMotion shooter;
 
     private final double MOTOR_CPR = 104; //counts per revolution
-    private final double MAX_TICKS_PER_SEC = 1500; //Ticks/Sec: (1780 * 103.6) / 60 ≈ 3073
+    private final double MAX_TICKS_PER_SEC = 1500;
     private final double TOLERANCE_RPM = 50;
     private final double TOLERANCE_TICKS = (TOLERANCE_RPM * MOTOR_CPR) / 60.0;
     private double targetTPS = 0;
@@ -31,10 +31,10 @@ public class ShooterSubsystem extends SubsystemBase {
                 hardwareMap.get(DcMotorEx.class,"ShooterMotor"),
                 false,
                 MAX_TICKS_PER_SEC,
-                0.8,
+                1,
                 0,
-                0.003,
-                0
+                0.004,
+                0.0006        
         );
     }
 

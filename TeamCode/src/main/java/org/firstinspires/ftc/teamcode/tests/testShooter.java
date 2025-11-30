@@ -14,8 +14,9 @@ public class testShooter extends OpMode {
 
     @Override
     public void init() {
-//        rot = hardwareMap.get(DcMotor.class,"rot");
-        shooter1 = hardwareMap.get(DcMotorEx.class,"ShooterMotor"); //port0 shooter1 forward
+
+
+        shooter1 = hardwareMap.get(DcMotorEx.class,"IntakeMotor "); //port0 shooter1 forward
         shooter1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         shooter1.setDirection(DcMotorSimple.Direction.FORWARD);
 //        shooter2 = hardwareMap.get(DcMotorEx.class,"ShooterMotor2");//port1 shooter2 forward
