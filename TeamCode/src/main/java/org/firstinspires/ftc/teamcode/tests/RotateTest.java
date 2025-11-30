@@ -1,23 +1,62 @@
 package org.firstinspires.ftc.teamcode.tests;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import static com.arcrobotics.ftclib.hardware.motors.Motor.Direction.FORWARD;
+import static com.arcrobotics.ftclib.hardware.motors.Motor.Direction.REVERSE;
+
+import com.arcrobotics.ftclib.hardware.motors.Motor;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-@TeleOp(name="testRot")
-public class RotateTest extends OpMode {
-    private DcMotor Rot;
+@TeleOp(name = "FTCLib RotTest", group = "Test")
+public class RotateTest extends LinearOpMode {
 
-    @Override
-    public void init() {
-        this.Rot = hardwareMap.get(DcMotor.class,"Rot");
-        Rot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-    }
+
+    private Motor Rot;
 
     @Override
-    public void loop() {
-        final double rotPower = gamepad2.left_stick_x;
-        Rot.setPower(0.3*rotPower);
-    }
+    public void runOpMode() throws InterruptedException {
 
+        Rot = new Motor(hardwareMap, "Rot");
+
+
+        Rot.setRunMode(Motor.RunMode.PositionControl);
+
+
+        Rot.setPositionCoefficient(0.05);
+        Rot.setPositionTolerance(100);
+
+        Rot.setInverted(false);
+
+        Rot.resetEncoder();
+
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
+
+        waitForStart();
+
+        if (opModeIsActive()) {
+            int targetPos = 1000;
+            Rot.setTargetPosition(targetPos);
+
+
+            Rot.set(0.01);
+
+            while (opModeIsActive()) {
+
+
+                if (Rot.atTargetPosition()) {
+                    telemetry.addData("Status", "Target Reached!");
+
+                } else {
+                    telemetry.addData("Status", "Moving to Target...");
+                }
+
+
+                telemetry.addData("Current Position", Rot.getCurrentPosition());
+                telemetry.addData("Target Position", targetPos);
+                telemetry.update();
+            }
+            Rot.stopMotor();
+        }
+    }
 }

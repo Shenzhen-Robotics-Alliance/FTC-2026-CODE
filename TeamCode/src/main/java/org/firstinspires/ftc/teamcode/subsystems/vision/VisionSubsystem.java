@@ -9,10 +9,9 @@ import com.qualcomm.hardware.limelightvision.LLStatus;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.sun.tools.javac.code.Attribute;
+
 import org.firstinspires.ftc.teamcode.constants.SystemConstants;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
-import org.firstinspires.ftc.teamcode.utils.MapleMaths.Angles;
 
 import java.util.List;
 
@@ -28,7 +27,7 @@ public class VisionSubsystem extends SubsystemBase {
     public boolean hasTarget = false;
     public double targetX = 0.0;
     public double targetY = 0.0;
-    public int targetID = 0;
+    public int CurrentID = 0;
     private int pipelineIndex = 0;
     
     // PID Controller for target tracking
@@ -82,7 +81,7 @@ public class VisionSubsystem extends SubsystemBase {
                 fiducialResults = result.getFiducialResults();
                 if (!fiducialResults.isEmpty()) {
                     // Safely get the ID of the first detected fiducial tag
-                    targetID = fiducialResults.get(0).getFiducialId();
+                    CurrentID = fiducialResults.get(0).getFiducialId();
                 }
             } else {
                 hasTarget = false;
@@ -94,8 +93,8 @@ public class VisionSubsystem extends SubsystemBase {
     }
 
 
-    public int getTargetID() {
-        return targetID;
+    public int getCurrentID() {
+        return CurrentID;
     }
 
     public boolean hasTarget(){

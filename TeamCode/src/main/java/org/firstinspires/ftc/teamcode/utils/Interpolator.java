@@ -6,7 +6,7 @@ import java.util.Map;
 public class Interpolator {
     private final TreeMap<Double, Double> table = new TreeMap<>();
 
-    //table store distance adn rpm
+    //table store distance and rpm
     public void add(double distance, double rpm) {
         table.put(distance, rpm);
     }

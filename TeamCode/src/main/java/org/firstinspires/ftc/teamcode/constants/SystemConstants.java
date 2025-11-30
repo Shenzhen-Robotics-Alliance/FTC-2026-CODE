@@ -12,9 +12,10 @@ public class SystemConstants {
     public static final double ODOMETRY_UPDATE_RATE_HZ = 200.0;
     public static final double IMU_UPDATE_HZ = 5;
     public static final double TARGET_HIGHT_CM = 90.45;
-    public static final double CAMERA_ANGLE_DEGREE = 66;
-    public static final double CAMERA_HIEHT_CM = 25.4;
-    public static final double ROT_SOFT_LIMIT = 170;
+    public static final double CAMERA_ANGLE_DEGREE = 30;
+    public static final double CAMERA_HIEHT_CM = 31.4;
+    public static final double ROT_SOFT_LIMIT = 650;
+    public static double ROT_INIT_POSITION = 0;
 
 
 }

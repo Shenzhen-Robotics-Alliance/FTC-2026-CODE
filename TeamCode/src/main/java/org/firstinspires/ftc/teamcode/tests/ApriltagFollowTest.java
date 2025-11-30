@@ -23,7 +23,7 @@ public class ApriltagFollowTest extends OpMode {
         telemetry.addLine("---");
 
         telemetry.addData("Target Found", () -> limelight.hasTarget());
-        telemetry.addData("Target ID", () -> limelight.getTargetID());
+        telemetry.addData("Target ID", () -> limelight.getCurrentID());
         telemetry.addData("Target X", () -> String.format("%.2f", limelight.targetX));
         telemetry.addData("Target Y", () -> String.format("%.2f", limelight.targetY));
         RotMotor.setPower(limelight.targetX*-0.3);

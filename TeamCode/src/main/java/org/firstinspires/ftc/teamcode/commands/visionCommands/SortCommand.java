@@ -15,8 +15,8 @@ public class SortCommand extends CommandBase{
     }
     public void execute(){
         visionSubsystem.periodic();
-        if (visionSubsystem.getTargetID()!=21 || visionSubsystem.getTargetID()!=24) {
-            final int Sorting_ID = visionSubsystem.getTargetID();
+        if (visionSubsystem.getCurrentID()!=21 || visionSubsystem.getCurrentID()!=24) {
+            final int Sorting_ID = visionSubsystem.getCurrentID();
         }
     }
     public void end(boolean interrupted){
