@@ -19,7 +19,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private final double TOLERANCE_TICKS = (TOLERANCE_RPM * MOTOR_CPR) / 60.0;
 
 
-
     public ShooterSubsystem(HardwareMap hardwareMap){
         this.shooter = new LinearMotion(
                 "shooter",
@@ -77,7 +76,6 @@ public class ShooterSubsystem extends SubsystemBase {
         return new RunCommand(() -> shooter.setTargetVelocity(0));
     }
 
-
     //<Fixed Point shoot in both Short and Far Point>
     public Command shooterFixFarLaunch(){
         return new RunCommand(() -> setTargetRPM(1500));
@@ -95,12 +93,10 @@ public class ShooterSubsystem extends SubsystemBase {
         return isAtTargetSpeed();
     }
 
+
+
     
     //<Shoot as the odometry>
-
-
-
-
 
 
 }

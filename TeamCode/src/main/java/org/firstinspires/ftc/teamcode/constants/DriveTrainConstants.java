@@ -40,7 +40,7 @@ public class DriveTrainConstants {
             RevHubOrientationOnRobot.UsbFacingDirection.LEFT
     ));
 
-    public static final double ODOMETER_ENCODER_TICKS_PER_REVOLUTION = 2000; // 2048 ticks mag encoder
+    public static final double ODOMETER_ENCODER_TICKS_PER_REVOLUTION = 2000; // 2000 ticks mag encoder
     public static final double ODOMETER_WHEELS_RADIUS_METERS = 16.0/1000; // 32mm
 
 

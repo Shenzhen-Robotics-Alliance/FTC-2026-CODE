@@ -32,7 +32,6 @@ public class RotSubsystem extends SubsystemBase {
         telemetry.addData("Target Vel", "%.0f RPM", rotateMotion.getTargetVelocity()); //* 2000
         telemetry.addData("Current Vel", "%.0f RPM", rotateMotion.getCurrentVelocityRaw());
         telemetry.addData("Vel Error", "%.0f RPM", rotateMotion.getVelocityError()); //* 2000
-        telemetry.addData("Output Power", "%.3f", rotateMotion.getOutputPower());
         telemetry.addData("Encoder Pos", "%.0f", rotateMotion.getPosition());
         double pos = rotateMotion.getPosition();
         double targetVel = rotateMotion.getTargetVelocity();
