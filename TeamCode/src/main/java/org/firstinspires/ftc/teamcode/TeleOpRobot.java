@@ -88,24 +88,34 @@ public class TeleOpRobot extends Robot {
 
         this.copilotGamePad.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenActive(() -> isAutoShootingMode = true);
+<<<<<<< HEAD
 
         Trigger pilotIntakeTrigger = new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5);
 
         pilotIntakeTrigger.toggleWhenActive(robotContainer.intakeCommand.intakeContinuously());
+=======
+        
+        new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5)
+                .whileActiveOnce(robotContainer.intakeCommand.intakeContinuously());
+>>>>>>> parent of b394baf (new)
 
         //pilot use A to control intake
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.A)
                 .whenHeld(robotContainer.intakeCommand.outtakeContinuously());
 
-        Trigger pilotShootTrigger = new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5);
-        pilotShootTrigger.whileActiveOnce(
+        new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)
+                .whileActiveOnce(
                         new SelectCommand(
                                 new HashMap<Object, Command>() {{
                                     put(false, robotContainer.shootCommand.fixShootShortContinuously());
                                     put(true, robotContainer.shootCommand.shootAutoVelocity());
                                 }},
                                 () -> isAutoShootingMode)
+<<<<<<< HEAD
         );
+=======
+                );
+>>>>>>> parent of b394baf (new)
     }
 
     @Override
