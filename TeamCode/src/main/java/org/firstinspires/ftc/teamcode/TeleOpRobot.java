@@ -91,7 +91,8 @@ public class TeleOpRobot extends Robot {
 
         Trigger pilotIntakeTrigger = new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5);
 
-        pilotIntakeTrigger.toggleWhenActive(robotContainer.intakeCommand.intakeContinuously());
+        pilotIntakeTrigger.whileActiveOnce(robotContainer.intakeCommand.intakeContinuously());
+
 
         //pilot use A to control intake
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.A)
