@@ -93,8 +93,6 @@ public class TeleOpRobot extends Robot {
 
         pilotIntakeTrigger.whileActiveOnce(robotContainer.intakeCommand.intakeContinuously());
 
-        pilotIntakeTrigger.whenInactive(
-                new InstantCommand(robotContainer.intakeCommand::stopIntake));
 
         //pilot use A to control intake
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.A)
@@ -110,7 +108,6 @@ public class TeleOpRobot extends Robot {
                                 () -> isAutoShootingMode)
                 );
 
-        pilotShootTrigger.whenInactive(new InstantCommand(robotContainer.shootCommand::shootStop));
     }
 
     @Override

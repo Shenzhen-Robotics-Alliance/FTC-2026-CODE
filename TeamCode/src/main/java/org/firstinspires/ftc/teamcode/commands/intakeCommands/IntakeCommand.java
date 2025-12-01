@@ -2,7 +2,9 @@ package org.firstinspires.ftc.teamcode.commands.intakeCommands;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandBase;
+import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.StartEndCommand;
 
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.IntakeSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.PreShooterSubsystem;
@@ -14,15 +16,13 @@ public class IntakeCommand extends CommandBase{
         this.intakeSubsystem = intakeSubsystem;
     }
 
-    public Command intakeContinuously(){
-        SequentialCommandGroup sequence = new SequentialCommandGroup();
-        sequence.addRequirements(intakeSubsystem);
-
-        sequence.addCommands(intakeSubsystem.enableIntakeMotor());
-
-        return sequence;
+    public Command intakeContinuously() {
+        return new StartEndCommand(
+                intakeSubsystem::enableIntakeMotor,
+                intakeSubsystem::enableStopMotor,
+                intakeSubsystem
+        );
     }
-
     public Command outtakeContinuously(){
         SequentialCommandGroup sequence = new SequentialCommandGroup();
         sequence.addRequirements(intakeSubsystem);

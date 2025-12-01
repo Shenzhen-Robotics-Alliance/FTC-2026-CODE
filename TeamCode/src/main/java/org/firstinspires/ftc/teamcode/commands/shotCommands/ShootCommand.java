@@ -48,7 +48,15 @@ public class ShootCommand extends CommandBase {
                         new WaitUntilCommand(shooterSubsystem::isReadyToFixFarLaunch),
                         preShooterSubsystem.setShootingAngle()
                 )
-        );
+        ) {
+            @Override
+            public void end(boolean interrupted) {
+                super.end(interrupted);
+
+                shooterSubsystem.setShootingMotorStop();
+                preShooterSubsystem.setStopPreShooter();
+            }
+        };
     }
 
     public Command fixShootShortContinuously() {
@@ -59,7 +67,15 @@ public class ShootCommand extends CommandBase {
                         new WaitUntilCommand(shooterSubsystem::isReadyToFixShortLaunch),
                         preShooterSubsystem.setShootingAngle()
                 )
-        );
+        ) {
+            @Override
+            public void end(boolean interrupted) {
+                super.end(interrupted);
+
+                shooterSubsystem.setShootingMotorStop();
+                preShooterSubsystem.setStopPreShooter();
+            }
+        };
     }
 
     public Command shootStop(){
