@@ -52,6 +52,7 @@ public class ShootCommand extends CommandBase {
             @Override
             public void end(boolean interrupted) {
                 super.end(interrupted);
+
                 shooterSubsystem.setShootingMotorStop();
                 preShooterSubsystem.setStopPreShooter();
             }
@@ -70,6 +71,7 @@ public class ShootCommand extends CommandBase {
             @Override
             public void end(boolean interrupted) {
                 super.end(interrupted);
+
                 shooterSubsystem.setShootingMotorStop();
                 preShooterSubsystem.setStopPreShooter();
             }
@@ -108,18 +110,9 @@ public class ShootCommand extends CommandBase {
             (shooterSubsystem.isAtTargetSpeed()
                     ? preShooterSubsystem.setShootingAngle()
                     : preShooterSubsystem.setStopPreShooter()
-            ).schedule();
-        },shooterSubsystem){
-
-            @Override
-            public void end(boolean interrupted) {
-                super.end(interrupted);
-                shooterSubsystem.setShootingMotorStop().schedule();
-                preShooterSubsystem.setStopPreShooter().schedule();
-            }
-        };
+            ).execute();
+        });
     }
+
 }
-
-
 
