@@ -106,8 +106,7 @@ public class TeleOpRobot extends Robot {
                                     put(true, robotContainer.shootCommand.shootAutoVelocity());
                                 }},
                                 () -> isAutoShootingMode)
-                );
-
+        );
     }
 
     @Override

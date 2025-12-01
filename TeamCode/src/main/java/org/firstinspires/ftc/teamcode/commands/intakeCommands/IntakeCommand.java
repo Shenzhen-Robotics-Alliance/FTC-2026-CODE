@@ -18,8 +18,8 @@ public class IntakeCommand extends CommandBase{
 
     public Command intakeContinuously() {
         return new StartEndCommand(
-                intakeSubsystem::enableIntakeMotor,
-                intakeSubsystem::enableStopMotor,
+                () -> intakeSubsystem.enableOuttakeMotor().schedule(),
+                () -> intakeSubsystem.enableStopMotor().schedule(),
                 intakeSubsystem
         );
     }
