@@ -2,9 +2,11 @@ package org.firstinspires.ftc.teamcode.commands.shotCommands;
 //=========1,shootCommand============
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.CommandBase;
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.RunCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.StartEndCommand;
 import com.arcrobotics.ftclib.command.Subsystem;
 import com.arcrobotics.ftclib.command.WaitUntilCommand;
 
@@ -59,21 +61,32 @@ public class ShootCommand extends CommandBase {
     }
 
     public Command fixShootShortContinuously() {
-        return new ParallelCommandGroup(
-                shooterSubsystem.shooterFixShortLaunch(),
+        return new CommandBase() {
+            {
+                addRequirements(shooterSubsystem);
+            }
 
-                new SequentialCommandGroup(
-                        new WaitUntilCommand(shooterSubsystem::isReadyToFixShortLaunch),
-                        preShooterSubsystem.setShootingAngle()
-                )
-        ) {
+            @Override
+            public void initialize() {
+                shooterSubsystem.shooterFixShortLaunch().initialize();
+            }
+
+            @Override
+            public void execute() {
+                if (shooterSubsystem.isReadyToFixShortLaunch()) {
+                    preShooterSubsystem.setShootingAngle().initialize();
+                }else{
+                    preShooterSubsystem.setStopPreShooter().initialize();
+                }
+            }
+
             @Override
             public void end(boolean interrupted) {
-                super.end(interrupted);
-                shooterSubsystem.setShootingMotorStop();
-                preShooterSubsystem.setStopPreShooter();
+                shooterSubsystem.setShootingMotorStop().initialize();
+                preShooterSubsystem.setStopPreShooter().initialize();
             }
         };
+
     }
 
     public Command shootStop(){
@@ -110,7 +123,6 @@ public class ShootCommand extends CommandBase {
                     : preShooterSubsystem.setStopPreShooter()
             ).schedule();
         },shooterSubsystem){
-
             @Override
             public void end(boolean interrupted) {
                 super.end(interrupted);
