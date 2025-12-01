@@ -92,4 +92,5 @@ public class ShooterSubsystem extends SubsystemBase {
     public boolean isReadyToFixShortLaunch() {
         return isAtTargetSpeed();
     }
+    //<Shoot as the odometry>
 }
