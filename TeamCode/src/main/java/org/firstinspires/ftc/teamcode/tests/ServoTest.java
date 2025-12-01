@@ -12,8 +12,8 @@ public class ServoTest extends OpMode {
 
     @Override
     public void init() {
-        servo1 = hardwareMap.get(Servo.class, "PreShooter1");
-        servo2 = hardwareMap.get(Servo.class, "PreShooter2");
+        servo1 = hardwareMap.get(Servo.class, "PreShooter");
+        servo2 = hardwareMap.get(Servo.class, "IntakeServo");
 
     }
 
@@ -21,14 +21,14 @@ public class ServoTest extends OpMode {
     public void loop() {
         if (gamepad1.a) {
             servo1.setPosition(0.58);//close
-            servo2.setPosition(0.655);
+            servo2.setPosition(0.5);
         } else if (gamepad1.b) {
             servo1.setPosition(0);
             servo2.setPosition(0);
         }
         else if (gamepad1.x){
             servo1.setPosition(0.655);//open
-            servo2.setPosition(0.58);
+            servo2.setPosition(1);
         }
     }
 }

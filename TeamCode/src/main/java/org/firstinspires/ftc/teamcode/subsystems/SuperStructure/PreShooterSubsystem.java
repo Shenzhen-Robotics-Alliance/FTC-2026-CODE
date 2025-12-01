@@ -7,27 +7,22 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class PreShooterSubsystem {
-    public final Servo preShooter1;
-    public final Servo preShooter2;
+    public final Servo preShooter;
 
     public PreShooterSubsystem(HardwareMap hardwareMap){
-        this.preShooter1 = hardwareMap.get(Servo.class,"PreShooter1");
-        this.preShooter2 = hardwareMap.get(Servo.class,"PreShooter2");
+        this.preShooter = hardwareMap.get(Servo.class,"PreShooter");
     }
 
     public Command setShootingAngle(){
         return new RunCommand(() ->
-        {preShooter1.setPosition(0.58);
-         preShooter2.setPosition(0.655);
-        }
+                preShooter.setPosition(0.58)
         );
      }
 
     public Command setStopPreShooter(){
         return new RunCommand(() ->
-        {preShooter1.setPosition(0.655);
-         preShooter2.setPosition(0.58);
-        }
-        );
+                preShooter.setPosition(0.655));
     }
+
+    
 }
