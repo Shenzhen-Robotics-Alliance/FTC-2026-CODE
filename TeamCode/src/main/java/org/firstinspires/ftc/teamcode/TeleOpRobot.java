@@ -31,6 +31,7 @@ public class TeleOpRobot extends Robot {
 
     //State machine to make sure if AutoShootingMode
     private boolean isAutoShootingMode = false;
+    private boolean isFarShootingMode = false;
 
     public TeleOpRobot(RobotContainer robotContainer, Gamepad pilotGamePad, Gamepad copilotGamePad) {
         super();
@@ -77,78 +78,35 @@ public class TeleOpRobot extends Robot {
         this.copilotGamePad.getGamepadButton(GamepadKeys.Button.A)
                 .whenPressed(robotContainer.autoRotCommand);
 
-
-        /**
-         *  <-- pilot control the intake and outtake -->
-         *  pilot use right bumper to control the outtake
-         */
-        this.pilotGamePad.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                .toggleWhenActive(
-                        robotContainer.intakeCommand.intakeContinuously(),
-                        robotContainer.intakeCommand.stopIntake()
+        new Trigger(() -> copilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)
+                .whileActiveContinuous(
+                        robotContainer.shootCommand.fixShootFarContinuously()
                 );
 
-        //pilot use left bumper to control intake
-        this.pilotGamePad.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .toggleWhenActive(
-                        robotContainer.intakeCommand.outtakeContinuously(),
-                        robotContainer.intakeCommand.stopIntake()
-                );
-
-        /**
-         * <-- copilot and pilot control the intake and outtake -->
-         *  copilot pressed the left trigger to enter the Fixed Point
-         *  Copilot pressed the right trigger to enter the Auto Point Shooting
-         */
-
-        new Trigger(() -> copilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5)
+        this.copilotGamePad.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
                 .whenActive(() -> isAutoShootingMode = false);
 
-        new Trigger(() -> copilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)
+        this.copilotGamePad.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenActive(() -> isAutoShootingMode = true);
 
-        //When the robot situated at auto state, pilot press the left trigger enter the auto, or fixed point
+
+
         new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5)
-                .toggleWhenActive(
+                .whileActiveContinuous(robotContainer.intakeCommand.intakeContinuously());
+
+        //pilot use A to control intake
+        this.pilotGamePad.getGamepadButton(GamepadKeys.Button.A)
+                .whenPressed(robotContainer.intakeCommand.outtakeContinuously());
+
+        new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)
+                .whileActiveContinuous(
                         new SelectCommand(
                                 new HashMap<Object, Command>() {{
                                     put(false, robotContainer.shootCommand.fixShootShortContinuously());
                                     put(true, robotContainer.shootCommand.shootAutoVelocity());
                                 }},
-                                () -> isAutoShootingMode
-                        ),
-                        robotContainer.shootCommand.shootStop()
+                                () -> isAutoShootingMode)
                 );
-
-        //When the robot situated at auto left trigger enter the auto, or fixed point
-        new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)
-                .toggleWhenActive(
-                        new SelectCommand(
-                                new HashMap<Object, Command>() {{
-                                    put(false, robotContainer.shootCommand.fixShootFarContinuously());
-                                    put(true, new InstantCommand());
-                                }},
-                                () -> isAutoShootingMode
-                        ),
-                        robotContainer.shootCommand.shootStop()
-                );
-
-/**
-        //pilot use the left trigger to control the shooter to shoot the short
-        new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5)
-                .toggleWhenActive(
-                        robotContainer.shootCommand.fixShootShortContinuously(),
-                        robotContainer.shootCommand.shootStop()
-                );
-
-        //pilot use the right trigger to control the shooter to shoot the far one
-        new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)
-                .toggleWhenActive(
-                robotContainer.shootCommand.fixShootFarContinuously(),
-                        robotContainer.shootCommand.shootStop()
-        );
- */
-
     }
 
     @Override
