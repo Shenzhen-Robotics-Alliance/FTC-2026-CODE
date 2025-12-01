@@ -78,11 +78,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
     //<Fixed Point shoot in both Short and Far Point>
     public Command shooterFixFarLaunch(){
-        return new RunCommand(() -> setTargetRPM(800));
+        return new RunCommand(() -> setTargetRPM(1200));
     }
 
     public Command shooterFixShortLaunch(){
-        return new RunCommand(() -> setTargetRPM(550));
+        return new RunCommand(() -> setTargetRPM(1000));
     }
 
     public boolean isReadyToFixFarLaunch(){
