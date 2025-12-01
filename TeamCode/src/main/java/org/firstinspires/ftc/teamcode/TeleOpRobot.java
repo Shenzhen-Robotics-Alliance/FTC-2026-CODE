@@ -88,20 +88,16 @@ public class TeleOpRobot extends Robot {
 
         this.copilotGamePad.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
                 .whenActive(() -> isAutoShootingMode = true);
-
-        Trigger pilotIntakeTrigger = new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5);
-
-        pilotIntakeTrigger.whileActiveOnce(robotContainer.intakeCommand.intakeContinuously());
-
-        pilotIntakeTrigger.whenInactive(
-                new InstantCommand(robotContainer.intakeCommand::stopIntake));
+        
+        new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5)
+                .whileActiveOnce(robotContainer.intakeCommand.intakeContinuously());
 
         //pilot use A to control intake
         this.pilotGamePad.getGamepadButton(GamepadKeys.Button.A)
                 .whenHeld(robotContainer.intakeCommand.outtakeContinuously());
 
-        Trigger pilotShootTrigger = new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5);
-        pilotShootTrigger.whileActiveOnce(
+        new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)
+                .whileActiveOnce(
                         new SelectCommand(
                                 new HashMap<Object, Command>() {{
                                     put(false, robotContainer.shootCommand.fixShootShortContinuously());
@@ -109,8 +105,6 @@ public class TeleOpRobot extends Robot {
                                 }},
                                 () -> isAutoShootingMode)
                 );
-
-        pilotShootTrigger.whenInactive(new InstantCommand(robotContainer.shootCommand::shootStop));
     }
 
     @Override
