@@ -17,15 +17,9 @@ public class IntakeSubsystem extends SubsystemBase{
                 new DcMotorEx[]{hardwareMap.get(DcMotorEx.class,"IntakeMotor")},
                 new boolean[]{false},
                 hardwareMap.get(DcMotorEx.class,"IntakeMotor"),
-<<<<<<< HEAD
                 true,
                 2880,
                 5,
-=======
-                false,
-                2000,
-                5,  //0
->>>>>>> parent of b394baf (new)
                 0,
                 0.001,
                 0.000347
@@ -37,11 +31,11 @@ public class IntakeSubsystem extends SubsystemBase{
     }
 
     public Command enableIntakeMotor(){
-        return new RunCommand(() -> intake.setTargetVelocity(0.9));
+        return new RunCommand(() -> intake.setTargetVelocity(-0.9));
     }
 
     public Command enableOuttakeMotor(){
-        return new RunCommand(() -> intake.setTargetVelocity(-0.9));
+        return new RunCommand(() -> intake.setTargetVelocity(0.9));
     }
 
     public Command enableStopMotor(){
