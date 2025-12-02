@@ -74,7 +74,7 @@ public class VisionSubsystem extends SubsystemBase {
                 hasTarget = true;
                 targetX = result.getTx();
                 targetY = result.getTy();
-                Distance = getTargetDistance(targetY+SystemConstants.CAMERA_ANGLE_DEGREE, SystemConstants.TARGET_HIGHT_CM)-SystemConstants.CAMERA_HIEHT_CM;
+                Distance = getTargetDistance(targetY+SystemConstants.CAMERA_ANGLE_DEGREE, SystemConstants.TARGET_HEIGHT_CM)-SystemConstants.CAMERA_HEIGHT_CM;
 
 
                 // Access fiducial results

@@ -38,7 +38,10 @@ public class ShootCommand extends CommandBase {
         rpmTable.add(0.7, 1680);
     }
 
-
+    @Override
+    public void initialize(){
+        preShooterSubsystem.setStopPreShooter();
+    }
     // <Fixed Point Shooting in both Far and Short point>
     public Command fixShootFarContinuously() {
         return new ParallelCommandGroup(

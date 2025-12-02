@@ -19,7 +19,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private final double TOLERANCE_TICKS = (TOLERANCE_RPM * MOTOR_CPR) / 60.0;
     private double targetTPS = 0;
     private double currentTPS = 0;
-    private double MotorScale = 2.3;
+    private double MotorScale = 2;
 
     public ShooterSubsystem(HardwareMap hardwareMap){
         this.shooter = new LinearMotion(
@@ -31,7 +31,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 hardwareMap.get(DcMotorEx.class,"ShooterMotor"),
                 false,
                 MAX_TICKS_PER_SEC,
-                1,
+                1.05,
                 0,
                 0.004,
                 0.0006        
@@ -81,11 +81,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
     //<Fixed Point shoot in both Short and Far Point>
     public Command shooterFixFarLaunch(){
-        return new RunCommand(() -> setTargetRPM(1200));
+        return new RunCommand(() -> setTargetRPM(800));
     }
 
     public Command shooterFixShortLaunch(){
-        return new RunCommand(() -> setTargetRPM(1000));
+        return new RunCommand(() -> setTargetRPM(500));
     }
 
     public boolean isReadyToFixFarLaunch(){

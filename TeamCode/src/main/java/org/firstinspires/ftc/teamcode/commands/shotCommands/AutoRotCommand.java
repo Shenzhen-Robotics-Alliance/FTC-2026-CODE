@@ -16,7 +16,7 @@ public class AutoRotCommand extends CommandBase {
     private int BLUE_TARGET = 20;
     private int RED_TARGET = 24;
     private int TARGET_ID = 0;
-    private int Current_ID =0;
+    private int Current_ID = 0;
     private double Target_Distance = 0;
 
 
