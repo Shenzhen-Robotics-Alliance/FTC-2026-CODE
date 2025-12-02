@@ -44,7 +44,6 @@ public class ShooterSubsystem extends SubsystemBase {
         telemetry.addData("Target Vel", "%.0f RPM", shooter.getTargetVelocity());
         telemetry.addData("Vel TPS", "%.0f tick/s", this.targetTPS);
         telemetry.addData("Current TPS", "%.0f tick/s", this.currentTPS);
-
         telemetry.addData("Encoder Pos", "%.0f", shooter.getPosition());
         telemetry.addData("===== SHOOTER STATUS =====", "");
         telemetry.addData("ready to short shoot?",isReadyToFixShortLaunch());
@@ -55,7 +54,7 @@ public class ShooterSubsystem extends SubsystemBase {
     //<General Functions for the motor control>
     public void setTargetRPM(double rpm) {
         //limit control motor
-        double clampedRPM = Math.min(rpm, 1780.0);
+        double clampedRPM = Math.min(rpm, 1500);
         //Translate rpm to Ticks/Sec
         targetTPS = (clampedRPM * MOTOR_CPR) / 60.0;
 
@@ -65,11 +64,15 @@ public class ShooterSubsystem extends SubsystemBase {
         shooter.setTargetVelocity(Math.max(0, normalized));
     }
 
+    
+
     public boolean isAtTargetSpeed() {
         // get Ticks/Sec
         currentTPS = shooter.getCurrentVelocityRaw();
         return Math.abs(currentTPS - targetTPS) < TOLERANCE_TICKS;
     }
+
+    
 
     public Command setShootingMotorStop(){
         return new RunCommand(() -> shooter.setTargetVelocity(0));
@@ -86,11 +89,12 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public boolean isReadyToFixFarLaunch(){
-        return isAtTargetSpeed();
+        currentTPS = shooter.getCurrentVelocityRaw();
+        return currentTPS > 1100;
     }
 
     public boolean isReadyToFixShortLaunch() {
-        return isAtTargetSpeed();
+        currentTPS = shooter.getCurrentVelocityRaw();
+        return currentTPS > 900;
     }
-    //<Shoot as the odometry>
 }
