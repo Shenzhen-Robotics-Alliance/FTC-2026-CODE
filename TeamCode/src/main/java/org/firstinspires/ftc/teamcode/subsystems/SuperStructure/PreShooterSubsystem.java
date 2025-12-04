@@ -17,8 +17,8 @@ public class PreShooterSubsystem {
 
     public Command setShootingAngle(){
         return new InstantCommand(() -> {
-            preShooter1.setPosition(0.59);
-            preShooter2.setPosition(0.65);
+            preShooter1.setPosition(0.585);
+            preShooter2.setPosition(0.655);
         });
      }
 

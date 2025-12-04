@@ -11,8 +11,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 public class AutoUtils {
-    public static final Pose2d scoreShortBallsPose = new Pose2d(-0.40, -0.79, Rotation2d.fromDegrees(45));
-    public static final Pose2d scoreLongBallsPose = new Pose2d(0, 0, Rotation2d.fromDegrees(45));
+    public static final Pose2d scoreShortBallsPose = new Pose2d(-0.01, 0.39, Rotation2d.fromDegrees(15));
+    public static final Pose2d scoreLongBallsPose = new Pose2d(0, 0, Rotation2d.fromDegrees(0));
     public static final Pose2d startPose = new Pose2d(0,0,Rotation2d.fromDegrees(0));
 
     //Drive to short shooting pose and then shooting
@@ -21,16 +21,20 @@ public class AutoUtils {
 
         Command moveToShortScoringBalls = robotContainer.driveSubsystem.followPath(
                 new Pose2d(startPose.getTranslation(),Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(0.5,0.5)},  //change as the real situation
-                new Pose2d(Positions.SHOOTING_POINT,Rotation2d.fromDegrees(0)),
-                Rotation2d.fromDegrees(0),
+                new Translation2d[]{new Translation2d(0.15,0.03)},  //change as the real situation
+                new Pose2d(Positions.SHOOTING_POINT,Rotation2d.fromDegrees(15)),
+                Rotation2d.fromDegrees(15),
                 0.3
         );
 
         sequence.addCommands(moveToShortScoringBalls);
 
+        sequence.addCommands(robotContainer.intakeCommand.intakeContinuously());
 
-        sequence.addCommands(robotContainer.shootCommand.fixShootShortContinuously());
+        sequence.addCommands(robotContainer.shootCommand.fixShootShortContinuously().withTimeout((long)3000));
+
+        sequence.addCommands(robotContainer.intakeCommand.stopIntake());
+
 
         return sequence;
     }

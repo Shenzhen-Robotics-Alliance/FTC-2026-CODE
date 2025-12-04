@@ -13,7 +13,7 @@ import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
  * */
 public class DriveTrainConstants {
     public static final String
-        FRONT_LEFT_MOTOR_NAME = "fro     ntLeft",
+        FRONT_LEFT_MOTOR_NAME = "frontLeft",
         FRONT_RIGHT_MOTOR_NAME = "frontRight",
         BACK_LEFT_MOTOR_NAME = "backLeft",
         BACK_RIGHT_MOTOR_NAME = "backRight";
@@ -49,8 +49,8 @@ public class DriveTrainConstants {
     public static final double ODOMETER_CENTER_WHEELS_OFFSET = 0.035;
 
     public static final double CHASSIS_WIDTH_METERS = 0.335;
-    public static final double CHASSIS_LENGTH_METERS = 0.358;
 
+    public static final double CHASSIS_LENGTH_METERS = 0.358;
     public static final MecanumDriveKinematics KINEMATICS = new MecanumDriveKinematics(
             new Translation2d(CHASSIS_LENGTH_METERS /2, CHASSIS_WIDTH_METERS / 2),
             new Translation2d(CHASSIS_LENGTH_METERS /2, -CHASSIS_WIDTH_METERS / 2),

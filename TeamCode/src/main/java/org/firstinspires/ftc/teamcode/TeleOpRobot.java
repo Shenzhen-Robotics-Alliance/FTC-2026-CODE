@@ -97,13 +97,13 @@ public class TeleOpRobot extends Robot {
         new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5)
                        .toggleWhenActive(
                         robotContainer.intakeCommand.intakeContinuously(),
-                        robotContainer.intakeCommand.stopIntake()
+                        robotContainer.intakeSubsystem.enableStopMotor()
                 );
 
             this.pilotGamePad.getGamepadButton(GamepadKeys.Button.X)
                 .toggleWhenActive(
                         robotContainer.intakeCommand.outtakeContinuously(),
-                        robotContainer.intakeCommand.stopIntake()
+                        robotContainer.intakeSubsystem.enableStopMotor()
                 );
 
         new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5)

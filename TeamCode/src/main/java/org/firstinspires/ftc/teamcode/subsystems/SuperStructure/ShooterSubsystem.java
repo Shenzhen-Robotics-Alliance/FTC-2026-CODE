@@ -1,5 +1,4 @@
 package org.firstinspires.ftc.teamcode.subsystems.SuperStructure;
-//2,=========shooterSubsystem==========
 import static org.firstinspires.ftc.teamcode.constants.SystemConstants.telemetry;
 
 import com.arcrobotics.ftclib.command.Command;
@@ -15,7 +14,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private final double MOTOR_CPR = 104; //counts per revolution
     private final double MAX_TICKS_PER_SEC = 1500;
-    private final double TOLERANCE_RPM = 50;
+    private final double TOLERANCE_RPM = 3;
     private final double TOLERANCE_TICKS = (TOLERANCE_RPM * MOTOR_CPR) / 60.0;
     private double targetTPS = 0;
     private double currentTPS = 0;
@@ -31,7 +30,7 @@ public class ShooterSubsystem extends SubsystemBase {
                 hardwareMap.get(DcMotorEx.class,"ShooterMotor"),
                 false,
                 MAX_TICKS_PER_SEC,
-                1.05,
+                1.25,
                 0,
                 0.004,
                 0.0006        
@@ -81,20 +80,20 @@ public class ShooterSubsystem extends SubsystemBase {
 
     //<Fixed Point shoot in both Short and Far Point>
     public Command shooterFixFarLaunch(){
-        return new RunCommand(() -> setTargetRPM(1400));
+        return new RunCommand(() -> setTargetRPM(850));
     }
 
     public Command shooterFixShortLaunch(){
-        return new RunCommand(() -> setTargetRPM(1200));
+        return new RunCommand(() -> setTargetRPM(710));
     }
 
     public boolean isReadyToFixFarLaunch(){
         currentTPS = shooter.getCurrentVelocityRaw();
-        return currentTPS > 1100;
+        return currentTPS > 1700;
     }
 
     public boolean isReadyToFixShortLaunch() {
         currentTPS = shooter.getCurrentVelocityRaw();
-        return currentTPS > 900;
+        return currentTPS > 1400;
     }
 }

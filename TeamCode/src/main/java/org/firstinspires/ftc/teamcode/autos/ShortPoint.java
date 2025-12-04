@@ -21,7 +21,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 final class Positions {
     public static final Translation2d START_POINT = new Translation2d(0, 0);
     public static final Rotation2d START_FACING = Rotation2d.fromDegrees(0);
-    public static final Translation2d SHOOTING_POINT = new Translation2d(-0.56, -0.94);
+    public static final Translation2d SHOOTING_POINT = new Translation2d(-0.01, 0.39);
     public static final Rotation2d SHOOTING_FACING = Rotation2d.fromDegrees(-50);
     public static final Rotation2d INTAKE_FACING = Rotation2d.fromDegrees(-90);
     public static final Translation2d LINE_1_LEFT_BALL = new Translation2d(-0.73, -0.47);
