@@ -13,7 +13,7 @@ import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
  * */
 public class DriveTrainConstants {
     public static final String
-        FRONT_LEFT_MOTOR_NAME = "fro     ntLeft",
+        FRONT_LEFT_MOTOR_NAME = "frontLeft",
         FRONT_RIGHT_MOTOR_NAME = "frontRight",
         BACK_LEFT_MOTOR_NAME = "backLeft",
         BACK_RIGHT_MOTOR_NAME = "backRight";

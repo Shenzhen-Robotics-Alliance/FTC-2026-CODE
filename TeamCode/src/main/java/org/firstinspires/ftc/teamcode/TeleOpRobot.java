@@ -93,7 +93,6 @@ public class TeleOpRobot extends Robot {
                 .whenActive(() -> isAutoShootingMode = true);
 
 
-
         new Trigger(() -> pilotGamePad.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5)
                        .toggleWhenActive(
                         robotContainer.intakeCommand.intakeContinuously(),
