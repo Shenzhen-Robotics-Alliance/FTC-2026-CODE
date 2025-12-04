@@ -5,7 +5,9 @@ import com.arcrobotics.ftclib.command.CommandBase;
 import org.firstinspires.ftc.teamcode.subsystems.SuperStructure.RotSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.vision.VisionSubsystem;
 import org.firstinspires.ftc.teamcode.utils.AllianceSide;
+
 import static org.firstinspires.ftc.teamcode.constants.SystemConstants.telemetry;
+import static org.firstinspires.ftc.teamcode.constants.SystemConstants.ROT_INIT_POSITION;
 public class AutoRotCommand extends CommandBase {
     private final RotSubsystem rotSubsystem;
     private final VisionSubsystem visionSubsystem;
@@ -50,7 +52,7 @@ public class AutoRotCommand extends CommandBase {
         double targetVelocity = (tx / CameraHorizontalPOV);
         if (Current_ID == TARGET_ID) {
             rotSubsystem.setRotateVelocity(
-                    visionSubsystem.hasTarget ? targetVelocity * (Math.abs(tx) < 5 ? 1.5 : 0.9)
+                    visionSubsystem.hasTarget ? targetVelocity * (Math.abs(tx) < 8 ? 1.5 : 0.9)
                             : 0
             );
         }

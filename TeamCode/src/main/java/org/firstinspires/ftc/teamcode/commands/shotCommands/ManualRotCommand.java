@@ -22,6 +22,7 @@ public class ManualRotCommand extends CommandBase{
 
     public void initialize(){
         rotSubsystem.setRotateStop();
+        ROT_INIT_POSITION = rotSubsystem.getCurrentPosition();
     }
 
     @Override
