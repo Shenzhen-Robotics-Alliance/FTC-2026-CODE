@@ -31,14 +31,14 @@ public class IntakeSubsystem extends SubsystemBase{
     }
 
     public Command enableIntakeMotor(){
-        return new RunCommand(() -> intake.setTargetVelocity(-0.9));
+        return new InstantCommand(() -> intake.setTargetVelocity(-0.9));
     }
 
     public Command enableOuttakeMotor(){
-        return new RunCommand(() -> intake.setTargetVelocity(0.9));
+        return new InstantCommand(() -> intake.setTargetVelocity(0.9));
     }
 
     public Command enableStopMotor(){
-        return new RunCommand(() -> intake.setTargetVelocity(0));
+        return new InstantCommand(() -> intake.setTargetVelocity(0));
     }
 }

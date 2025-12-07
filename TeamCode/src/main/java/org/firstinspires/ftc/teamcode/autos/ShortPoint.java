@@ -21,18 +21,18 @@ import edu.wpi.first.math.geometry.Translation3d;
 final class Positions {
     public static final Translation2d START_POINT = new Translation2d(0, 0);
     public static final Rotation2d START_FACING = Rotation2d.fromDegrees(0);
-    public static final Translation2d SHOOTING_POINT = new Translation2d(-0.01, 0.39);
-    public static final Rotation2d SHOOTING_FACING = Rotation2d.fromDegrees(-50);
-    public static final Rotation2d INTAKE_FACING = Rotation2d.fromDegrees(-90);
-    public static final Translation2d LINE_1_LEFT_BALL = new Translation2d(-0.73, -0.47);
-    public static final Translation2d LINE_1_MID_BALL = new Translation2d(-0.77, -0.53);
-    public static final Translation2d LINE_1_RIGHT_BALL = new Translation2d(-0.78, -0.67);
-    public static final Translation2d LINE_2_LEFT_BALL = new Translation2d(-1.36, -0.47);
-    public static final Translation2d LINE_2_MID_BALL = new Translation2d(-1.35, -0.51);
-    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d(-1.36, -0.67);
-    public static final Translation2d LINE_3_LEFT_BALL = new Translation2d(-1.70, -0.33);
-    public static final Translation2d LINE_3_MID_BALL = new Translation2d(-1.73, -0.46);
-    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(-1.75, -0.52);
+    public static final Translation2d SHOOTING_POINT = new Translation2d(0.77,-0.42);
+    public static final Rotation2d SHOOTING_FACING = Rotation2d.fromDegrees(0);
+    public static final Rotation2d INTAKE_FACING = Rotation2d.fromDegrees(0);
+    public static final Translation2d LINE_1_LEFT_BALL = new Translation2d(0,-0.73);
+    public static final Translation2d LINE_1_MID_BALL = new Translation2d(0.53,-0.77);
+    public static final Translation2d LINE_1_RIGHT_BALL = new Translation2d(1,-0.78);
+    public static final Translation2d LINE_2_LEFT_BALL = new Translation2d(0,-1.36);
+    public static final Translation2d LINE_2_MID_BALL = new Translation2d(0.51,-1.35);
+    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.67,-1.36);
+    public static final Translation2d LINE_3_LEFT_BALL = new Translation2d(0,-1.70);
+    public static final Translation2d LINE_3_MID_BALL = new Translation2d(0.46,-1.73);
+    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.52,-1.75);
 }
 
 
@@ -40,42 +40,38 @@ public class ShortPoint implements Auto{
     @Override
     public Command getAutonomousCommands(RobotContainer robotContainer) {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
-        sequence.addRequirements(robotContainer.driveSubsystem,robotContainer.intakeSubsystem,robotContainer.rotSubsystem,robotContainer.shooterSubsystem, robotContainer.odometry);
-
         // Step 0: Reset Odometry
         sequence.addCommands(new InstantCommand(() -> robotContainer.driveSubsystem.setPose(new Pose2d())));
 
         // <-- Step 1: Score preloaded Balls and shoot -->
-       sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer));
+       sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer,Positions.START_POINT,1500));
 
         // <-- Step 2:  Intake and score the first three Balls -->
         Command driveToFirstLine = robotContainer.driveSubsystem.followPath(
-                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(40)),
-                new Translation2d[]{new Translation2d(0.5,0.5)},
-                new Pose2d(Positions.LINE_1_RIGHT_BALL,Rotation2d.fromDegrees(-90)),
-                Rotation2d.fromDegrees(45),
+                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(90)),
+                new Translation2d[]{new Translation2d(1.5,-0.63)},
+                new Pose2d(Positions.LINE_1_RIGHT_BALL,Rotation2d.fromDegrees(75)),
+                Rotation2d.fromDegrees(0),
                 0.3
         );
-        sequence.addCommands(driveToFirstLine);
+        sequence.addCommands(driveToFirstLine.withTimeout(3000).andThen(AutoUtils.driveToIntakeContinuousLy(robotContainer)).withTimeout(2000));
 
-        sequence.addCommands(AutoUtils.driveToIntakeContinuousLy(robotContainer));
 
-        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer));
+        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer, Positions.LINE_1_LEFT_BALL,2500));
 
 
         // <-- Step 3:  Intake and score the Second three Balls -->
         Command driveToSecondLine = robotContainer.driveSubsystem.followPath(
-                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(40)),
-                new Translation2d[]{new Translation2d(0.5,0.5)},
-                new Pose2d(Positions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(-90)),
-                Rotation2d.fromDegrees(45),
+                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
+                new Translation2d[]{new Translation2d(1.38,-1)},
+                new Pose2d(Positions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(0)),
+                Rotation2d.fromDegrees(-90),
                 0.3
                 );
-        sequence.addCommands(driveToSecondLine);
+        sequence.addCommands(driveToSecondLine.withTimeout((long)2000).andThen(AutoUtils.driveToIntakeContinuousLy(robotContainer)));
 
-        sequence.addCommands(AutoUtils.driveToIntakeContinuousLy(robotContainer));
 
-        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer));
+        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer,Positions.LINE_2_LEFT_BALL,3000));
 
 
 
