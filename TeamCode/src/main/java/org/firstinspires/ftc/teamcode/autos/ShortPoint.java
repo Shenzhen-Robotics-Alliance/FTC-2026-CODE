@@ -63,10 +63,8 @@ public class ShortPoint implements Auto{
                 Rotation2d.fromDegrees(0),
                 0.7
         );
-        sequence.addCommands(driveToFirstLine
-                .andThen(AutoUtils.driveToIntakeFirstLineContinuousLy(robotContainer)));
-
-
+        sequence.addCommands(driveToFirstLine);
+        sequence.addCommands(AutoUtils.driveToIntakeFirstLineContinuousLy(robotContainer));
         sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer, Positions.LINE_1_ENDING));
 
 
@@ -76,15 +74,14 @@ public class ShortPoint implements Auto{
                 new Translation2d[]{new Translation2d(0.60,-1.34)},
                 new Pose2d(Positions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
-                0.7);
+                0.7
+        );
 
-        sequence.addCommands(driveToSecondLine
-                .andThen(AutoUtils.driveToIntakeSecondLineContinuousLy(robotContainer)));
-
-
+        sequence.addCommands(driveToSecondLine);
+        sequence.addCommands(AutoUtils.driveToIntakeSecondLineContinuousLy(robotContainer));
         sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer,Positions.LINE_2_ENDING));
-        // <-- Step 4:  Intake and score the Third three Balls -->
 
+        // <-- Step 4:  Intake and score the Third three Balls -->
         Command driveToThirdLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
                 new Translation2d[]{new Translation2d(0.58,-1.99)},
@@ -92,16 +89,11 @@ public class ShortPoint implements Auto{
                 Rotation2d.fromDegrees(0),
                 0.7);
 
-        sequence.addCommands(driveToThirdLine
-                .andThen(AutoUtils.driveToIntakeThirdLineContinuousLy(robotContainer)));
-
-
+        sequence.addCommands(driveToThirdLine);
+        sequence.addCommands(AutoUtils.driveToIntakeThirdLineContinuousLy(robotContainer));
         sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer,Positions.LINE_3_ENDING));
 
-
-
         return sequence;
-
 
     }
 }
