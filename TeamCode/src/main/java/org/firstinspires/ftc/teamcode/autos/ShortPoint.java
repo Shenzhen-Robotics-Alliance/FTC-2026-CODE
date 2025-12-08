@@ -29,18 +29,18 @@ final class Positions {
     public static final Translation2d LINE_1_RIGHT_BALL = new Translation2d(0.57,-0.79);
 
     //new
-    public static final Translation2d LINE_1_ENDING = new Translation2d(0.18,-0.74);
+    public static final Translation2d LINE_1_ENDING = LINE_1_RIGHT_BALL.plus(new Translation2d(0.3,0));
 
     public static final Translation2d LINE_2_LEFT_BALL = new Translation2d(0,-1.36);
     public static final Translation2d LINE_2_MID_BALL = new Translation2d(0.51,-1.35);
     public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.46,-1.36);
     //new
-    public static final Translation2d LINE_2_ENDING = new Translation2d(0.11,-1.36);
+    public static final Translation2d LINE_2_ENDING = LINE_2_RIGHT_BALL.plus(new Translation2d(0.3,0));
 
     public static final Translation2d LINE_3_LEFT_BALL = new Translation2d(0,-1.70);
     public static final Translation2d LINE_3_MID_BALL = new Translation2d(0.46,-1.73);
     public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.52,-1.75);
-    public static final Translation2d LINE_3_ENDING = new Translation2d(-0.19,-1.94);
+    public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(0.3,0));
 
 }
 
