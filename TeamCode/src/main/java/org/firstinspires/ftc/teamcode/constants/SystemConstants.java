@@ -14,7 +14,7 @@ public class SystemConstants {
     public static final double TARGET_HEIGHT_CM = 90.45;
     public static final double CAMERA_ANGLE_DEGREE = 30;
     public static final double CAMERA_HEIGHT_CM = 31.4;
-    public static final double ROT_SOFT_LIMIT = 650;
+    public static final double ROT_SOFT_LIMIT = 800;
     public static double ROT_INIT_POSITION = 0;
 
 

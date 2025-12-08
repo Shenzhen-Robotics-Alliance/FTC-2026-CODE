@@ -1,3 +1,4 @@
+//=============AutoUtils==========
 package org.firstinspires.ftc.teamcode.autos;
 
 import com.arcrobotics.ftclib.command.Command;
@@ -17,7 +18,7 @@ public class AutoUtils {
     public static final Pose2d startPose = new Pose2d(0,0,Rotation2d.fromDegrees(0));
 
     //Drive to short shooting pose and then shooting
-    public static Command driveToShortPoseAndShot(RobotContainer robotContainer,Translation2d startingPoint,long ReturnTimeout) {
+    public static Command driveToShortPoseAndShot(RobotContainer robotContainer,Translation2d startingPoint) {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
 
         Command moveToShortScoringBalls = robotContainer.driveSubsystem.followPath(
@@ -28,12 +29,9 @@ public class AutoUtils {
                 0.5
          );
 
-        sequence.addCommands(moveToShortScoringBalls.withTimeout(ReturnTimeout));
-
         sequence.addCommands(robotContainer.intakeCommand.intakeContinuously()
                 .alongWith(robotContainer.shootCommand.fixShootShortContinuously())
                 .withTimeout((long)3000));
-        new WaitCommand(3500);
         sequence.addCommands(robotContainer.shootCommand.shootStop());
 
 
@@ -64,10 +62,9 @@ public class AutoUtils {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
         Command driveAndIntake = robotContainer.driveSubsystem.drive(
                 () -> new ChassisSpeeds(-0.7, 0, 0),
-                () -> false).withTimeout(1300)
+                () -> false).withTimeout(2000)
                 .alongWith(robotContainer.intakeCommand.intakeContinuously());
         sequence.addCommands(driveAndIntake);
-        new WaitCommand(2000);
 
         return sequence;
     }

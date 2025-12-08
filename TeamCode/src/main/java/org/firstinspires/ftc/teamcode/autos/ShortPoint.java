@@ -1,3 +1,4 @@
+//===========ShortPoint===============
 package org.firstinspires.ftc.teamcode.autos;
 
 import static org.firstinspires.ftc.teamcode.autos.AutoUtils.scoreShortBallsPose;
@@ -5,6 +6,7 @@ import static org.firstinspires.ftc.teamcode.autos.AutoUtils.scoreShortBallsPose
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.RobotContainer;
 
@@ -44,7 +46,7 @@ public class ShortPoint implements Auto{
         sequence.addCommands(new InstantCommand(() -> robotContainer.driveSubsystem.setPose(new Pose2d())));
 
         // <-- Step 1: Score preloaded Balls and shoot -->
-       sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer,Positions.START_POINT,1500));
+       sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer,Positions.START_POINT));
 
         // <-- Step 2:  Intake and score the first three Balls -->
         Command driveToFirstLine = robotContainer.driveSubsystem.followPath(
@@ -54,10 +56,12 @@ public class ShortPoint implements Auto{
                 Rotation2d.fromDegrees(0),
                 0.3
         );
-        sequence.addCommands(driveToFirstLine.withTimeout(3000).andThen(AutoUtils.driveToIntakeContinuousLy(robotContainer)).withTimeout(2000));
+        sequence.addCommands(driveToFirstLine.withTimeout(3000)
+                .andThen(AutoUtils.driveToIntakeContinuousLy(robotContainer))
+                .withTimeout(2000));
+        
 
-
-        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer, Positions.LINE_1_LEFT_BALL,2500));
+        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer, Positions.LINE_1_LEFT_BALL));
 
 
         // <-- Step 3:  Intake and score the Second three Balls -->
@@ -66,12 +70,14 @@ public class ShortPoint implements Auto{
                 new Translation2d[]{new Translation2d(0.60,-1.34)},
                 new Pose2d(Positions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
-                0.3
-                );
-        sequence.addCommands(driveToSecondLine.withTimeout((long)2000).andThen(AutoUtils.driveToIntakeContinuousLy(robotContainer)));
+                0.3);
+
+        sequence.addCommands(driveToSecondLine.withTimeout((long)2000)
+                .andThen(AutoUtils.driveToIntakeContinuousLy(robotContainer)
+                        .andThen(new WaitCommand(1300))));
 
 
-        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer,Positions.LINE_2_LEFT_BALL,3000));
+        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer,Positions.LINE_2_LEFT_BALL));
 
 
 
