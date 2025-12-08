@@ -24,7 +24,7 @@ public class AutoUtils {
         Command moveToShortScoringBalls = robotContainer.driveSubsystem.followPath(
                 new Pose2d(startingPoint,Rotation2d.fromDegrees(90)),
                 new Translation2d[]{},  //change as the real situation
-                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
+                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(45)),
                 Rotation2d.fromDegrees(0),
                 0.7
          );
