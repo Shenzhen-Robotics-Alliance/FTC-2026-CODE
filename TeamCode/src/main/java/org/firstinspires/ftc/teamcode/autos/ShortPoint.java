@@ -29,12 +29,21 @@ final class Positions {
     public static final Translation2d LINE_1_LEFT_BALL = new Translation2d(0,-0.73);
     public static final Translation2d LINE_1_MID_BALL = new Translation2d(0.53,-0.77);
     public static final Translation2d LINE_1_RIGHT_BALL = new Translation2d(0.72,-0.79);
+
+    //new
+    public static final Translation2d LINE_1_ENDING = new Translation2d(0,0);
+
     public static final Translation2d LINE_2_LEFT_BALL = new Translation2d(0,-1.36);
     public static final Translation2d LINE_2_MID_BALL = new Translation2d(0.51,-1.35);
     public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.46,-1.36);
+    //new
+    public static final Translation2d LINE_2_ENDING = new Translation2d(0,0);
+
     public static final Translation2d LINE_3_LEFT_BALL = new Translation2d(0,-1.70);
     public static final Translation2d LINE_3_MID_BALL = new Translation2d(0.46,-1.73);
     public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.52,-1.75);
+    public static final Translation2d LINE_3_ENDING = new Translation2d(0,0);
+
 }
 
 
@@ -59,9 +68,15 @@ public class ShortPoint implements Auto{
         sequence.addCommands(driveToFirstLine.withTimeout(3000)
                 .andThen(AutoUtils.driveToIntakeContinuousLy(robotContainer))
                 .withTimeout(2000));
-        
 
-        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer, Positions.LINE_1_LEFT_BALL));
+        Command backToFirstLineRight = robotContainer.driveSubsystem.followStraightLine(
+                Positions.LINE_1_ENDING,
+                Positions.LINE_1_RIGHT_BALL,
+                Rotation2d.fromDegrees(0),
+                0.3
+        );
+
+        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer, Positions.LINE_1_RIGHT_BALL));
 
 
         // <-- Step 3:  Intake and score the Second three Balls -->
