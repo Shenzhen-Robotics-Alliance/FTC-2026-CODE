@@ -76,6 +76,8 @@ public class ShortPoint implements Auto{
                 0.3
         );
 
+        sequence.addCommands(backToFirstLineRight);
+
         sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer, Positions.LINE_1_RIGHT_BALL));
 
 
