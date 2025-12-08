@@ -65,20 +65,11 @@ public class ShortPoint implements Auto{
                 Rotation2d.fromDegrees(0),
                 0.3
         );
-        sequence.addCommands(driveToFirstLine.withTimeout(3000)
-                .andThen(AutoUtils.driveToIntakeContinuousLy(robotContainer))
-                .withTimeout(2000));
+        sequence.addCommands(driveToFirstLine
+                .andThen(AutoUtils.driveToIntakeFirstLineContinuousLy(robotContainer)));
 
-        Command backToFirstLineRight = robotContainer.driveSubsystem.followStraightLine(
-                Positions.LINE_1_ENDING,
-                Positions.LINE_1_RIGHT_BALL,
-                Rotation2d.fromDegrees(0),
-                0.3
-        );
 
-        sequence.addCommands(backToFirstLineRight);
-
-        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer, Positions.LINE_1_RIGHT_BALL));
+        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer, Positions.LINE_1_ENDING));
 
 
         // <-- Step 3:  Intake and score the Second three Balls -->
@@ -89,12 +80,11 @@ public class ShortPoint implements Auto{
                 Rotation2d.fromDegrees(0),
                 0.3);
 
-        sequence.addCommands(driveToSecondLine.withTimeout((long)2000)
-                .andThen(AutoUtils.driveToIntakeContinuousLy(robotContainer)
-                        .andThen(new WaitCommand(1300))));
+        sequence.addCommands(driveToSecondLine
+                .andThen(AutoUtils.driveToIntakeSecondLineContinuousLy(robotContainer)));
 
 
-        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer,Positions.LINE_2_LEFT_BALL));
+        sequence.addCommands(AutoUtils.driveToShortPoseAndShot(robotContainer,Positions.LINE_2_ENDING));
 
 
 

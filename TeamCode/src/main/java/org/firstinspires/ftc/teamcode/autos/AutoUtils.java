@@ -58,11 +58,28 @@ public class AutoUtils {
         return sequence;
     }
 
-    public static Command driveToIntakeContinuousLy(RobotContainer robotContainer){
+    public static Command driveToIntakeFirstLineContinuousLy(RobotContainer robotContainer){
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
-        Command driveAndIntake = robotContainer.driveSubsystem.drive(
-                () -> new ChassisSpeeds(-0.7, 0, 0),
-                () -> false).withTimeout(2000)
+        Command driveAndIntake = robotContainer.driveSubsystem.followStraightLine(
+                Positions.LINE_1_RIGHT_BALL,
+                Positions.LINE_1_ENDING,
+                Rotation2d.fromDegrees(0),
+                        0.3
+                )
+                .alongWith(robotContainer.intakeCommand.intakeContinuously());
+        sequence.addCommands(driveAndIntake);
+
+        return sequence;
+    }
+
+    public static Command driveToIntakeSecondLineContinuousLy(RobotContainer robotContainer){
+        final SequentialCommandGroup sequence = new SequentialCommandGroup();
+        Command driveAndIntake = robotContainer.driveSubsystem.followStraightLine(
+                        Positions.LINE_2_RIGHT_BALL,
+                        Positions.LINE_2_ENDING,
+                        Rotation2d.fromDegrees(0),
+                        0.3
+                )
                 .alongWith(robotContainer.intakeCommand.intakeContinuously());
         sequence.addCommands(driveAndIntake);
 
