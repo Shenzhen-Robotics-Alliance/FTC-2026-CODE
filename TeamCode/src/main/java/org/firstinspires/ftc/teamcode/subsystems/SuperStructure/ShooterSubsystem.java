@@ -14,7 +14,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private final double MOTOR_CPR = 104; //counts per revolution
     private final double MAX_TICKS_PER_SEC = 1500;
-    private final double TOLERANCE_RPM = 3;
+    private final double TOLERANCE_RPM = 1;
     private final double TOLERANCE_TICKS = (TOLERANCE_RPM * MOTOR_CPR) / 60.0;
     private double targetTPS = 0;
     private double currentTPS = 0;
@@ -80,7 +80,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     //<Fixed Point shoot in both Short and Far Point>
     public Command shooterFixFarLaunch(){
-        return new RunCommand(() -> setTargetRPM(850));
+        return new RunCommand(() -> setTargetRPM(950));
     }
 
     public Command shooterFixShortLaunch(){
@@ -89,7 +89,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public boolean isReadyToFixFarLaunch(){
         currentTPS = shooter.getCurrentVelocityRaw();
-        return currentTPS > 1700;
+        return currentTPS > 2200;
     }
 
     public boolean isReadyToFixShortLaunch() {

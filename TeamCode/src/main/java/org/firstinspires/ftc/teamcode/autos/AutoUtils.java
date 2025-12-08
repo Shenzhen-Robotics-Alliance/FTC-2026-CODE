@@ -26,7 +26,7 @@ public class AutoUtils {
                 new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(100)),
                 Rotation2d.fromDegrees(45),
                 0.7
-        );
+         );
 
         sequence.addCommands(moveToShortScoringBalls.withTimeout(ReturnTimeout));
 
