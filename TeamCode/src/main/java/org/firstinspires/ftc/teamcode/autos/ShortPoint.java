@@ -26,10 +26,10 @@ final class Positions {
     public static final Rotation2d INTAKE_FACING = Rotation2d.fromDegrees(0);
     public static final Translation2d LINE_1_LEFT_BALL = new Translation2d(0,-0.73);
     public static final Translation2d LINE_1_MID_BALL = new Translation2d(0.53,-0.77);
-    public static final Translation2d LINE_1_RIGHT_BALL = new Translation2d(1,-0.78);
+    public static final Translation2d LINE_1_RIGHT_BALL = new Translation2d(0.72,-0.79);
     public static final Translation2d LINE_2_LEFT_BALL = new Translation2d(0,-1.36);
     public static final Translation2d LINE_2_MID_BALL = new Translation2d(0.51,-1.35);
-    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.67,-1.36);
+    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.46,-1.36);
     public static final Translation2d LINE_3_LEFT_BALL = new Translation2d(0,-1.70);
     public static final Translation2d LINE_3_MID_BALL = new Translation2d(0.46,-1.73);
     public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.52,-1.75);
@@ -48,9 +48,9 @@ public class ShortPoint implements Auto{
 
         // <-- Step 2:  Intake and score the first three Balls -->
         Command driveToFirstLine = robotContainer.driveSubsystem.followPath(
-                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(90)),
-                new Translation2d[]{new Translation2d(1.5,-0.63)},
-                new Pose2d(Positions.LINE_1_RIGHT_BALL,Rotation2d.fromDegrees(75)),
+                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
+                new Translation2d[]{new Translation2d(0.72,-0.78)},
+                new Pose2d(Positions.LINE_1_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
                 0.3
         );
@@ -63,9 +63,9 @@ public class ShortPoint implements Auto{
         // <-- Step 3:  Intake and score the Second three Balls -->
         Command driveToSecondLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(1.38,-1)},
-                new Pose2d(Positions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(0)),
-                Rotation2d.fromDegrees(-90),
+                new Translation2d[]{new Translation2d(0.60,-1.34)},
+                new Pose2d(Positions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
+                Rotation2d.fromDegrees(0),
                 0.3
                 );
         sequence.addCommands(driveToSecondLine.withTimeout((long)2000).andThen(AutoUtils.driveToIntakeContinuousLy(robotContainer)));
