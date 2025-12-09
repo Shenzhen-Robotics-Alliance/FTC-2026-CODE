@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.autos.blueAutoThreePlusNineBalls;
 import org.firstinspires.ftc.teamcode.utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.utils.OpModeUtils;
 
-@Autonomous(name="<Auto> 3 + 6 score artifacts BLUE")
+@Autonomous(name="<Auto> BLUE 3 + 6 score artifacts ")
 public class ShortPoint9score extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
