@@ -85,7 +85,7 @@ public class AutoUtils {
         Command moveToFarScoringBalls = robotContainer.driveSubsystem.followPath(
                 new Pose2d(startPose.getTranslation(),Rotation2d.fromDegrees(0)),
                 new Translation2d[]{new Translation2d(0,0)},   //change as the real situation
-                new Pose2d(Positions.SHOOTING_POINT,Rotation2d.fromDegrees(0)),
+                new Pose2d(bluePositions.SHOOTING_POINT,Rotation2d.fromDegrees(0)),
                 Rotation2d.fromDegrees(0),
                 0.7
         );
@@ -101,9 +101,9 @@ public class AutoUtils {
     public static Command driveToIntakeFirstLineContinuousLy(RobotContainer robotContainer){
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
         Command driveAndIntake = robotContainer.driveSubsystem.followPath(
-                        new Pose2d(Positions.LINE_1_RIGHT_BALL,Rotation2d.fromDegrees(90)),
+                        new Pose2d(bluePositions.LINE_1_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                         new Translation2d[]{},   //change as the real situation
-                        new Pose2d(Positions.LINE_1_ENDING,Rotation2d.fromDegrees(90)),
+                        new Pose2d(bluePositions.LINE_1_ENDING,Rotation2d.fromDegrees(90)),
                         Rotation2d.fromDegrees(0),
                         0.7
                 )
@@ -116,9 +116,9 @@ public class AutoUtils {
     public static Command driveToIntakeSecondLineContinuousLy(RobotContainer robotContainer){
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
         Command driveAndIntake = robotContainer.driveSubsystem.followPath(
-                        new Pose2d(Positions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
+                        new Pose2d(bluePositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                         new Translation2d[]{},   //change as the real situation
-                        new Pose2d(Positions.LINE_2_ENDING,Rotation2d.fromDegrees(90)),
+                        new Pose2d(bluePositions.LINE_2_ENDING,Rotation2d.fromDegrees(90)),
                         Rotation2d.fromDegrees(0),
                         0.7
                 )
@@ -130,9 +130,9 @@ public class AutoUtils {
     public static Command driveToIntakeThirdLineContinuousLy(RobotContainer robotContainer){
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
         Command driveAndIntake = robotContainer.driveSubsystem.followPath(
-                        new Pose2d(Positions.LINE_3_RIGHT_BALL,Rotation2d.fromDegrees(90)),
+                        new Pose2d(bluePositions.LINE_3_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                         new Translation2d[]{},   //change as the real situation
-                        new Pose2d(Positions.LINE_3_ENDING,Rotation2d.fromDegrees(90)),
+                        new Pose2d(bluePositions.LINE_3_ENDING,Rotation2d.fromDegrees(90)),
                         Rotation2d.fromDegrees(0),
                         0.7
                 )

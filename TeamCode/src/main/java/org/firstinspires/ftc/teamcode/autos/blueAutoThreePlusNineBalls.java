@@ -18,7 +18,7 @@ import edu.wpi.first.math.geometry.Translation2d;
  * base on the blue alliance field
  * Using the TeleOP mode to measure the point and change the current one into correct one
  */
-final class Positions {
+final class bluePositions {
     public static final Translation2d START_POINT = new Translation2d(0, 0);
     public static final Rotation2d START_FACING = Rotation2d.fromDegrees(0);
     public static final Translation2d SHOOTING_POINT = new Translation2d(0.77,-0.42);
@@ -45,7 +45,7 @@ final class Positions {
 }
 
 
-public class autoThreePlusNineBalls implements Auto{
+public class blueAutoThreePlusNineBalls implements Auto{
     @Override
     public Command getAutonomousCommands(RobotContainer robotContainer) {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
@@ -53,27 +53,27 @@ public class autoThreePlusNineBalls implements Auto{
         sequence.addCommands(new InstantCommand(() -> robotContainer.driveSubsystem.setPose(new Pose2d())));
 
         // <-- Step 1: Score preloaded Balls and shoot -->
-       sequence.addCommands(AutoUtils.preloadDriveToShortPoseAndShot(robotContainer,Positions.START_POINT));
+       sequence.addCommands(AutoUtils.preloadDriveToShortPoseAndShot(robotContainer,bluePositions.START_POINT));
 
         // <-- Step 2:  Intake and score the first three Balls -->
         Command driveToFirstLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
                 new Translation2d[]{new Translation2d(0.72,-0.78)},
-                new Pose2d(Positions.LINE_1_RIGHT_BALL,Rotation2d.fromDegrees(90)),
+                new Pose2d(bluePositions.LINE_1_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
                 0.7
         );
         sequence.addCommands(driveToFirstLine
                 .withTimeout(800));
         sequence.addCommands(AutoUtils.driveToIntakeFirstLineContinuousLy(robotContainer).withTimeout(1000));
-        sequence.addCommands(AutoUtils.firstLineDriveToShortPoseAndShot(robotContainer, Positions.LINE_1_ENDING,1300));
+        sequence.addCommands(AutoUtils.firstLineDriveToShortPoseAndShot(robotContainer, bluePositions.LINE_1_ENDING,1300));
 
 
         // <-- Step 3:  Intake and score the Second three Balls -->
         Command driveToSecondLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
                 new Translation2d[]{new Translation2d(1,-1.34)},
-                new Pose2d(Positions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
+                new Pose2d(bluePositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
                 0.7
         );
@@ -82,13 +82,13 @@ public class autoThreePlusNineBalls implements Auto{
                 .withTimeout(1200));
 
         sequence.addCommands(AutoUtils.driveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1400));
-        sequence.addCommands(AutoUtils.secondLineDriveToShortPoseAndShot(robotContainer,Positions.LINE_2_ENDING,2000));
+        sequence.addCommands(AutoUtils.secondLineDriveToShortPoseAndShot(robotContainer,bluePositions.LINE_2_ENDING,2000));
 
         // -- Step 4: Back to Original Point -->
         Command backToOriginalPoint = robotContainer.driveSubsystem.followPath(
-                new Pose2d(Positions.SHOOTING_POINT,Rotation2d.fromDegrees(90)),
+                new Pose2d(bluePositions.SHOOTING_POINT,Rotation2d.fromDegrees(90)),
                 new Translation2d[]{},
-                new Pose2d(Positions.START_POINT,Rotation2d.fromDegrees(0)),
+                new Pose2d(bluePositions.START_POINT,Rotation2d.fromDegrees(0)),
                 Rotation2d.fromDegrees(0),
                 0.7
         );
