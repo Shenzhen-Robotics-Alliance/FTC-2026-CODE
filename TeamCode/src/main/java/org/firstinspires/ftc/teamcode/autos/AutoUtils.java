@@ -81,6 +81,29 @@ public class AutoUtils {
         return sequence;
     }
 
+    public static Command thirdLineDriveToShortPoseAndShot(RobotContainer robotContainer,Translation2d startingPoint,long Timeout) {
+        final SequentialCommandGroup sequence = new SequentialCommandGroup();
+
+        Command moveToShortScoringBalls = robotContainer.driveSubsystem.followPath(
+                new Pose2d(startingPoint,Rotation2d.fromDegrees(45)),
+                new Translation2d[]{},  //in need
+                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(135)),
+                Rotation2d.fromDegrees(0),
+                0.9
+        ).withTimeout(Timeout);
+        sequence.addCommands(moveToShortScoringBalls);
+
+        sequence.addCommands(robotContainer.intakeCommand.intakeContinuously()
+                .alongWith(robotContainer.shootCommand.fixShootShortContinuously())
+                .withTimeout(2900));
+        sequence.addCommands(robotContainer.shootCommand.shootStop());
+
+        return sequence;
+    }
+
+
+
+
     //Drive to long shooting pose and then shooting
     public static Command driveToFarPoseAndShot(RobotContainer robotContainer) {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
