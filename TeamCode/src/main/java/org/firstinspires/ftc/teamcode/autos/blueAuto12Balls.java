@@ -69,7 +69,6 @@ public class blueAuto12Balls implements Auto{
         sequence.addCommands(AutoUtils.driveToIntakeThirdLineContinuousLy(robotContainer).withTimeout(1400));
         sequence.addCommands(AutoUtils.thirdLineDriveToShortPoseAndShot(robotContainer,bluePositions.LINE_3_ENDING,2000));
 
-
         // <-- Step 5: Go to the TeleOp Starting Point -->
         return sequence;
     }
