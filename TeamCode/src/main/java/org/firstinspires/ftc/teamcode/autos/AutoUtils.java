@@ -13,6 +13,9 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 public class AutoUtils {
+    /**
+     * BLUE AutoUtils
+     */
     public static final Pose2d scoreShortBallsPose = new Pose2d(0.78, -0.49, Rotation2d.fromDegrees(0));
     public static final Pose2d scoreLongBallsPose = new Pose2d(0, 0, Rotation2d.fromDegrees(0));
     public static final Pose2d startPose = new Pose2d(0,0,Rotation2d.fromDegrees(0));
@@ -141,5 +144,12 @@ public class AutoUtils {
 
         return sequence;
     }
+
+
+    /**
+     * Red AutoUtils
+     */
+
+
 
 }
