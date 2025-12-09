@@ -81,7 +81,7 @@ public class autoThreePlusNineBalls implements Auto{
         sequence.addCommands(AutoUtils.driveToIntakeSecondLineContinuousLy(robotContainer));
         sequence.addCommands(AutoUtils.secondLineDriveToShortPoseAndShot(robotContainer,Positions.LINE_2_ENDING));
 
-        // -- Step 4:  Intake and score the Second three Balls -->
+        // -- Step 4: Back to Original Point -->
         Command backToOriginalPoint = robotContainer.driveSubsystem.followPath(
                 new Pose2d(Positions.SHOOTING_POINT,Rotation2d.fromDegrees(0)),
                 new Translation2d[]{},
