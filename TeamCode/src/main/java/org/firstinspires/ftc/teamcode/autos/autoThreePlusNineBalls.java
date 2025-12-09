@@ -63,7 +63,8 @@ public class autoThreePlusNineBalls implements Auto{
                 Rotation2d.fromDegrees(0),
                 0.7
         );
-        sequence.addCommands(driveToFirstLine);
+        sequence.addCommands(driveToFirstLine
+                .withTimeout(700));
         sequence.addCommands(AutoUtils.driveToIntakeFirstLineContinuousLy(robotContainer));
         sequence.addCommands(AutoUtils.firstLineDriveToShortPoseAndShot(robotContainer, Positions.LINE_1_ENDING));
 
@@ -77,7 +78,8 @@ public class autoThreePlusNineBalls implements Auto{
                 0.7
         );
 
-        sequence.addCommands(driveToSecondLine);
+        sequence.addCommands(driveToSecondLine
+                .withTimeout(1200));
         sequence.addCommands(AutoUtils.driveToIntakeSecondLineContinuousLy(robotContainer));
         sequence.addCommands(AutoUtils.secondLineDriveToShortPoseAndShot(robotContainer,Positions.LINE_2_ENDING));
 

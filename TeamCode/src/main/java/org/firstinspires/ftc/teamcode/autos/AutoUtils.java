@@ -23,16 +23,15 @@ public class AutoUtils {
 
         Command moveToShortScoringBalls = robotContainer.driveSubsystem.followPath(
                 new Pose2d(startingPoint,Rotation2d.fromDegrees(135)),
-                new Translation2d[]{},  //change as the real situation
+                new Translation2d[]{},
                 new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(135)),
                 Rotation2d.fromDegrees(0),
-                0.5
-         );
+                0.3
+        ).withTimeout(800);
         sequence.addCommands(moveToShortScoringBalls);
 
         sequence.addCommands(robotContainer.intakeCommand.intakeContinuously()
-                .alongWith(robotContainer.shootCommand.fixShootShortContinuously())
-                .withTimeout(3000));
+                .alongWith(robotContainer.shootCommand.fixShootShortContinuously()));
         sequence.addCommands(robotContainer.shootCommand.shootStop());
 
         return sequence;
@@ -47,12 +46,11 @@ public class AutoUtils {
                 new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(45)),
                 Rotation2d.fromDegrees(0),
                 0.7
-        );
+        ).withTimeout(1500);
         sequence.addCommands(moveToShortScoringBalls);
 
         sequence.addCommands(robotContainer.intakeCommand.intakeContinuously()
-                .alongWith(robotContainer.shootCommand.fixShootShortContinuously())
-                .withTimeout(3000));
+                .alongWith(robotContainer.shootCommand.fixShootShortContinuously()));
         sequence.addCommands(robotContainer.shootCommand.shootStop());
 
         return sequence;
@@ -67,12 +65,11 @@ public class AutoUtils {
                 new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(45)),
                 Rotation2d.fromDegrees(0),
                 0.7
-        );
+        ).withTimeout(1500);
         sequence.addCommands(moveToShortScoringBalls);
 
         sequence.addCommands(robotContainer.intakeCommand.intakeContinuously()
-                .alongWith(robotContainer.shootCommand.fixShootShortContinuously())
-                .withTimeout(3000));
+                .alongWith(robotContainer.shootCommand.fixShootShortContinuously()));
         sequence.addCommands(robotContainer.shootCommand.shootStop());
 
         return sequence;
