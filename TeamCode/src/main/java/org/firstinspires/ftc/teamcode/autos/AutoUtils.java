@@ -26,50 +26,53 @@ public class AutoUtils {
                 new Translation2d[]{},
                 new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(135)),
                 Rotation2d.fromDegrees(0),
-                0.3
-        ).withTimeout(800);
+                0.75
+        ).withTimeout(1080);
         sequence.addCommands(moveToShortScoringBalls);
 
         sequence.addCommands(robotContainer.intakeCommand.intakeContinuously()
-                .alongWith(robotContainer.shootCommand.fixShootShortContinuously()));
+                .alongWith(robotContainer.shootCommand.fixShootShortContinuously())
+                .withTimeout(2900));
         sequence.addCommands(robotContainer.shootCommand.shootStop());
 
         return sequence;
     }
 
-    public static Command firstLineDriveToShortPoseAndShot(RobotContainer robotContainer,Translation2d startingPoint) {
+    public static Command firstLineDriveToShortPoseAndShot(RobotContainer robotContainer,Translation2d startingPoint, long Timeout) {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
 
         Command moveToShortScoringBalls = robotContainer.driveSubsystem.followPath(
                 new Pose2d(startingPoint,Rotation2d.fromDegrees(45)),
                 new Translation2d[]{new Translation2d(0.55,-0.56)},  //change as the real situation
-                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(45)),
+                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(135)),
                 Rotation2d.fromDegrees(0),
-                0.7
-        ).withTimeout(1500);
+                0.75
+        ).withTimeout(Timeout);
         sequence.addCommands(moveToShortScoringBalls);
 
         sequence.addCommands(robotContainer.intakeCommand.intakeContinuously()
-                .alongWith(robotContainer.shootCommand.fixShootShortContinuously()));
+                .alongWith(robotContainer.shootCommand.fixShootShortContinuously())
+                .withTimeout(2900));
         sequence.addCommands(robotContainer.shootCommand.shootStop());
 
         return sequence;
     }
 
-    public static Command secondLineDriveToShortPoseAndShot(RobotContainer robotContainer,Translation2d startingPoint) {
+    public static Command secondLineDriveToShortPoseAndShot(RobotContainer robotContainer,Translation2d startingPoint,long Timeout) {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
 
         Command moveToShortScoringBalls = robotContainer.driveSubsystem.followPath(
-                new Pose2d(startingPoint,Rotation2d.fromDegrees(135)),
+                new Pose2d(startingPoint,Rotation2d.fromDegrees(45)),
                 new Translation2d[]{new Translation2d(0.78,-1.21)},  //change as the real situation
-                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(45)),
+                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(135)),
                 Rotation2d.fromDegrees(0),
-                0.7
-        ).withTimeout(1500);
+                0.75
+        ).withTimeout(Timeout);
         sequence.addCommands(moveToShortScoringBalls);
 
         sequence.addCommands(robotContainer.intakeCommand.intakeContinuously()
-                .alongWith(robotContainer.shootCommand.fixShootShortContinuously()));
+                .alongWith(robotContainer.shootCommand.fixShootShortContinuously())
+                .withTimeout(2900));
         sequence.addCommands(robotContainer.shootCommand.shootStop());
 
         return sequence;

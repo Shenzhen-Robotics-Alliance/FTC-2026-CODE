@@ -32,14 +32,14 @@ final class Positions {
     public static final Translation2d LINE_1_ENDING = LINE_1_RIGHT_BALL.plus(new Translation2d(-0.7,0));
 
     public static final Translation2d LINE_2_LEFT_BALL = new Translation2d(0,-1.36);
-    public static final Translation2d LINE_2_MID_BALL = new Translation2d(0.51,-1.35);
-    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.46,-1.36);
+    public static final Translation2d LINE_2_MID_BALL = new Translation2d(0.31,-1.35);
+    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.57,-1.36);
     //new
-    public static final Translation2d LINE_2_ENDING = LINE_2_RIGHT_BALL.plus(new Translation2d(-0.7,0));
+    public static final Translation2d LINE_2_ENDING = LINE_2_RIGHT_BALL.plus(new Translation2d(-0.9,0));
 
     public static final Translation2d LINE_3_LEFT_BALL = new Translation2d(0,-1.70);
     public static final Translation2d LINE_3_MID_BALL = new Translation2d(0.46,-1.73);
-    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.52,-1.75);
+    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.52,-1.77);
     public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
 
 }
@@ -64,15 +64,15 @@ public class autoThreePlusNineBalls implements Auto{
                 0.7
         );
         sequence.addCommands(driveToFirstLine
-                .withTimeout(700));
-        sequence.addCommands(AutoUtils.driveToIntakeFirstLineContinuousLy(robotContainer));
-        sequence.addCommands(AutoUtils.firstLineDriveToShortPoseAndShot(robotContainer, Positions.LINE_1_ENDING));
+                .withTimeout(800));
+        sequence.addCommands(AutoUtils.driveToIntakeFirstLineContinuousLy(robotContainer).withTimeout(1000));
+        sequence.addCommands(AutoUtils.firstLineDriveToShortPoseAndShot(robotContainer, Positions.LINE_1_ENDING,1300));
 
 
         // <-- Step 3:  Intake and score the Second three Balls -->
         Command driveToSecondLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(0.60,-1.34)},
+                new Translation2d[]{new Translation2d(1,-1.34)},
                 new Pose2d(Positions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
                 0.7
@@ -80,14 +80,15 @@ public class autoThreePlusNineBalls implements Auto{
 
         sequence.addCommands(driveToSecondLine
                 .withTimeout(1200));
-        sequence.addCommands(AutoUtils.driveToIntakeSecondLineContinuousLy(robotContainer));
-        sequence.addCommands(AutoUtils.secondLineDriveToShortPoseAndShot(robotContainer,Positions.LINE_2_ENDING));
+
+        sequence.addCommands(AutoUtils.driveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1400));
+        sequence.addCommands(AutoUtils.secondLineDriveToShortPoseAndShot(robotContainer,Positions.LINE_2_ENDING,2000));
 
         // -- Step 4: Back to Original Point -->
         Command backToOriginalPoint = robotContainer.driveSubsystem.followPath(
-                new Pose2d(Positions.SHOOTING_POINT,Rotation2d.fromDegrees(0)),
+                new Pose2d(Positions.SHOOTING_POINT,Rotation2d.fromDegrees(90)),
                 new Translation2d[]{},
-                new Pose2d(Positions.START_POINT,Rotation2d.fromDegrees(90)),
+                new Pose2d(Positions.START_POINT,Rotation2d.fromDegrees(0)),
                 Rotation2d.fromDegrees(0),
                 0.7
         );
