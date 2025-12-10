@@ -48,7 +48,7 @@ final class bluePositions {
 }
 
 
-public class blueAutoThreePlusNineBalls implements Auto{
+public class blueAuto9Balls implements Auto{
     @Override
     public Command getAutonomousCommands(RobotContainer robotContainer) {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
@@ -90,8 +90,8 @@ public class blueAutoThreePlusNineBalls implements Auto{
         // -- Step 4: Back to Parking Point -->
         Command backToOriginalPoint = robotContainer.driveSubsystem.followPath(
                 new Pose2d(bluePositions.SHOOTING_POINT,Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(0.47,-0.77)},
-                new Pose2d(bluePositions.PARKING_POINT,Rotation2d.fromDegrees(90)),
+                new Translation2d[]{new Translation2d(0.5,-0.77)},
+                new Pose2d(bluePositions.PARKING_POINT,Rotation2d.fromDegrees(45)),
                 bluePositions.PARKING_FACING,
                 0.7
         );

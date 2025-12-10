@@ -5,9 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.AutonomousRobot;
 import org.firstinspires.ftc.teamcode.RobotContainer;
-import org.firstinspires.ftc.teamcode.autos.blueAutoThreePlusNineBalls;
-import org.firstinspires.ftc.teamcode.autos.blueAutoThreePlusNineBalls;
-import org.firstinspires.ftc.teamcode.autos.blueAutoThreePlusNineBalls;
+import org.firstinspires.ftc.teamcode.autos.blueAuto9Balls;
 import org.firstinspires.ftc.teamcode.utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.utils.OpModeUtils;
 
@@ -17,7 +15,7 @@ public class ShortPoint9score extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         final AutonomousRobot robot = new AutonomousRobot(
                 new RobotContainer(hardwareMap, AllianceSide.BLUE),
-                new blueAutoThreePlusNineBalls()
+                new blueAuto9Balls()
         );
         OpModeUtils.runAutoMode(robot, this);
     }
