@@ -13,7 +13,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 
-
 /**
  * base on the blue alliance field
  * Using the TeleOP mode to measure the point and change the current one into correct one
@@ -46,7 +45,6 @@ final class bluePositions {
 
 
 }
-
 
 public class blueAuto9Balls implements Auto{
     @Override
