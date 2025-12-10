@@ -49,7 +49,7 @@ public class blueAuto12Balls implements Auto{
         );
 
         sequence.addCommands(driveToSecondLine
-                .withTimeout(1000));
+                .withTimeout(1000));  //narrow
 
         sequence.addCommands(AutoUtils.driveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1400));
         sequence.addCommands(AutoUtils.secondLineDriveToShortPoseAndShot(robotContainer,bluePositions.LINE_2_ENDING,2000));
@@ -64,12 +64,12 @@ public class blueAuto12Balls implements Auto{
         );
 
         sequence.addCommands(driveToThirdLine
-                .withTimeout(1200));
+                .withTimeout(1200)); //narrow
 
         sequence.addCommands(AutoUtils.driveToIntakeThirdLineContinuousLy(robotContainer).withTimeout(1400));
         sequence.addCommands(AutoUtils.thirdLineDriveToShortPoseAndShot(robotContainer,bluePositions.LINE_3_ENDING,2000));
 
-        // <-- Step 5: Go to the TeleOp Starting Point -->
+        // <-- Step 5: Go to the Auto Ending Point -->
         Command goToEndingPoint = robotContainer.driveSubsystem.followPath(
                 new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
                 new Translation2d[]{}, //need

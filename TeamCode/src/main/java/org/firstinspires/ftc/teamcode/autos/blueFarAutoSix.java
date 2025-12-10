@@ -17,7 +17,7 @@ public class blueFarAutoSix implements Auto{
     public Command getAutonomousCommands(RobotContainer robotContainer) {
         SequentialCommandGroup sequence = new SequentialCommandGroup();
 
-        // Step 0: Reset Odometry
+        //  0: Reset Odometry
         sequence.addCommands(new InstantCommand(() -> robotContainer.driveSubsystem.setPose(new Pose2d())));
 
         // <-- Step 1: Score preloaded Balls and shoot -->
