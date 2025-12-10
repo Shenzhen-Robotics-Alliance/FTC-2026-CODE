@@ -87,12 +87,12 @@ public class blueAutoThreePlusNineBalls implements Auto{
         sequence.addCommands(AutoUtils.driveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1400));
         sequence.addCommands(AutoUtils.secondLineDriveToShortPoseAndShot(robotContainer,bluePositions.LINE_2_ENDING,2000));
 
-        // -- Step 4: Back to Original Point -->
+        // -- Step 4: Back to Parking Point -->
         Command backToOriginalPoint = robotContainer.driveSubsystem.followPath(
-                new Pose2d(bluePositions.SHOOTING_POINT,Rotation2d.fromDegrees(90)),
-                new Translation2d[]{},
-                new Pose2d(bluePositions.START_POINT,Rotation2d.fromDegrees(0)),
-                Rotation2d.fromDegrees(0),
+                new Pose2d(bluePositions.SHOOTING_POINT,Rotation2d.fromDegrees(0)),
+                new Translation2d[]{new Translation2d(0.47,-0.77)},
+                new Pose2d(bluePositions.PARKING_POINT,Rotation2d.fromDegrees(90)),
+                bluePositions.PARKING_FACING,
                 0.7
         );
         sequence.addCommands(backToOriginalPoint);
