@@ -38,10 +38,10 @@ final class bluePositions {
 
     public static final Translation2d LINE_3_LEFT_BALL = new Translation2d(0,-1.70);
     public static final Translation2d LINE_3_MID_BALL = new Translation2d(0.46,-1.73);
-    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.52,-1.77);
+    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.52,-1.83);
     public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.9,0));
     public static final Translation2d PARKING_POINT = new Translation2d(0,-1.00);
-    public static final Rotation2d PARKING_FACING = Rotation2d.fromDegrees(-95);
+    public static final Rotation2d PARKING_FACING = Rotation2d.fromDegrees(-105);
 
 
 }
@@ -87,9 +87,9 @@ public class blueAuto9Balls implements Auto{
 
         // -- Step 4: Back to Parking Point -->
         Command backToOriginalPoint = robotContainer.driveSubsystem.followPath(
-                new Pose2d(bluePositions.SHOOTING_POINT,Rotation2d.fromDegrees(45)),
-                new Translation2d[]{new Translation2d(0.5,-0.77)},
-                new Pose2d(bluePositions.PARKING_POINT,Rotation2d.fromDegrees(0)),
+                new Pose2d(bluePositions.SHOOTING_POINT,Rotation2d.fromDegrees(180)),
+                new Translation2d[]{},
+                new Pose2d(bluePositions.PARKING_POINT,Rotation2d.fromDegrees(-90)),
                 bluePositions.PARKING_FACING,
                 0.7
         );

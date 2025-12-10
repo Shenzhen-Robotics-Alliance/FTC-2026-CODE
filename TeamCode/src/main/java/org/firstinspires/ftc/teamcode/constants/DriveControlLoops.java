@@ -13,7 +13,7 @@ public class DriveControlLoops {
     public static final double DRIVE_DEAD_BAND_MPS = 0.03;
     public static final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(0.1, 1.0 / DriveTrainConstants.MAX_VELOCITY_METERS_PER_SECOND);
     public static final ProfiledPIDController rotationController = new ProfiledPIDController(
-            2, 0, 0.008,
+            1.4, 0, 0.008,
             new TrapezoidProfile.Constraints(DriveTrainConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND, 720));
     public static final HolonomicDriveController driveController = new HolonomicDriveController(
             new PIDController(3, 0, 0.008),
