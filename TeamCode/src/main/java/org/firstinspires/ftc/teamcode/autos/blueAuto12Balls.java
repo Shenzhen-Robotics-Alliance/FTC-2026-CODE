@@ -70,6 +70,16 @@ public class blueAuto12Balls implements Auto{
         sequence.addCommands(AutoUtils.thirdLineDriveToShortPoseAndShot(robotContainer,bluePositions.LINE_3_ENDING,2000));
 
         // <-- Step 5: Go to the TeleOp Starting Point -->
+        Command goToEndingPoint = robotContainer.driveSubsystem.followPath(
+                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
+                new Translation2d[]{}, //need
+                new Pose2d(bluePositions.PARKING_POINT,Rotation2d.fromDegrees(90)),
+                bluePositions.PARKING_FACING,
+                0.9
+        );
+
+        sequence.addCommands(goToEndingPoint);
+
         return sequence;
     }
 }

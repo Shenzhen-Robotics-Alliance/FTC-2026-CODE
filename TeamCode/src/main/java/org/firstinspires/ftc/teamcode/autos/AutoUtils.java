@@ -118,7 +118,10 @@ public class AutoUtils {
 
         sequence.addCommands(moveToFarScoringBalls);
 
-        sequence.addCommands(robotContainer.shootCommand.fixShootFarContinuously());
+        sequence.addCommands(robotContainer.intakeCommand.intakeContinuously()
+                .alongWith(robotContainer.shootCommand.fixShootShortContinuously())
+                .withTimeout(3500));
+        sequence.addCommands(robotContainer.shootCommand.shootStop());
 
         return sequence;
     }
