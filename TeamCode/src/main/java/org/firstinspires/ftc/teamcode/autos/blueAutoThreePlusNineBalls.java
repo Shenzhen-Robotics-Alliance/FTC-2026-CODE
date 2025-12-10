@@ -40,7 +40,10 @@ final class bluePositions {
     public static final Translation2d LINE_3_LEFT_BALL = new Translation2d(0,-1.70);
     public static final Translation2d LINE_3_MID_BALL = new Translation2d(0.46,-1.73);
     public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.52,-1.77);
-    public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
+    public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.9,0));
+    public static final Translation2d PARKING_POINT = new Translation2d(0.14,-1.00);
+    public static final Rotation2d PARKING_FACING = Rotation2d.fromDegrees(-90);
+
 
 }
 
