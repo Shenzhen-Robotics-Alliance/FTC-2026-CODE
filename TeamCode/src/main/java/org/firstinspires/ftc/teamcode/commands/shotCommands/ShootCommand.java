@@ -33,9 +33,13 @@ public class ShootCommand extends CommandBase {
         addRequirements(shooterSubsystem);
 
         this.rpmTable = new Interpolator();
-        rpmTable.add(0.5, 1350); //distance unit: meters
-        rpmTable.add(0.6, 1500);
-        rpmTable.add(0.7, 1680);
+        rpmTable.add(2.27, 797);
+        rpmTable.add(2.18, 783);
+        rpmTable.add(1.98, 747);
+        rpmTable.add(1.8, 740);
+        rpmTable.add(1.49, 718);
+        rpmTable.add(1.0, 710);
+        rpmTable.add(0.57, 674);
     }
 
     @Override

@@ -94,6 +94,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public boolean isReadyToFixShortLaunch() {
         currentTPS = shooter.getCurrentVelocityRaw();
-        return currentTPS > 1400;
+        return currentTPS > 1000;
     }
 }

@@ -3,14 +3,12 @@ package org.firstinspires.ftc.teamcode.autos;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
-import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.RobotContainer;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 public class AutoUtils {
     /**
@@ -21,7 +19,7 @@ public class AutoUtils {
     public static final Pose2d startPose = new Pose2d(0,0,Rotation2d.fromDegrees(0));
 
     //Drive to short shooting pose and then shooting
-    public static Command preloadDriveToShortPoseAndShot(RobotContainer robotContainer,Translation2d startingPoint) {
+    public static Command BluePreloadDriveToShortPoseAndShot(RobotContainer robotContainer, Translation2d startingPoint) {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
 
         Command moveToShortScoringBalls = robotContainer.driveSubsystem.followPath(
@@ -41,7 +39,7 @@ public class AutoUtils {
         return sequence;
     }
 
-    public static Command firstLineDriveToShortPoseAndShot(RobotContainer robotContainer,Translation2d startingPoint, long Timeout) {
+    public static Command BlueFirstLineDriveToShortPoseAndShot(RobotContainer robotContainer, Translation2d startingPoint, long Timeout) {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
 
         Command moveToShortScoringBalls = robotContainer.driveSubsystem.followPath(
@@ -61,7 +59,7 @@ public class AutoUtils {
         return sequence;
     }
 
-    public static Command secondLineDriveToShortPoseAndShot(RobotContainer robotContainer,Translation2d startingPoint,long Timeout) {
+    public static Command BlueSecondLineDriveToShortPoseAndShot(RobotContainer robotContainer, Translation2d startingPoint, long Timeout) {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
 
         Command moveToShortScoringBalls = robotContainer.driveSubsystem.followPath(
@@ -81,7 +79,7 @@ public class AutoUtils {
         return sequence;
     }
 
-    public static Command thirdLineDriveToShortPoseAndShot(RobotContainer robotContainer,Translation2d startingPoint,long Timeout) {
+    public static Command BlueThirdLineDriveToShortPoseAndShot(RobotContainer robotContainer, Translation2d startingPoint, long Timeout) {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
 
         Command moveToShortScoringBalls = robotContainer.driveSubsystem.followPath(
@@ -105,7 +103,7 @@ public class AutoUtils {
 
 
     //Drive to long shooting pose and then shooting
-    public static Command driveToFarPoseAndShot(RobotContainer robotContainer) {
+    public static Command BlueDriveToFarPoseAndShot(RobotContainer robotContainer) {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
 
         Command moveToFarScoringBalls = robotContainer.driveSubsystem.followPath(
@@ -127,7 +125,7 @@ public class AutoUtils {
     }
 
 
-    public static Command driveToIntakeFirstLineContinuousLy(RobotContainer robotContainer){
+    public static Command BlueDriveToIntakeFirstLineContinuousLy(RobotContainer robotContainer){
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
         Command driveAndIntake = robotContainer.driveSubsystem.followPath(
                         new Pose2d(bluePositions.LINE_1_RIGHT_BALL,Rotation2d.fromDegrees(90)),
@@ -142,7 +140,7 @@ public class AutoUtils {
         return sequence;
     }
 
-    public static Command driveToIntakeSecondLineContinuousLy(RobotContainer robotContainer){
+    public static Command BLueDriveToIntakeSecondLineContinuousLy(RobotContainer robotContainer){
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
         Command driveAndIntake = robotContainer.driveSubsystem.followPath(
                         new Pose2d(bluePositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
@@ -156,7 +154,7 @@ public class AutoUtils {
 
         return sequence;
     }
-    public static Command driveToIntakeThirdLineContinuousLy(RobotContainer robotContainer){
+    public static Command BlueDriveToIntakeThirdLineContinuousLy(RobotContainer robotContainer){
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
         Command driveAndIntake = robotContainer.driveSubsystem.followPath(
                         new Pose2d(bluePositions.LINE_3_RIGHT_BALL,Rotation2d.fromDegrees(90)),

@@ -21,7 +21,7 @@ public class blueFarAutoSix implements Auto{
         sequence.addCommands(new InstantCommand(() -> robotContainer.driveSubsystem.setPose(new Pose2d())));
 
         // <-- Step 1: Score preloaded Balls and shoot -->
-        sequence.addCommands(AutoUtils.driveToFarPoseAndShot(robotContainer));
+        sequence.addCommands(AutoUtils.BlueDriveToFarPoseAndShot(robotContainer));
 
         // <-- Step 2: Intake and Score the third line balls -->
         Command driveToThirdLine = robotContainer.driveSubsystem.followPath(
@@ -33,8 +33,8 @@ public class blueFarAutoSix implements Auto{
         );
         sequence.addCommands(driveToThirdLine
                 .withTimeout(1500));
-        sequence.addCommands(AutoUtils.driveToIntakeThirdLineContinuousLy(robotContainer).withTimeout(1200));
-        sequence.addCommands(AutoUtils.firstLineDriveToShortPoseAndShot(robotContainer, bluePositions.LINE_3_ENDING,1500));
+        sequence.addCommands(AutoUtils.BlueDriveToIntakeThirdLineContinuousLy(robotContainer).withTimeout(1200));
+        sequence.addCommands(AutoUtils.BlueFirstLineDriveToShortPoseAndShot(robotContainer, bluePositions.LINE_3_ENDING,1500));
 
 
         return sequence;

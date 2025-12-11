@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.autos;
 
 import static org.firstinspires.ftc.teamcode.autos.AutoUtils.scoreShortBallsPose;
-import static org.firstinspires.ftc.teamcode.autos.AutoUtils.thirdLineDriveToShortPoseAndShot;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -23,7 +22,7 @@ public class blueAuto12Balls implements Auto{
         sequence.addCommands(new InstantCommand(() -> robotContainer.driveSubsystem.setPose(new Pose2d())));
 
         // <-- Step 1: Score preloaded Balls and shoot -->
-        sequence.addCommands(AutoUtils.preloadDriveToShortPoseAndShot(robotContainer,bluePositions.START_POINT));
+        sequence.addCommands(AutoUtils.BluePreloadDriveToShortPoseAndShot(robotContainer,bluePositions.START_POINT));
 
         // <-- Step 2:  Intake and score the first three Balls -->
         Command driveToFirstLine = robotContainer.driveSubsystem.followPath(
@@ -34,47 +33,47 @@ public class blueAuto12Balls implements Auto{
                 0.8
         );
         sequence.addCommands(driveToFirstLine
-                .withTimeout(800));
-        sequence.addCommands(AutoUtils.driveToIntakeFirstLineContinuousLy(robotContainer).withTimeout(1000));
-        sequence.addCommands(AutoUtils.firstLineDriveToShortPoseAndShot(robotContainer, bluePositions.LINE_1_ENDING,1300));
+                .withTimeout(900));
+        sequence.addCommands(AutoUtils.BlueDriveToIntakeFirstLineContinuousLy(robotContainer).withTimeout(1000));
+        sequence.addCommands(AutoUtils.BlueFirstLineDriveToShortPoseAndShot(robotContainer, bluePositions.LINE_1_ENDING,1300));
 
 
         // <-- Step 3:  Intake and score the Second three Balls -->
         Command driveToSecondLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(1,-1.34)},
+                new Translation2d[]{new Translation2d(1,-1.38)},
                 new Pose2d(bluePositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
                 0.8
         );
 
         sequence.addCommands(driveToSecondLine
-                .withTimeout(1200));  //narrow
+                .withTimeout(1400));  //narrow
 
-        sequence.addCommands(AutoUtils.driveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1400));
-        sequence.addCommands(AutoUtils.secondLineDriveToShortPoseAndShot(robotContainer,bluePositions.LINE_2_ENDING,2000));
+        sequence.addCommands(AutoUtils.BLueDriveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1400));
+        sequence.addCommands(AutoUtils.BlueSecondLineDriveToShortPoseAndShot(robotContainer,bluePositions.LINE_2_ENDING,2000));
 
         // <-- Step 4:  Intake and score the Third three Balls -->
         Command driveToThirdLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(1,-1.77)},   //need
+                new Translation2d[]{new Translation2d(1,-1.96)},   //need
                 new Pose2d(bluePositions.LINE_3_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
                 0.8
         );
 
         sequence.addCommands(driveToThirdLine
-                .withTimeout(1700)); //narrow
+                .withTimeout(1800)); //narrow
 
-        sequence.addCommands(AutoUtils.driveToIntakeThirdLineContinuousLy(robotContainer).withTimeout(1400));
-        sequence.addCommands(AutoUtils.thirdLineDriveToShortPoseAndShot(robotContainer,bluePositions.LINE_3_ENDING,2000));
+        sequence.addCommands(AutoUtils.BlueDriveToIntakeThirdLineContinuousLy(robotContainer).withTimeout(1400));
+        sequence.addCommands(AutoUtils.BlueThirdLineDriveToShortPoseAndShot(robotContainer,bluePositions.LINE_3_ENDING,2000));
 
         // <-- Step 5: Go to the Auto Ending Point -->
         Command goToEndingPoint = robotContainer.driveSubsystem.followPath(
                 new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
                 new Translation2d[]{}, //need
-                new Pose2d(bluePositions.PARKING_POINT,Rotation2d.fromDegrees(90)),
-                bluePositions.PARKING_FACING,
+                new Pose2d(bluePositions.START_POINT,Rotation2d.fromDegrees(90)),
+                Rotation2d.fromRotations(0),
                 0.8
         );
 
