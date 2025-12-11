@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.subsystems.SuperStructure;
 import static org.firstinspires.ftc.teamcode.constants.SystemConstants.telemetry;
-
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.RunCommand;
@@ -9,6 +8,11 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.teamcode.subsystems.drive.MecanumDriveSubsystem;
+import org.firstinspires.ftc.teamcode.utils.Interpolator;
+
+import edu.wpi.first.math.geometry.Pose2d;
+
 public class ShooterSubsystem extends SubsystemBase {
     public final LinearMotion shooter;
 
@@ -16,11 +20,16 @@ public class ShooterSubsystem extends SubsystemBase {
     private final double MAX_TICKS_PER_SEC = 1500;
     private final double TOLERANCE_RPM = 1;
     private final double TOLERANCE_TICKS = (TOLERANCE_RPM * MOTOR_CPR) / 60.0;
+    private final MecanumDriveSubsystem driveSubsystem;
     private double targetTPS = 0;
     private double currentTPS = 0;
     private double MotorScale = 2;
+    private static final double GOAL_X_METERS = 0;
+    private static final double GOAL_Y_METERS = 0;
+    private final Interpolator rpmTable;
 
-    public ShooterSubsystem(HardwareMap hardwareMap){
+
+    public ShooterSubsystem(HardwareMap hardwareMap,MecanumDriveSubsystem driveSubsystem){
         this.shooter = new LinearMotion(
                 "shooter",
                 new DcMotorEx[]{
@@ -35,6 +44,14 @@ public class ShooterSubsystem extends SubsystemBase {
                 0.004,
                 0.0006        
         );
+
+        this.rpmTable = new Interpolator();
+        rpmTable.add(0.5, 1350); //distance unit: meters
+        rpmTable.add(0.6, 1500);
+        rpmTable.add(0.7, 1680);
+
+        this.driveSubsystem = driveSubsystem;
+
     }
 
     public void periodic() {
@@ -87,6 +104,42 @@ public class ShooterSubsystem extends SubsystemBase {
         return new RunCommand(() -> setTargetRPM(710));
     }
 
+    public Command shooterAutoLaunch(){
+        return new RunCommand(() -> {
+            // 1.get current Pose
+            Pose2d currentPose = driveSubsystem.getPose();
+
+            // 2.  calculate the distance between the current pose to the goal pose
+            double distance = Math.hypot(
+                    GOAL_X_METERS - currentPose.getX(),
+                    GOAL_Y_METERS - currentPose.getY()
+            );
+
+            // 3. get the RPM through the table
+            double targetRPM = rpmTable.getRPM(distance);
+
+            // 4.set the RPM for the shooter
+            setTargetRPM(targetRPM);
+      });
+    }
+
+    public double getTargetAutoRpm(){
+        // 1.get current Pose
+        Pose2d currentPose = driveSubsystem.getPose();
+
+        // 2.  calculate the distance between the current pose to the goal pose
+        double distance = Math.hypot(
+                GOAL_X_METERS - currentPose.getX(),
+                GOAL_Y_METERS - currentPose.getY()
+        );
+
+        // 3. get the RPM through the table
+        double targetRPM = rpmTable.getRPM(distance);
+
+        return targetRPM;
+    }
+
+
     public boolean isReadyToFixFarLaunch(){
         currentTPS = shooter.getCurrentVelocityRaw();
         return currentTPS > 2200;
@@ -96,4 +149,11 @@ public class ShooterSubsystem extends SubsystemBase {
         currentTPS = shooter.getCurrentVelocityRaw();
         return currentTPS > 1400;
     }
+
+    public boolean isReadyToAutoLaunch(){
+        currentTPS = shooter.getCurrentVelocityRaw();
+        return  currentTPS > getTargetAutoRpm();
+    }
+
+
 }

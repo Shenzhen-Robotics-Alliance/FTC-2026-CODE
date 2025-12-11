@@ -81,7 +81,7 @@ public final class RobotContainer implements AutoCloseable {
         this.manualRotCommand = new ManualRotCommand(rotSubsystem,joystickSupplier);
         this.autoRotCommand = new AutoRotCommand(rotSubsystem,visionSubsystem,side);
 
-        this.shooterSubsystem = new ShooterSubsystem(hardwareMap);
+        this.shooterSubsystem = new ShooterSubsystem(hardwareMap,driveSubsystem);
         shooterSubsystem.register();
         this.shootCommand = new ShootCommand(shooterSubsystem,preShooterSubsystem,driveSubsystem);
 

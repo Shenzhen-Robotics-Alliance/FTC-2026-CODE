@@ -20,6 +20,8 @@ public class ShootCommand extends CommandBase {
     private PreShooterSubsystem preShooterSubsystem;
     private final MecanumDriveSubsystem driveSubsystem;
     private final Interpolator rpmTable;
+    private double currentTPS = 0;
+
 
     //HIgh goal position
     private static final double GOAL_X_METERS = 0;
@@ -77,29 +79,14 @@ public class ShootCommand extends CommandBase {
 
     //<Auto velocity shooting according to current pose>
     public Command shootAutoVelocity() {
-        return new RunCommand(() -> {
-            // 1.get current Pose
-            Pose2d currentPose = driveSubsystem.getPose();
+        return new ParallelCommandGroup(
+                shooterSubsystem.shooterAutoLaunch(),
 
-            // 2.  calculate the distance between the current pose to the goal pose
-            double distance = Math.hypot(
-                    GOAL_X_METERS - currentPose.getX(),
-                    GOAL_Y_METERS - currentPose.getY()
-            );
-
-            // 3. get the RPM through the table
-            double targetRPM = rpmTable.getRPM(distance);
-
-            // 4.set the RPM for the shooter
-            shooterSubsystem.setTargetRPM(targetRPM);
-
-            //5.enable the preShooter until the current RPM reach the target one
-            if (shooterSubsystem.isAtTargetSpeed()) {
-                preShooterSubsystem.setShootingAngle();
-            } else {
-                preShooterSubsystem.setStopPreShooter();
-            }
-        });
+                new SequentialCommandGroup(
+                        new WaitUntilCommand(shooterSubsystem::isReadyToAutoLaunch),
+                        preShooterSubsystem.setShootingAngle()
+                )
+        );
     }
 
 }
