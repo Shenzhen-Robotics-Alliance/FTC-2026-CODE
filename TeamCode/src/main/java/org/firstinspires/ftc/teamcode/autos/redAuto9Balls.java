@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.autos;
 
 //===========ShortPoint===============
 
-import static org.firstinspires.ftc.teamcode.autos.AutoUtils.scoreShortBallsPose;
+import static org.firstinspires.ftc.teamcode.autos.AutoUtils.RedScoreShortBallsPose;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -15,7 +15,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 
 /**
- * base on the blue alliance field
+ * base on the red alliance field
  * Using the TeleOP mode to measure the point and change the current one into correct one
  */
 final class redPositions {
@@ -55,27 +55,27 @@ public class redAuto9Balls implements Auto{
         sequence.addCommands(new InstantCommand(() -> robotContainer.driveSubsystem.setPose(new Pose2d())));
 
         // <-- Step 1: Score preloaded Balls and shoot -->
-        sequence.addCommands(AutoUtils.BluePreloadDriveToShortPoseAndShot(robotContainer,redPositions.START_POINT));
+        sequence.addCommands(AutoUtils.RedPreloadDriveToShortPoseAndShot(robotContainer,redPositions.START_POINT));
 
         // <-- Step 2:  Intake and score the first three Balls -->
         Command driveToFirstLine = robotContainer.driveSubsystem.followPath(
-                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(0.72,-0.78)},
+                new Pose2d(RedScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
+                new Translation2d[]{new Translation2d(0.72, 0.78)},
                 new Pose2d(redPositions.LINE_1_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
                 0.7
         );
         sequence.addCommands(driveToFirstLine
                 .withTimeout(1000));
-        sequence.addCommands(AutoUtils.BlueDriveToIntakeFirstLineContinuousLy(robotContainer).withTimeout(1200));
-        sequence.addCommands(AutoUtils.BlueFirstLineDriveToShortPoseAndShot(robotContainer, bluePositions.LINE_1_ENDING,1300));
+        sequence.addCommands(AutoUtils.RedDriveToIntakeFirstLineContinuousLy(robotContainer).withTimeout(1200));
+        sequence.addCommands(AutoUtils.RedFirstLineDriveToShortPoseAndShot(robotContainer, redPositions.LINE_1_ENDING,1300));
 
 
         // <-- Step 3:  Intake and score the Second three Balls -->
         Command driveToSecondLine = robotContainer.driveSubsystem.followPath(
-                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(1,-1.38)},
-                new Pose2d(bluePositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
+                new Pose2d(RedScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
+                new Translation2d[]{new Translation2d(1,1.38)},
+                new Pose2d(redPositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
                 0.7
         );
@@ -83,14 +83,14 @@ public class redAuto9Balls implements Auto{
         sequence.addCommands(driveToSecondLine
                 .withTimeout(1500));
 
-        sequence.addCommands(AutoUtils.BLueDriveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1400));
-        sequence.addCommands(AutoUtils.BlueSecondLineDriveToShortPoseAndShot(robotContainer,bluePositions.LINE_2_ENDING,2000));
+        sequence.addCommands(AutoUtils.RedDriveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1400));
+        sequence.addCommands(AutoUtils.RedSecondLineDriveToShortPoseAndShot(robotContainer,redPositions.LINE_2_ENDING,2000));
 
         // -- Step 4: Back to ordinary Point -->
         Command backToOriginalPoint = robotContainer.driveSubsystem.followPath(
-                new Pose2d(scoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
+                new Pose2d(RedScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
                 new Translation2d[]{},
-                new Pose2d(bluePositions.START_POINT,Rotation2d.fromDegrees(90)),
+                new Pose2d(redPositions.START_POINT,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromRotations(0),
                 0.7
         );

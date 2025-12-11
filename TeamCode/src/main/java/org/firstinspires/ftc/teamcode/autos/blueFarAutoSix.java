@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.autos;
 
-import static org.firstinspires.ftc.teamcode.autos.AutoUtils.scoreShortBallsPose;
+import static org.firstinspires.ftc.teamcode.autos.AutoUtils.BlueScoreShortBallsPose;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.InstantCommand;
@@ -25,7 +25,7 @@ public class blueFarAutoSix implements Auto{
 
         // <-- Step 2: Intake and Score the third line balls -->
         Command driveToThirdLine = robotContainer.driveSubsystem.followPath(
-                new Pose2d(scoreShortBallsPose.getTranslation(), Rotation2d.fromDegrees(0)),
+                new Pose2d(BlueScoreShortBallsPose.getTranslation(), Rotation2d.fromDegrees(0)),
                 new Translation2d[]{},  //need
                 new Pose2d(bluePositions.LINE_3_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
