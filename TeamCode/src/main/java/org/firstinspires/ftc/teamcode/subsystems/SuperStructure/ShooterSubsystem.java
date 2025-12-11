@@ -134,9 +134,7 @@ public class ShooterSubsystem extends SubsystemBase {
         );
 
         // 3. get the RPM through the table
-        double targetRPM = rpmTable.getRPM(distance);
-
-        return targetRPM;
+        return rpmTable.getRPM(distance);
     }
 
 
