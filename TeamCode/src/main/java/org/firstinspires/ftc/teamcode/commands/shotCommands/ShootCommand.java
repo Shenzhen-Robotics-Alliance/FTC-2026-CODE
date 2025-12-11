@@ -94,10 +94,11 @@ public class ShootCommand extends CommandBase {
             shooterSubsystem.setTargetRPM(targetRPM);
 
             //5.enable the preShooter until the current RPM reach the target one
-            (shooterSubsystem.isAtTargetSpeed()
-                    ? preShooterSubsystem.setShootingAngle()
-                    : preShooterSubsystem.setStopPreShooter()
-            ).execute();
+            if (shooterSubsystem.isAtTargetSpeed()) {
+                preShooterSubsystem.setShootingAngle();
+            } else {
+                preShooterSubsystem.setStopPreShooter();
+            }
         });
     }
 
