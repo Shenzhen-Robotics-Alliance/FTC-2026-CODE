@@ -26,15 +26,15 @@ public class blueFarAutoSix implements Auto{
         // <-- Step 2: Intake and Score the third line balls -->
         Command driveToThirdLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(BlueScoreShortBallsPose.getTranslation(), Rotation2d.fromDegrees(0)),
-                new Translation2d[]{},  //need
-                new Pose2d(bluePositions.LINE_3_RIGHT_BALL,Rotation2d.fromDegrees(90)),
+                new Translation2d[]{new Translation2d(-0.15,0.69)},  //need
+                new Pose2d(bluePositions.FAR_SHOOTING_LINE_3_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
-                0.3
+                0.4
         );
         sequence.addCommands(driveToThirdLine
                 .withTimeout(1500));
         sequence.addCommands(AutoUtils.BlueDriveToIntakeThirdLineContinuousLy(robotContainer).withTimeout(1200));
-        sequence.addCommands(AutoUtils.BlueFirstLineDriveToShortPoseAndShot(robotContainer, bluePositions.LINE_3_ENDING,1500));
+        sequence.addCommands(AutoUtils.BlueFirstLineDriveToShortPoseAndShot(robotContainer, bluePositions.FAR_SHOOTING__ENDING_LINE_3_ENDING,1500));
 
 
         return sequence;

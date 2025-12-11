@@ -41,6 +41,7 @@ final class redPositions {
     public static final Translation2d LINE_3_MID_BALL = new Translation2d(0.46,1.73);
     public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.36,1.95);
     public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
+    public static final Translation2d FAR_SHOOTING_LINE_3_RIGHT_BALL = new Translation2d(0.36,-1.95);
     public static final Translation2d PARKING_POINT = new Translation2d(0,1.00);
     public static final Rotation2d PARKING_FACING = Rotation2d.fromDegrees(-105);
 

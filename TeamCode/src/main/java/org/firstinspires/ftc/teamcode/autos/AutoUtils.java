@@ -109,7 +109,7 @@ public class AutoUtils {
 
         Command moveToFarScoringBalls = robotContainer.driveSubsystem.followPath(
                 new Pose2d(startPose.getTranslation(),Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(0,0)},   //change as the real situation
+                new Translation2d[]{},   //change as the real situation
                 new Pose2d(bluePositions.SHOOTING_POINT,Rotation2d.fromDegrees(0)),
                 Rotation2d.fromDegrees(0),
                 0.7
@@ -161,6 +161,20 @@ public class AutoUtils {
                         new Pose2d(bluePositions.LINE_3_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                         new Translation2d[]{},   //change as the real situation
                         new Pose2d(bluePositions.LINE_3_ENDING,Rotation2d.fromDegrees(90)),
+                        Rotation2d.fromDegrees(0),
+                        0.7
+                )
+                .alongWith(robotContainer.intakeCommand.intakeContinuously());
+        sequence.addCommands(driveAndIntake);
+
+        return sequence;
+    }
+    public static Command BlueFarDriveToIntakeThirdLineContinuousLy(RobotContainer robotContainer){
+        final SequentialCommandGroup sequence = new SequentialCommandGroup();
+        Command driveAndIntake = robotContainer.driveSubsystem.followPath(
+                        new Pose2d(bluePositions.FAR_SHOOTING_LINE_3_RIGHT_BALL,Rotation2d.fromDegrees(90)),
+                        new Translation2d[]{},   //change as the real situation
+                        new Pose2d(bluePositions.FAR_SHOOTING__ENDING_LINE_3_ENDING,Rotation2d.fromDegrees(90)),
                         Rotation2d.fromDegrees(0),
                         0.7
                 )

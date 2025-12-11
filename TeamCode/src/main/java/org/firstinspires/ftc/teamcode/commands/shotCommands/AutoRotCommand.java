@@ -52,7 +52,7 @@ public class AutoRotCommand extends CommandBase {
         double targetVelocity = (tx / CameraHorizontalPOV);
         if (Current_ID == TARGET_ID) {
             rotSubsystem.setRotateVelocity(
-                    visionSubsystem.hasTarget ? targetVelocity * (Math.abs(tx) < 8 ? 1.5 : 0.9)
+                    visionSubsystem.hasTarget ? targetVelocity * (Math.abs(tx) < 8 ? 1.8 : 0.9)
                             : 0
             );
         }

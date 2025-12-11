@@ -46,10 +46,13 @@ public class ShooterSubsystem extends SubsystemBase {
         );
 
         this.rpmTable = new Interpolator();
-        rpmTable.add(0.5, 1350); //distance unit: meters
-        rpmTable.add(0.6, 1500);
-        rpmTable.add(0.7, 1680);
-
+        rpmTable.add(2.3, 799);
+        rpmTable.add(2.2, 785);
+        rpmTable.add(2.0, 750);
+        rpmTable.add(1.8, 740);
+        rpmTable.add(1.53, 730);
+        rpmTable.add(1.13, 710);
+        rpmTable.add(0.57, 674);
         this.driveSubsystem = driveSubsystem;
 
     }
@@ -140,7 +143,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public boolean isReadyToFixFarLaunch(){
         currentTPS = shooter.getCurrentVelocityRaw();
-        return currentTPS > 2200;
+        return currentTPS > 2100;
     }
 
     public boolean isReadyToFixShortLaunch() {
@@ -150,7 +153,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public boolean isReadyToAutoLaunch(){
         currentTPS = shooter.getCurrentVelocityRaw();
-        return  currentTPS > getTargetAutoRpm();
+        double TargetAutoTicks = getTargetAutoRpm()*MOTOR_CPR / 60;
+        return  currentTPS > TargetAutoTicks;
     }
 
 
