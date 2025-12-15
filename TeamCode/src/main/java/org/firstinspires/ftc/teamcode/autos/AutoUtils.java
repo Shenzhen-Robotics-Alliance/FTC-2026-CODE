@@ -8,13 +8,14 @@ import org.firstinspires.ftc.teamcode.RobotContainer;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 
 public class AutoUtils {
     /**
      * BLUE AutoUtils
      */
-    public static final Pose2d BlueScoreShortBallsPose = new Pose2d(0.78, -0.49, Rotation2d.fromDegrees(0));
+    public static final Pose2d BlueScoreShortBallsPose = new Pose2d(0.72, -0.43, Rotation2d.fromDegrees(0));
     public static final Pose2d RedScoreShortBallsPose = new Pose2d(0.78, 0.49, Rotation2d.fromDegrees(0));
     public static final Pose2d scoreLongBallsPose = new Pose2d(1.02, -2.67, Rotation2d.fromDegrees(0));
     public static final Pose2d startPose = new Pose2d(0,0,Rotation2d.fromDegrees(0));
@@ -48,7 +49,7 @@ public class AutoUtils {
                 new Translation2d[]{new Translation2d(0.55,-0.56)},  //change as the real situation
                 new Pose2d(BlueScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(135)),
                 Rotation2d.fromDegrees(0),
-                0.75
+                0.7
         ).withTimeout(Timeout);
         sequence.addCommands(moveToShortScoringBalls);
 
@@ -64,11 +65,11 @@ public class AutoUtils {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
 
         Command moveToShortScoringBalls = robotContainer.driveSubsystem.followPath(
-                new Pose2d(startingPoint,Rotation2d.fromDegrees(45)),
-                new Translation2d[]{new Translation2d(0.78,-1.21)},  //change as the real situation
-                new Pose2d(BlueScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(135)),
+                new Pose2d(startingPoint,Rotation2d.fromDegrees(60)),
+                new Translation2d[]{new Translation2d(0.78,-0.7)},  //change as the real situation
+                new Pose2d(BlueScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(45)),
                 Rotation2d.fromDegrees(0),
-                0.75
+                0.8
         ).withTimeout(Timeout);
         sequence.addCommands(moveToShortScoringBalls);
 
@@ -86,9 +87,9 @@ public class AutoUtils {
         Command moveToShortScoringBalls = robotContainer.driveSubsystem.followPath(
                 new Pose2d(startingPoint,Rotation2d.fromDegrees(45)),
                 new Translation2d[]{},  //in need
-                new Pose2d(BlueScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(135)),
+                new Pose2d(BlueScoreShortBallsPose.plus(new Transform2d(0.2,0.2,new Rotation2d(0))).getTranslation(),Rotation2d.fromDegrees(135)),
                 Rotation2d.fromDegrees(0),
-                0.9
+                0.95
         ).withTimeout(Timeout);
         sequence.addCommands(moveToShortScoringBalls);
 
@@ -104,22 +105,33 @@ public class AutoUtils {
 
 
     //Drive to long shooting pose and then shooting
-    public static Command BlueDriveToFarPoseAndShot(RobotContainer robotContainer) {
+    public static Command BlueDriveToFarPoseAndShot(RobotContainer robotContainer, Translation2d startingPoint, long Timeout) {
         final SequentialCommandGroup sequence = new SequentialCommandGroup();
 
         Command moveToFarScoringBalls = robotContainer.driveSubsystem.followPath(
-                new Pose2d(startPose.getTranslation(),Rotation2d.fromDegrees(0)),
+                new Pose2d(startingPoint,Rotation2d.fromDegrees(90)),
                 new Translation2d[]{},   //change as the real situation
-                new Pose2d(bluePositions.SHOOTING_POINT,Rotation2d.fromDegrees(0)),
+                new Pose2d(bluePositions.FAR_SHOOTING_POINT,Rotation2d.fromDegrees(0)),
                 Rotation2d.fromDegrees(0),
                 0.7
-        );
+        ).withTimeout(Timeout);
 
         sequence.addCommands(moveToFarScoringBalls);
 
         sequence.addCommands(robotContainer.intakeCommand.intakeContinuously()
-                .alongWith(robotContainer.shootCommand.fixShootShortContinuously())
-                .withTimeout(3500));
+                .alongWith(robotContainer.shootCommand.fixShootFarContinuously())
+                .withTimeout(6000));
+        sequence.addCommands(robotContainer.shootCommand.shootStop());
+
+        return sequence;
+    }
+
+    public static Command BlueFarPoseShot(RobotContainer robotContainer) {
+        final SequentialCommandGroup sequence = new SequentialCommandGroup();
+
+        sequence.addCommands(robotContainer.intakeCommand.intakeContinuously()
+                .alongWith(robotContainer.shootCommand.fixShootFarContinuously())
+                .withTimeout(6000));
         sequence.addCommands(robotContainer.shootCommand.shootStop());
 
         return sequence;
@@ -133,7 +145,7 @@ public class AutoUtils {
                         new Translation2d[]{},   //change as the real situation
                         new Pose2d(bluePositions.LINE_1_ENDING,Rotation2d.fromDegrees(90)),
                         Rotation2d.fromDegrees(0),
-                        0.7
+                        0.8
                 )
                 .alongWith(robotContainer.intakeCommand.intakeContinuously());
         sequence.addCommands(driveAndIntake);
@@ -148,7 +160,7 @@ public class AutoUtils {
                         new Translation2d[]{},   //change as the real situation
                         new Pose2d(bluePositions.LINE_2_ENDING,Rotation2d.fromDegrees(90)),
                         Rotation2d.fromDegrees(0),
-                        0.7
+                        0.8
                 )
                 .alongWith(robotContainer.intakeCommand.intakeContinuously());
         sequence.addCommands(driveAndIntake);
@@ -162,7 +174,7 @@ public class AutoUtils {
                         new Translation2d[]{},   //change as the real situation
                         new Pose2d(bluePositions.LINE_3_ENDING,Rotation2d.fromDegrees(90)),
                         Rotation2d.fromDegrees(0),
-                        0.7
+                        0.9
                 )
                 .alongWith(robotContainer.intakeCommand.intakeContinuously());
         sequence.addCommands(driveAndIntake);
@@ -174,9 +186,9 @@ public class AutoUtils {
         Command driveAndIntake = robotContainer.driveSubsystem.followPath(
                         new Pose2d(bluePositions.FAR_SHOOTING_LINE_3_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                         new Translation2d[]{},   //change as the real situation
-                        new Pose2d(bluePositions.FAR_SHOOTING__ENDING_LINE_3_ENDING,Rotation2d.fromDegrees(90)),
+                        new Pose2d(bluePositions.FAR_SHOOTING_ENDING_LINE_3_ENDING,Rotation2d.fromDegrees(90)),
                         Rotation2d.fromDegrees(0),
-                        0.7
+                        0.9
                 )
                 .alongWith(robotContainer.intakeCommand.intakeContinuously());
         sequence.addCommands(driveAndIntake);
@@ -255,7 +267,7 @@ public class AutoUtils {
                 new Translation2d[]{},  //in need
                 new Pose2d(RedScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(45)),
                 Rotation2d.fromDegrees(0),
-                0.9
+                0.95
         ).withTimeout(Timeout);
         sequence.addCommands(moveToShortScoringBalls);
 

@@ -42,17 +42,24 @@ public class redAuto12Balls implements Auto{
         // <-- Step 3:  Intake and score the Second three Balls -->
         Command driveToSecondLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(RedScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(1,1.38)},
+                new Translation2d[]{new Translation2d(1,-1.38)},
                 new Pose2d(redPositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
                 0.8
         );
+        Command driveToGATE = robotContainer.driveSubsystem.followPath(
+                new Pose2d(redPositions.LINE_2_ENDING,Rotation2d.fromDegrees(60)),
+                new Translation2d[]{new Translation2d(0.31,-1.36)},
+                new Pose2d(redPositions.GATE_POINT,Rotation2d.fromDegrees(90)),
+                Rotation2d.fromDegrees(0),
+                0.8
+        );
 
-        sequence.addCommands(driveToSecondLine
-                .withTimeout(1400));  //narrow
-
+        sequence.addCommands(driveToSecondLine.withTimeout(1400));  //narrow
         sequence.addCommands(AutoUtils.RedDriveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1400));
-        sequence.addCommands(AutoUtils.RedSecondLineDriveToShortPoseAndShot(robotContainer,redPositions.LINE_2_ENDING,2000));
+
+        sequence.addCommands(driveToGATE.withTimeout(1500));  //narrow
+        sequence.addCommands(AutoUtils.RedSecondLineDriveToShortPoseAndShot(robotContainer,redPositions.GATE_POINT,2000));
 
         // <-- Step 4:  Intake and score the Third three Balls -->
         Command driveToThirdLine = robotContainer.driveSubsystem.followPath(
@@ -67,7 +74,7 @@ public class redAuto12Balls implements Auto{
                 .withTimeout(1800)); //narrow
 
         sequence.addCommands(AutoUtils.RedDriveToIntakeThirdLineContinuousLy(robotContainer).withTimeout(1400));
-        sequence.addCommands(AutoUtils.RedThirdLineDriveToShortPoseAndShot(robotContainer,redPositions.LINE_3_ENDING,2000));
+        sequence.addCommands(AutoUtils.RedThirdLineDriveToShortPoseAndShot(robotContainer,redPositions.LINE_3_ENDING,2200));
 
         // <-- Step 5: Go to the Auto Ending Point -->
         Command goToEndingPoint = robotContainer.driveSubsystem.followPath(

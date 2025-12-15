@@ -41,9 +41,11 @@ final class redPositions {
     public static final Translation2d LINE_3_MID_BALL = new Translation2d(0.46,1.73);
     public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.36,1.95);
     public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
-    public static final Translation2d FAR_SHOOTING_LINE_3_RIGHT_BALL = new Translation2d(0.36,-1.95);
-    public static final Translation2d PARKING_POINT = new Translation2d(0,1.00);
-    public static final Rotation2d PARKING_FACING = Rotation2d.fromDegrees(-105);
+    public static final Translation2d FAR_SHOOTING_LINE_3_RIGHT_BALL = new Translation2d(-0.63,0.72);
+
+    public static final Translation2d FAR_SHOOTING_ENDING_LINE_3_ENDING = FAR_SHOOTING_LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
+    public static final Translation2d GATE_POINT = new Translation2d(-0.1,0.8);
+    public static final Rotation2d PARKING_FACING = Rotation2d.fromDegrees(-90);
 
 
 }
@@ -64,7 +66,7 @@ public class redAuto9Balls implements Auto{
                 new Translation2d[]{new Translation2d(0.72, 0.78)},
                 new Pose2d(redPositions.LINE_1_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
-                0.7
+                0.75
         );
         sequence.addCommands(driveToFirstLine
                 .withTimeout(1000));
@@ -78,14 +80,21 @@ public class redAuto9Balls implements Auto{
                 new Translation2d[]{new Translation2d(1,1.38)},
                 new Pose2d(redPositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
-                0.7
+                0.75
+        );
+        Command driveToGATE = robotContainer.driveSubsystem.followPath(
+                new Pose2d(redPositions.LINE_2_ENDING,Rotation2d.fromDegrees(60)),
+                new Translation2d[]{new Translation2d(0.31,1.36)},
+                new Pose2d(redPositions.GATE_POINT,Rotation2d.fromDegrees(90)),
+                Rotation2d.fromDegrees(0),
+                0.8
         );
 
-        sequence.addCommands(driveToSecondLine
-                .withTimeout(1500));
+        sequence.addCommands(driveToSecondLine.withTimeout(1400));  //narrow
+        sequence.addCommands(AutoUtils.RedDriveToFarPoseAndShot(robotContainer).withTimeout(1400));
 
-        sequence.addCommands(AutoUtils.RedDriveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1400));
-        sequence.addCommands(AutoUtils.RedSecondLineDriveToShortPoseAndShot(robotContainer,redPositions.LINE_2_ENDING,2000));
+        sequence.addCommands(driveToGATE.withTimeout(1500));  //narrow
+        sequence.addCommands(AutoUtils.RedSecondLineDriveToShortPoseAndShot(robotContainer,redPositions.GATE_POINT,1500));
 
         // -- Step 4: Back to ordinary Point -->
         Command backToOriginalPoint = robotContainer.driveSubsystem.followPath(

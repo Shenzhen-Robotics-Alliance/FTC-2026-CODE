@@ -24,16 +24,16 @@ public class DriveTrainConstants {
             RIGHT_ODOMETER_WHEEL_NAME = "frontRight";
 
     /* if the RAW encoder reading is POSITIVE when moving to the left, false; other wise, true */
-    public static final boolean CENTER_ODOMETER_WHEEL_INVERTED = true;
+    public static final boolean CENTER_ODOMETER_WHEEL_INVERTED = false;
     /* if the RAW encoder reading is POSITIVE when moving front, false; other wise, true */
-    public static final boolean LEFT_ODOMETER_WHEEL_INVERTED = false;
-    public static final boolean RIGHT_ODOMETER_WHEEL_INVERTED = false;
+    public static final boolean LEFT_ODOMETER_WHEEL_INVERTED = true;
+    public static final boolean RIGHT_ODOMETER_WHEEL_INVERTED = true;
 
     public static final double
-            FRONT_LEFT_MOTOR_DIRECTION = 1,
-            FRONT_RIGHT_MOTOR_DIRECTION = 1,
-            BACK_LEFT_MOTOR_DIRECTION = 1,
-            BACK_RIGHT_MOTOR_DIRECTION = -1;
+            FRONT_LEFT_MOTOR_DIRECTION = -1,
+            FRONT_RIGHT_MOTOR_DIRECTION = -1,
+            BACK_LEFT_MOTOR_DIRECTION = -1,
+            BACK_RIGHT_MOTOR_DIRECTION = 1;
 
     public static final IMU.Parameters IMU_PARAMS = new IMU.Parameters(new RevHubOrientationOnRobot(
             RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
@@ -57,5 +57,5 @@ public class DriveTrainConstants {
             new Translation2d(-CHASSIS_LENGTH_METERS /2, CHASSIS_WIDTH_METERS / 2),
             new Translation2d(-CHASSIS_LENGTH_METERS /2, -CHASSIS_WIDTH_METERS / 2));
 
-    public static final double MAX_VELOCITY_METERS_PER_SECOND = 1.8, MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = Math.toRadians(135);
+    public static final double MAX_VELOCITY_METERS_PER_SECOND = 2.56, MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = Math.toRadians(135);
 }

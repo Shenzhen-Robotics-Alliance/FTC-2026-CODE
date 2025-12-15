@@ -20,30 +20,30 @@ import edu.wpi.first.math.geometry.Translation2d;
 final class bluePositions {
     public static final Translation2d START_POINT = new Translation2d(0, 0);
     public static final Rotation2d START_FACING = Rotation2d.fromDegrees(0);
-    public static final Translation2d SHOOTING_POINT = new Translation2d(0.77,-0.42);
+    public static final Translation2d FAR_SHOOTING_POINT = new Translation2d(0,0);
     public static final Rotation2d SHOOTING_FACING = Rotation2d.fromDegrees(0);
     public static final Rotation2d INTAKE_FACING = Rotation2d.fromDegrees(0);
     public static final Translation2d LINE_1_LEFT_BALL = new Translation2d(0,-0.73);
     public static final Translation2d LINE_1_MID_BALL = new Translation2d(0.53,-0.77);
-    public static final Translation2d LINE_1_RIGHT_BALL = new Translation2d(0.57,-0.79);
+    public static final Translation2d LINE_1_RIGHT_BALL = new Translation2d(0.52,-0.79);
 
     //new
     public static final Translation2d LINE_1_ENDING = LINE_1_RIGHT_BALL.plus(new Translation2d(-0.7,0));
 
     public static final Translation2d LINE_2_LEFT_BALL = new Translation2d(0,-1.36);
     public static final Translation2d LINE_2_MID_BALL = new Translation2d(0.31,-1.35);
-    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.57,-1.36);
+    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.44,-1.48);
     //new
-    public static final Translation2d LINE_2_ENDING = LINE_2_RIGHT_BALL.plus(new Translation2d(-0.9,0));
+    public static final Translation2d LINE_2_ENDING = LINE_2_RIGHT_BALL.plus(new Translation2d(-0.8,0));
 
     public static final Translation2d LINE_3_LEFT_BALL = new Translation2d(0,-1.70);
     public static final Translation2d LINE_3_MID_BALL = new Translation2d(0.46,-1.73);
-    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.36,-1.95);
+    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.46,-2.0);
     public static final Translation2d FAR_SHOOTING_LINE_3_RIGHT_BALL = new Translation2d(-0.63,0.72);
-    public static final Translation2d FAR_SHOOTING__ENDING_LINE_3_ENDING = FAR_SHOOTING_LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
-    public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
-    public static final Translation2d PARKING_POINT = new Translation2d(0,-1.00);
-    public static final Rotation2d PARKING_FACING = Rotation2d.fromDegrees(-105);
+    public static final Translation2d FAR_SHOOTING_ENDING_LINE_3_ENDING = FAR_SHOOTING_LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
+    public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.8,0));
+    public static final Translation2d GATE_POINT = new Translation2d(-0.1,-1.0);
+    public static final Rotation2d PARKING_FACING = Rotation2d.fromDegrees(-90);
 
 
 }
@@ -78,14 +78,21 @@ public class blueAuto9Balls implements Auto{
                 new Translation2d[]{new Translation2d(1,-1.38)},
                 new Pose2d(bluePositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
-                0.7
+                0.8
+        );
+        Command driveToGATE = robotContainer.driveSubsystem.followPath(
+                new Pose2d(bluePositions.LINE_2_ENDING,Rotation2d.fromDegrees(60)),
+                new Translation2d[]{new Translation2d(0.31,-1.36)},
+                new Pose2d(bluePositions.GATE_POINT,Rotation2d.fromDegrees(90)),
+                Rotation2d.fromDegrees(0),
+                0.9
         );
 
-        sequence.addCommands(driveToSecondLine
-                .withTimeout(1500));
-
+        sequence.addCommands(driveToSecondLine.withTimeout(1400));  //narrow
         sequence.addCommands(AutoUtils.BLueDriveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1400));
-        sequence.addCommands(AutoUtils.BlueSecondLineDriveToShortPoseAndShot(robotContainer,bluePositions.LINE_2_ENDING,2000));
+
+        sequence.addCommands(driveToGATE.withTimeout(1500));  //narrow
+        sequence.addCommands(AutoUtils.BlueSecondLineDriveToShortPoseAndShot(robotContainer,bluePositions.GATE_POINT,1500));
 
         // -- Step 4: Back to ordinary Point -->
         Command backToOriginalPoint = robotContainer.driveSubsystem.followPath(
@@ -93,7 +100,7 @@ public class blueAuto9Balls implements Auto{
                 new Translation2d[]{},
                 new Pose2d(bluePositions.START_POINT,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromRotations(0),
-                0.7
+                0.9
         );
 
         sequence.addCommands(backToOriginalPoint);
