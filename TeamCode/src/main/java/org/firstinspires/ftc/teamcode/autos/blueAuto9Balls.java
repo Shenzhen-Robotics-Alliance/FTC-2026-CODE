@@ -25,24 +25,24 @@ final class bluePositions {
     public static final Rotation2d INTAKE_FACING = Rotation2d.fromDegrees(0);
     public static final Translation2d LINE_1_LEFT_BALL = new Translation2d(0,-0.73);
     public static final Translation2d LINE_1_MID_BALL = new Translation2d(0.53,-0.77);
-    public static final Translation2d LINE_1_RIGHT_BALL = new Translation2d(0.52,-0.79);
+    public static final Translation2d LINE_1_RIGHT_BALL = new Translation2d(0.55,-0.79);
 
     //new
     public static final Translation2d LINE_1_ENDING = LINE_1_RIGHT_BALL.plus(new Translation2d(-0.7,0));
 
     public static final Translation2d LINE_2_LEFT_BALL = new Translation2d(0,-1.36);
     public static final Translation2d LINE_2_MID_BALL = new Translation2d(0.31,-1.35);
-    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.44,-1.48);
+    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.59,-1.40);
     //new
-    public static final Translation2d LINE_2_ENDING = LINE_2_RIGHT_BALL.plus(new Translation2d(-0.8,0));
+    public static final Translation2d LINE_2_ENDING = LINE_2_RIGHT_BALL.plus(new Translation2d(-0.9,0));
 
     public static final Translation2d LINE_3_LEFT_BALL = new Translation2d(0,-1.70);
     public static final Translation2d LINE_3_MID_BALL = new Translation2d(0.46,-1.73);
-    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.46,-2.0);
+    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.64,-2.0);
     public static final Translation2d FAR_SHOOTING_LINE_3_RIGHT_BALL = new Translation2d(-0.63,0.72);
     public static final Translation2d FAR_SHOOTING_ENDING_LINE_3_ENDING = FAR_SHOOTING_LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
-    public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.8,0));
-    public static final Translation2d GATE_POINT = new Translation2d(-0.1,-1.0);
+    public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.88,0));
+    public static final Translation2d GATE_POINT = new Translation2d(-0.05,-1.09);
     public static final Rotation2d PARKING_FACING = Rotation2d.fromDegrees(-90);
 
 
@@ -78,7 +78,7 @@ public class blueAuto9Balls implements Auto{
                 new Translation2d[]{new Translation2d(1,-1.38)},
                 new Pose2d(bluePositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
-                0.8
+                0.85
         );
         Command driveToGATE = robotContainer.driveSubsystem.followPath(
                 new Pose2d(bluePositions.LINE_2_ENDING,Rotation2d.fromDegrees(60)),

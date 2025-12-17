@@ -26,14 +26,14 @@ public class blueAuto12Balls implements Auto{
 
         // <-- Step 2:  Intake and score the first three Balls -->
         Command driveToFirstLine = robotContainer.driveSubsystem.followPath(
-                new Pose2d(BlueScoreShortBallsPose.getTranslation(), Rotation2d.fromDegrees(0)),
+                new Pose2d(BlueScoreShortBallsPose.getTranslation(), Rotation2d.fromDegrees(90)),
                 new Translation2d[]{new Translation2d(0.72,-0.78)},
-                new Pose2d(bluePositions.LINE_1_RIGHT_BALL,Rotation2d.fromDegrees(90)),
+                new Pose2d(bluePositions.LINE_1_RIGHT_BALL,Rotation2d.fromDegrees(0)),
                 Rotation2d.fromDegrees(0),
-                0.8
+                0.85
         );
         sequence.addCommands(driveToFirstLine
-                .withTimeout(900));
+                .withTimeout(1000));
         sequence.addCommands(AutoUtils.BlueDriveToIntakeFirstLineContinuousLy(robotContainer).withTimeout(1000));
         sequence.addCommands(AutoUtils.BlueFirstLineDriveToShortPoseAndShot(robotContainer, bluePositions.LINE_1_ENDING,1300));
 
@@ -41,39 +41,39 @@ public class blueAuto12Balls implements Auto{
         // <-- Step 3:  Intake and score the Second three Balls -->
         Command driveToSecondLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(BlueScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(160)),
-                new Translation2d[]{new Translation2d(0.75,-1.07)},
+                new Translation2d[]{new Translation2d(0.85,-1.07)},
                 new Pose2d(bluePositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(80)),
                 Rotation2d.fromDegrees(0),
-                0.8
+                0.85
         );
         Command driveToGATE = robotContainer.driveSubsystem.followPath(
                 new Pose2d(bluePositions.LINE_2_ENDING,Rotation2d.fromDegrees(60)),
                 new Translation2d[]{new Translation2d(0.31,-1.36)},
                 new Pose2d(bluePositions.GATE_POINT,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
-                0.8
+                0.85
         );
 
-        sequence.addCommands(driveToSecondLine.withTimeout(1700));  //narrow
+        sequence.addCommands(driveToSecondLine.withTimeout(1500));  //narrow
         sequence.addCommands(AutoUtils.BLueDriveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1500));
 
-        sequence.addCommands(driveToGATE.withTimeout(1200));  //narrow
+        sequence.addCommands(driveToGATE.withTimeout(1000));  //narrow
         sequence.addCommands(AutoUtils.BlueSecondLineDriveToShortPoseAndShot(robotContainer,bluePositions.GATE_POINT,2000));
 
         // <-- Step 4:  Intake and score the Third three Balls -->
         Command driveToThirdLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(BlueScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(135)),
-                new Translation2d[]{new Translation2d(0.71,-1.70)},   //need
+                new Translation2d[]{new Translation2d(0.96,-2.0)},   //need
                 new Pose2d(bluePositions.LINE_3_RIGHT_BALL,Rotation2d.fromDegrees(75)),
                 Rotation2d.fromDegrees(0),
-                0.8
+                0.85
         );
 
         sequence.addCommands(driveToThirdLine
-                .withTimeout(2000)); //narrow
+                .withTimeout(2400)); //narrow
 
         sequence.addCommands(AutoUtils.BlueDriveToIntakeThirdLineContinuousLy(robotContainer).withTimeout(1900));
-        sequence.addCommands(AutoUtils.BlueThirdLineDriveToShortPoseAndShot(robotContainer,bluePositions.LINE_3_ENDING,2300));
+        sequence.addCommands(AutoUtils.BlueThirdLineDriveToShortPoseAndShot(robotContainer,bluePositions.LINE_3_ENDING,2400));
 
         // <-- Step 5: Go to the Auto Ending Point -->
         Command goToEndingPoint = robotContainer.driveSubsystem.followPath(
@@ -81,7 +81,7 @@ public class blueAuto12Balls implements Auto{
                 new Translation2d[]{}, //need
                 new Pose2d(bluePositions.START_POINT,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromRotations(0),
-                0.8
+                0.85
         );
 
         sequence.addCommands(goToEndingPoint.withTimeout(1500));

@@ -17,9 +17,9 @@ public class ShooterSubsystem extends SubsystemBase {
     public final LinearMotion shooter;
 
     private final double MOTOR_CPR = 104; //counts per revolution
-    private final double MAX_TICKS_PER_SEC = 1500;
-    private final double TOLERANCE_RPM = 1;
-    private final double TOLERANCE_TICKS = (TOLERANCE_RPM * MOTOR_CPR) / 60.0;
+    private final double MAX_TICKS_PER_SEC = 1850;
+//    private final double TOLERANCE_RPM = 1;
+//    private final double TOLERANCE_TICKS = (TOLERANCE_RPM * MOTOR_CPR) / 60.0;
     private final MecanumDriveSubsystem driveSubsystem;
     private double targetTPS = 0;
     private double currentTPS = 0;
@@ -35,14 +35,14 @@ public class ShooterSubsystem extends SubsystemBase {
                 new DcMotorEx[]{
                         hardwareMap.get(DcMotorEx.class,"ShooterMotor"),
                 },
-                new boolean[]{true},
+                new boolean[]{false},
                 hardwareMap.get(DcMotorEx.class,"ShooterMotor"),
-                false,
+                true,
                 MAX_TICKS_PER_SEC,
-                1.25,
+                1.5,
                 0,
                 0.004,
-                0.0006        
+                0.00085
         );
 
         this.rpmTable = new Interpolator();
@@ -85,14 +85,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     
 
-    public boolean isAtTargetSpeed() {
-        // get Ticks/Sec
-        currentTPS = shooter.getCurrentVelocityRaw();
-        return Math.abs(currentTPS - targetTPS) < TOLERANCE_TICKS;
-    }
-
-    
-
     public Command setShootingMotorStop(){
         return new InstantCommand(() -> shooter.setTargetVelocity(0));
     }
@@ -104,7 +96,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public Command shooterFixShortLaunch(){
-        return new RunCommand(() -> setTargetRPM(710));
+        return new RunCommand(() -> setTargetRPM(713));
     }
 
     public Command shooterAutoLaunch(){
@@ -142,17 +134,17 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
     public boolean isReadyToFixFarLaunch(){
-        currentTPS = shooter.getCurrentVelocityRaw();
+        currentTPS = Math.abs(shooter.getCurrentVelocityRaw());
         return currentTPS > 2100;
     }
 
     public boolean isReadyToFixShortLaunch() {
-        currentTPS = shooter.getCurrentVelocityRaw();
+        currentTPS = Math.abs(shooter.getCurrentVelocityRaw());
         return currentTPS > 1400;
     }
 
     public boolean isReadyToAutoLaunch(){
-        currentTPS = shooter.getCurrentVelocityRaw();
+        currentTPS = Math.abs(shooter.getCurrentVelocityRaw());
         double TargetAutoTicks = getTargetAutoRpm()*MOTOR_CPR / 60;
         return  currentTPS > TargetAutoTicks;
     }

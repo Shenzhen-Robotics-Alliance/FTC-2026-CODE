@@ -21,31 +21,31 @@ import edu.wpi.first.math.geometry.Translation2d;
 final class redPositions {
     public static final Translation2d START_POINT = new Translation2d(0, 0);
     public static final Rotation2d START_FACING = Rotation2d.fromDegrees(0);
-    public static final Translation2d SHOOTING_POINT = new Translation2d(0.77,0.42);
+    public static final Translation2d FAR_SHOOTING_POINT = new Translation2d(0,0);
     public static final Rotation2d SHOOTING_FACING = Rotation2d.fromDegrees(0);
     public static final Rotation2d INTAKE_FACING = Rotation2d.fromDegrees(0);
     public static final Translation2d LINE_1_LEFT_BALL = new Translation2d(0,0.73);
     public static final Translation2d LINE_1_MID_BALL = new Translation2d(0.53,0.77);
-    public static final Translation2d LINE_1_RIGHT_BALL = new Translation2d(0.57,0.79);
+    public static final Translation2d LINE_1_RIGHT_BALL = new Translation2d(0.57,0.69);
 
     //new
     public static final Translation2d LINE_1_ENDING = LINE_1_RIGHT_BALL.plus(new Translation2d(-0.7,0));
 
     public static final Translation2d LINE_2_LEFT_BALL = new Translation2d(0,1.36);
     public static final Translation2d LINE_2_MID_BALL = new Translation2d(0.31,1.35);
-    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.57,1.36);
+    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.53,1.29);
     //new
-    public static final Translation2d LINE_2_ENDING = LINE_2_RIGHT_BALL.plus(new Translation2d(-0.9,0));
+    public static final Translation2d LINE_2_ENDING = LINE_2_RIGHT_BALL.plus(new Translation2d(0.8,0));
 
     public static final Translation2d LINE_3_LEFT_BALL = new Translation2d(0,1.70);
     public static final Translation2d LINE_3_MID_BALL = new Translation2d(0.46,1.73);
-    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.36,1.95);
-    public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
+    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.52,2.0);
     public static final Translation2d FAR_SHOOTING_LINE_3_RIGHT_BALL = new Translation2d(-0.63,0.72);
-
     public static final Translation2d FAR_SHOOTING_ENDING_LINE_3_ENDING = FAR_SHOOTING_LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
-    public static final Translation2d GATE_POINT = new Translation2d(-0.1,0.8);
+    public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.88,0));
+    public static final Translation2d GATE_POINT = new Translation2d(-0.05,1.09);
     public static final Rotation2d PARKING_FACING = Rotation2d.fromDegrees(-90);
+
 
 
 }
@@ -80,18 +80,18 @@ public class redAuto9Balls implements Auto{
                 new Translation2d[]{new Translation2d(1,1.38)},
                 new Pose2d(redPositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
-                0.75
+                0.85
         );
         Command driveToGATE = robotContainer.driveSubsystem.followPath(
                 new Pose2d(redPositions.LINE_2_ENDING,Rotation2d.fromDegrees(60)),
                 new Translation2d[]{new Translation2d(0.31,1.36)},
                 new Pose2d(redPositions.GATE_POINT,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
-                0.8
+                0.9
         );
 
         sequence.addCommands(driveToSecondLine.withTimeout(1400));  //narrow
-        sequence.addCommands(AutoUtils.RedDriveToFarPoseAndShot(robotContainer).withTimeout(1400));
+        sequence.addCommands(AutoUtils.RedDriveToFarPoseAndShot(robotContainer,redPositions.FAR_SHOOTING_POINT,2000).withTimeout(1400));
 
         sequence.addCommands(driveToGATE.withTimeout(1500));  //narrow
         sequence.addCommands(AutoUtils.RedSecondLineDriveToShortPoseAndShot(robotContainer,redPositions.GATE_POINT,1500));
@@ -102,7 +102,7 @@ public class redAuto9Balls implements Auto{
                 new Translation2d[]{},
                 new Pose2d(redPositions.START_POINT,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromRotations(0),
-                0.7
+                0.8
         );
 
         sequence.addCommands(backToOriginalPoint);

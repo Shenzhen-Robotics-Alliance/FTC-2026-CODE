@@ -48,7 +48,7 @@ public class VisionSubsystem extends SubsystemBase {
         limelight = hardwareMap.get(Limelight3A.class, "limelight");
 
         // Configure and start the Limelight immediately
-        limelight.setPollRateHz(100);
+        limelight.setPollRateHz(50);
         limelight.pipelineSwitch(0);
         limelight.start();
         
@@ -60,7 +60,7 @@ public class VisionSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         // Get the latest status and result from the Limelight
-        status = limelight.getStatus();
+//        status = limelight.getStatus();
         LLResult result = limelight.getLatestResult();
 
         if (result != null) {
@@ -152,9 +152,9 @@ public class VisionSubsystem extends SubsystemBase {
      * Get the Limelight status
      * @return LLStatus object containing status information
      */
-    public LLStatus getStatus() {
-        return status;
-    }
+//    public LLStatus getStatus() {
+//        return status;
+//    }
 
     /**
      * Get the fiducial results

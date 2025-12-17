@@ -8,18 +8,19 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.AutonomousRobot;
 import org.firstinspires.ftc.teamcode.RobotContainer;
 import org.firstinspires.ftc.teamcode.autos.blueAuto9Balls;
+import org.firstinspires.ftc.teamcode.autos.redAuto9Balls;
 import org.firstinspires.ftc.teamcode.utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.utils.OpModeUtils;
 
-@Autonomous(name="<Auto> BLUE 3 + 6 score artifacts ")
+@Autonomous(name="<Auto> RED 3 + 6 score artifacts ")
 
-public class ShortPoint9score extends LinearOpMode{
-        @Override
-        public void runOpMode() throws InterruptedException {
-            final AutonomousRobot robot = new AutonomousRobot(
-                    new RobotContainer(hardwareMap, AllianceSide.BLUE),
-                    new blueAuto9Balls()
-            );
-            OpModeUtils.runAutoMode(robot, this);
-        }
+public class RedShort9score extends LinearOpMode {
+    @Override
+    public void runOpMode() throws InterruptedException {
+        final AutonomousRobot robot = new AutonomousRobot(
+                new RobotContainer(hardwareMap, AllianceSide.RED),
+                new redAuto9Balls()
+        );
+        OpModeUtils.runAutoMode(robot, this);
+    }
 }

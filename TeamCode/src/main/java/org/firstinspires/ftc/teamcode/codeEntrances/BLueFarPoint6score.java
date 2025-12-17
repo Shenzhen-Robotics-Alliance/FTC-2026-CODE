@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.utils.OpModeUtils;
 
 @Autonomous(name="<Auto> BLUE FAR 3 + 3 score artifacts ")
-public class FarPoint6score extends LinearOpMode {
+public class BLueFarPoint6score extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         final AutonomousRobot robot = new AutonomousRobot(

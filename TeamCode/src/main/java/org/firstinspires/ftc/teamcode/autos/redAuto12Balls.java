@@ -28,7 +28,7 @@ public class redAuto12Balls implements Auto{
         // <-- Step 2:  Intake and score the first three Balls -->
         Command driveToFirstLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(RedScoreShortBallsPose.getTranslation(), Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(0.72,0.78)},
+                new Translation2d[]{new Translation2d(0.81,0.97)},
                 new Pose2d(redPositions.LINE_1_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
                 0.8
@@ -42,7 +42,7 @@ public class redAuto12Balls implements Auto{
         // <-- Step 3:  Intake and score the Second three Balls -->
         Command driveToSecondLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(RedScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(1,-1.38)},
+                new Translation2d[]{new Translation2d(0.77,0.96)},
                 new Pose2d(redPositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
                 0.8
@@ -64,7 +64,7 @@ public class redAuto12Balls implements Auto{
         // <-- Step 4:  Intake and score the Third three Balls -->
         Command driveToThirdLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(RedScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(1,1.96)},   //need
+                new Translation2d[]{new Translation2d(0.7,1.54)},   //need
                 new Pose2d(redPositions.LINE_3_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
                 0.8

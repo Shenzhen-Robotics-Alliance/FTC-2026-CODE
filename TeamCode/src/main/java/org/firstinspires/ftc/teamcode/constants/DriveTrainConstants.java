@@ -24,21 +24,21 @@ public class DriveTrainConstants {
             RIGHT_ODOMETER_WHEEL_NAME = "frontRight";
 
     /* if the RAW encoder reading is POSITIVE when moving to the left, false; other wise, true */
-    public static final boolean CENTER_ODOMETER_WHEEL_INVERTED = false;
+    public static final boolean CENTER_ODOMETER_WHEEL_INVERTED = true;
     /* if the RAW encoder reading is POSITIVE when moving front, false; other wise, true */
-    public static final boolean LEFT_ODOMETER_WHEEL_INVERTED = true;
-    public static final boolean RIGHT_ODOMETER_WHEEL_INVERTED = true;
-
-    public static final double
-            FRONT_LEFT_MOTOR_DIRECTION = -1,
-            FRONT_RIGHT_MOTOR_DIRECTION = -1,
-            BACK_LEFT_MOTOR_DIRECTION = -1,
-            BACK_RIGHT_MOTOR_DIRECTION = 1;
+    public static final boolean LEFT_ODOMETER_WHEEL_INVERTED = false;
+    public static final boolean RIGHT_ODOMETER_WHEEL_INVERTED = false;
 
     public static final IMU.Parameters IMU_PARAMS = new IMU.Parameters(new RevHubOrientationOnRobot(
             RevHubOrientationOnRobot.LogoFacingDirection.RIGHT,
             RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD
     ));
+
+    public static final double
+            FRONT_LEFT_MOTOR_DIRECTION = 1,
+            FRONT_RIGHT_MOTOR_DIRECTION = 1,
+            BACK_LEFT_MOTOR_DIRECTION = 1,
+            BACK_RIGHT_MOTOR_DIRECTION = -1;
 
     public static final double ODOMETER_ENCODER_TICKS_PER_REVOLUTION = 2000; // 2000 ticks mag encoder
     public static final double ODOMETER_WHEELS_RADIUS_METERS = 16.0/1000; // 32mm
