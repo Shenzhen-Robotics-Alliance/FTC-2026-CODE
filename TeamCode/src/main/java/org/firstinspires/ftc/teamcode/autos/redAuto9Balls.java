@@ -33,20 +33,18 @@ final class redPositions {
 
     public static final Translation2d LINE_2_LEFT_BALL = new Translation2d(0,1.36);
     public static final Translation2d LINE_2_MID_BALL = new Translation2d(0.31,1.35);
-    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.53,1.29);
+    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.47,1.39);
     //new
-    public static final Translation2d LINE_2_ENDING = LINE_2_RIGHT_BALL.plus(new Translation2d(0.8,0));
+    public static final Translation2d LINE_2_ENDING = LINE_2_RIGHT_BALL.plus(new Translation2d(-0.7,0));
 
     public static final Translation2d LINE_3_LEFT_BALL = new Translation2d(0,1.70);
     public static final Translation2d LINE_3_MID_BALL = new Translation2d(0.46,1.73);
-    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.52,2.0);
+    public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.47,2.0);
     public static final Translation2d FAR_SHOOTING_LINE_3_RIGHT_BALL = new Translation2d(-0.63,0.72);
     public static final Translation2d FAR_SHOOTING_ENDING_LINE_3_ENDING = FAR_SHOOTING_LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
-    public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.88,0));
-    public static final Translation2d GATE_POINT = new Translation2d(-0.05,1.09);
+    public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
+    public static final Translation2d GATE_POINT = new Translation2d(-0.08,1.00);
     public static final Rotation2d PARKING_FACING = Rotation2d.fromDegrees(-90);
-
-
 
 }
 
@@ -77,7 +75,7 @@ public class redAuto9Balls implements Auto{
         // <-- Step 3:  Intake and score the Second three Balls -->
         Command driveToSecondLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(RedScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(1,1.38)},
+                new Translation2d[]{new Translation2d(0.69,1.0)},
                 new Pose2d(redPositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
                 0.85

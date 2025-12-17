@@ -244,7 +244,7 @@ public class AutoUtils {
 
         Command moveToShortScoringBalls = robotContainer.driveSubsystem.followPath(
                 new Pose2d(startingPoint, Rotation2d.fromDegrees(60)),
-                new Translation2d[]{new Translation2d(0.78, 0.7)},  //change as the real situation
+                new Translation2d[]{new Translation2d(0.88, 0.7)},  //change as the real situation
                 new Pose2d(RedScoreShortBallsPose.getTranslation(), Rotation2d.fromDegrees(45)),
                 Rotation2d.fromDegrees(0),
                 0.95

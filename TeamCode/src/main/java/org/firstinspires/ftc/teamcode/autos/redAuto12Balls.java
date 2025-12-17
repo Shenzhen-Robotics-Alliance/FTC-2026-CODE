@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.autos;
 
-
 import static org.firstinspires.ftc.teamcode.autos.AutoUtils.RedScoreShortBallsPose;
 
 import com.arcrobotics.ftclib.command.Command;
@@ -31,10 +30,9 @@ public class redAuto12Balls implements Auto{
                 new Translation2d[]{new Translation2d(0.81,0.97)},
                 new Pose2d(redPositions.LINE_1_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
-                0.8
+                0.85
         );
-        sequence.addCommands(driveToFirstLine
-                .withTimeout(900));
+        sequence.addCommands(driveToFirstLine.withTimeout(700));
         sequence.addCommands(AutoUtils.RedDriveToIntakeFirstLineContinuousLy(robotContainer).withTimeout(1000));
         sequence.addCommands(AutoUtils.RedFirstLineDriveToShortPoseAndShot(robotContainer, redPositions.LINE_1_ENDING,1300));
 
@@ -42,32 +40,32 @@ public class redAuto12Balls implements Auto{
         // <-- Step 3:  Intake and score the Second three Balls -->
         Command driveToSecondLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(RedScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(0.77,0.96)},
+                new Translation2d[]{new Translation2d(0.77,1.1)},
                 new Pose2d(redPositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
-                0.8
+                0.85
         );
         Command driveToGATE = robotContainer.driveSubsystem.followPath(
                 new Pose2d(redPositions.LINE_2_ENDING,Rotation2d.fromDegrees(60)),
-                new Translation2d[]{new Translation2d(0.31,-1.36)},
+                new Translation2d[]{new Translation2d(0.31,1.36)},
                 new Pose2d(redPositions.GATE_POINT,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
-                0.8
+                0.85
         );
 
-        sequence.addCommands(driveToSecondLine.withTimeout(1400));  //narrow
+        sequence.addCommands(driveToSecondLine.withTimeout(1500));  //narrow
         sequence.addCommands(AutoUtils.RedDriveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1400));
 
         sequence.addCommands(driveToGATE.withTimeout(1500));  //narrow
-        sequence.addCommands(AutoUtils.RedSecondLineDriveToShortPoseAndShot(robotContainer,redPositions.GATE_POINT,2000));
+        sequence.addCommands(AutoUtils.RedSecondLineDriveToShortPoseAndShot(robotContainer,redPositions.GATE_POINT,1900));
 
         // <-- Step 4:  Intake and score the Third three Balls -->
         Command driveToThirdLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(RedScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(0)),
-                new Translation2d[]{new Translation2d(0.7,1.54)},   //need
+                new Translation2d[]{new Translation2d(0.7,1.46)},   //need
                 new Pose2d(redPositions.LINE_3_RIGHT_BALL,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
-                0.8
+                0.85
         );
 
         sequence.addCommands(driveToThirdLine
@@ -82,7 +80,7 @@ public class redAuto12Balls implements Auto{
                 new Translation2d[]{}, //need
                 new Pose2d(redPositions.START_POINT,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromRotations(0),
-                0.8
+                0.85
         );
 
         sequence.addCommands(goToEndingPoint.withTimeout(1500));
