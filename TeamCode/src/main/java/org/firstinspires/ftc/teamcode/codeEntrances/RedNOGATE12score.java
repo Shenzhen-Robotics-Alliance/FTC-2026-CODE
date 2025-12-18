@@ -5,20 +5,19 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.AutonomousRobot;
 import org.firstinspires.ftc.teamcode.RobotContainer;
-import org.firstinspires.ftc.teamcode.autos.redAuto12Balls;
+import org.firstinspires.ftc.teamcode.autos.redNoGateAuto12Balls;
 import org.firstinspires.ftc.teamcode.utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.utils.OpModeUtils;
 
-@Autonomous(name="<Auto> RED 3 + 9 score artifacts ")
+@Autonomous(name="<Auto> BLUE NO GATE 3 + 9 score artifacts ")
 
-public class RedShort12score extends LinearOpMode {
+public class RedNOGATE12score extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         final AutonomousRobot robot = new AutonomousRobot(
                 new RobotContainer(hardwareMap, AllianceSide.RED),
-                new redAuto12Balls()
+                new redNoGateAuto12Balls()
         );
         OpModeUtils.runAutoMode(robot, this);
     }
-
 }

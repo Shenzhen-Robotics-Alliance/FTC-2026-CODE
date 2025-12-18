@@ -12,7 +12,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 
-public class redAuto12Balls implements Auto{
+public class redNoGateAuto12Balls implements Auto{
 
     @Override
     public Command getAutonomousCommands(RobotContainer robotContainer) {
@@ -55,9 +55,7 @@ public class redAuto12Balls implements Auto{
 
         sequence.addCommands(driveToSecondLine.withTimeout(1500));  //narrow
         sequence.addCommands(AutoUtils.RedDriveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1400));
-
-        sequence.addCommands(driveToGATE.withTimeout(1500));  //narrow
-        sequence.addCommands(AutoUtils.RedSecondLineDriveToShortPoseAndShot(robotContainer,redPositions.GATE_POINT,1900));
+        sequence.addCommands(AutoUtils.RedSecondLineDriveToShortPoseAndShot(robotContainer,redPositions.LINE_2_ENDING,1900));
 
         // <-- Step 4:  Intake and score the Third three Balls -->
         Command driveToThirdLine = robotContainer.driveSubsystem.followPath(
@@ -71,7 +69,7 @@ public class redAuto12Balls implements Auto{
         sequence.addCommands(driveToThirdLine
                 .withTimeout(1800)); //narrow
 
-        sequence.addCommands(AutoUtils.RedDriveToIntakeThirdLineContinuousLy(robotContainer).withTimeout(1450));
+        sequence.addCommands(AutoUtils.RedDriveToIntakeThirdLineContinuousLy(robotContainer).withTimeout(1400));
         sequence.addCommands(AutoUtils.RedThirdLineDriveToShortPoseAndShot(robotContainer,redPositions.LINE_3_ENDING,2200));
 
         // <-- Step 5: Go to the Auto Ending Point -->
