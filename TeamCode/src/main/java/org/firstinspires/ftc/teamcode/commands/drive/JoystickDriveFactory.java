@@ -20,7 +20,7 @@ public class JoystickDriveFactory {
         return driveSubsystem.drive(
                 () -> {
                     final ChassisSpeeds desiredDriveStationCentricSpeed = driveInput.getJoystickChassisSpeeds(
-                            driveSubsystem.getChassisMaxLinearVelocity() * 0.85, driveSubsystem.getChassisMaxAngularVelocity() * 0.8
+                            driveSubsystem.getChassisMaxLinearVelocity() * 0.85, driveSubsystem.getChassisMaxAngularVelocity() *0.85
                     );
                     SystemConstants.telemetry.addData("Driver Station Requested Speed", desiredDriveStationCentricSpeed);
                     return desiredDriveStationCentricSpeed;

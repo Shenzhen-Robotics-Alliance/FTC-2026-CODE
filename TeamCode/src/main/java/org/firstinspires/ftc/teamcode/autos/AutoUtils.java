@@ -173,7 +173,7 @@ public class AutoUtils {
                         new Translation2d[]{},   //change as the real situation
                         new Pose2d(bluePositions.LINE_3_ENDING, Rotation2d.fromDegrees(90)),
                         Rotation2d.fromDegrees(0),
-                        0.9
+                        0.95
                 )
                 .alongWith(robotContainer.intakeCommand.intakeContinuously());
         sequence.addCommands(driveAndIntake);
@@ -264,7 +264,7 @@ public class AutoUtils {
 
         Command moveToShortScoringBalls = robotContainer.driveSubsystem.followPath(
                 new Pose2d(startingPoint, Rotation2d.fromDegrees(135)),
-                new Translation2d[]{},  //in need
+                new Translation2d[]{new Translation2d(0.88,0.78)},  //in need
                 new Pose2d(RedScoreShortBallsPose.plus(new Transform2d(0.2, -0.2, new Rotation2d(0))).getTranslation(), Rotation2d.fromDegrees(45)),
                 Rotation2d.fromDegrees(0),
                 0.95

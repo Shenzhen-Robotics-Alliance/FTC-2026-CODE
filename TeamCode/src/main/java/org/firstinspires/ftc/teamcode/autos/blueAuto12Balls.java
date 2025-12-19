@@ -55,9 +55,9 @@ public class blueAuto12Balls implements Auto{
         );
 
         sequence.addCommands(driveToSecondLine.withTimeout(1350));  //narrow
-        sequence.addCommands(AutoUtils.BLueDriveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1400));
+        sequence.addCommands(AutoUtils.BLueDriveToIntakeSecondLineContinuousLy(robotContainer).withTimeout(1600));
 
-        sequence.addCommands(driveToGATE.withTimeout(500));  //narrow
+        sequence.addCommands(driveToGATE.withTimeout(1000));  //narrow
         sequence.addCommands(AutoUtils.BlueSecondLineDriveToShortPoseAndShot(robotContainer,bluePositions.GATE_POINT,1800));
 
         // <-- Step 4:  Intake and score the Third three Balls -->
@@ -72,7 +72,7 @@ public class blueAuto12Balls implements Auto{
         sequence.addCommands(driveToThirdLine
                 .withTimeout(2100)); //narrow
 
-        sequence.addCommands(AutoUtils.BlueDriveToIntakeThirdLineContinuousLy(robotContainer).withTimeout(1500));
+        sequence.addCommands(AutoUtils.BlueDriveToIntakeThirdLineContinuousLy(robotContainer).withTimeout(1700));
         sequence.addCommands(AutoUtils.BlueThirdLineDriveToShortPoseAndShot(robotContainer,bluePositions.LINE_3_ENDING,2300));
 
         // <-- Step 5: Go to the Auto Ending Point -->

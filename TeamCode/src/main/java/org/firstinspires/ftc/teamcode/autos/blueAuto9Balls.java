@@ -41,8 +41,8 @@ final class bluePositions {
     public static final Translation2d LINE_3_RIGHT_BALL = new Translation2d(0.64,-2.0);
     public static final Translation2d FAR_SHOOTING_LINE_3_RIGHT_BALL = new Translation2d(-0.63,0.72);
     public static final Translation2d FAR_SHOOTING_ENDING_LINE_3_ENDING = FAR_SHOOTING_LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
-    public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.88,0));
-    public static final Translation2d GATE_POINT = new Translation2d(-0.05,-1.09);
+    public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.9,0));
+    public static final Translation2d GATE_POINT = new Translation2d(-0.08,-1.0);
     public static final Rotation2d PARKING_FACING = Rotation2d.fromDegrees(-90);
 
 
