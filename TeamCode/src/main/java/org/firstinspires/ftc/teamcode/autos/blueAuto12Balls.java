@@ -41,7 +41,7 @@ public class blueAuto12Balls implements Auto{
         // <-- Step 3:  Intake and score the Second three Balls -->
         Command driveToSecondLine = robotContainer.driveSubsystem.followPath(
                 new Pose2d(BlueScoreShortBallsPose.getTranslation(),Rotation2d.fromDegrees(160)),
-                new Translation2d[]{new Translation2d(0.85,-1.07)},
+                new Translation2d[]{new Translation2d(0.9,-1.07)},
                 new Pose2d(bluePositions.LINE_2_RIGHT_BALL,Rotation2d.fromDegrees(80)),
                 Rotation2d.fromDegrees(0),
                 0.9
@@ -51,7 +51,7 @@ public class blueAuto12Balls implements Auto{
                 new Translation2d[]{new Translation2d(0.31,-1.36)},
                 new Pose2d(bluePositions.GATE_POINT,Rotation2d.fromDegrees(90)),
                 Rotation2d.fromDegrees(0),
-                0.9
+                0.95
         );
 
         sequence.addCommands(driveToSecondLine.withTimeout(1350));  //narrow

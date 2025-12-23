@@ -5,17 +5,17 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.AutonomousRobot;
 import org.firstinspires.ftc.teamcode.RobotContainer;
-import org.firstinspires.ftc.teamcode.autos.blueFarAutoSix;
+import org.firstinspires.ftc.teamcode.autos.blueFarAutothree;
 import org.firstinspires.ftc.teamcode.utils.AllianceSide;
 import org.firstinspires.ftc.teamcode.utils.OpModeUtils;
 
-@Autonomous(name="<Auto> BLUE FAR 3 + 3 score artifacts ")
-public class BLueFarPoint6score extends LinearOpMode {
+@Autonomous(name="<Auto> BLUE FAR 3 score artifacts ")
+public class BLueFarPoint3score extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         final AutonomousRobot robot = new AutonomousRobot(
                 new RobotContainer(hardwareMap, AllianceSide.BLUE),
-                new blueFarAutoSix()
+                new blueFarAutothree()
         );
         OpModeUtils.runAutoMode(robot, this);
     }

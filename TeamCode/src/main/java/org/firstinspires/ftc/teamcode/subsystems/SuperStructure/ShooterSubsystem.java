@@ -52,7 +52,7 @@ public class ShooterSubsystem extends SubsystemBase {
         rpmTable.add(1.8, 740);
         rpmTable.add(1.53, 730);
         rpmTable.add(1.13, 710);
-        rpmTable.add(0.57, 674);
+
         this.driveSubsystem = driveSubsystem;
 
     }
@@ -92,7 +92,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     //<Fixed Point shoot in both Short and Far Point>
     public Command shooterFixFarLaunch(){
-        return new RunCommand(() -> setTargetRPM(950));
+        return new RunCommand(() -> setTargetRPM(980));
     }
 
     public Command shooterFixShortLaunch(){
@@ -135,7 +135,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public boolean isReadyToFixFarLaunch(){
         currentTPS = Math.abs(shooter.getCurrentVelocityRaw());
-        return currentTPS > 2100;
+        return currentTPS > 2200;
     }
 
     public boolean isReadyToFixShortLaunch() {

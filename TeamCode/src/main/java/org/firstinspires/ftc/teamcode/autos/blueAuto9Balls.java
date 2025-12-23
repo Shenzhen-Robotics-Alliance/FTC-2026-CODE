@@ -67,7 +67,7 @@ public class blueAuto9Balls implements Auto{
                 0.7
         );
         sequence.addCommands(driveToFirstLine
-                .withTimeout(1000));
+                .withTimeout(930));
         sequence.addCommands(AutoUtils.BlueDriveToIntakeFirstLineContinuousLy(robotContainer).withTimeout(1200));
         sequence.addCommands(AutoUtils.BlueFirstLineDriveToShortPoseAndShot(robotContainer, bluePositions.LINE_1_ENDING,1300));
 

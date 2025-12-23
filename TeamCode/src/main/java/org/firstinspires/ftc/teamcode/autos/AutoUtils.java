@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.autos;
 
 import com.arcrobotics.ftclib.command.Command;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
+import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.RobotContainer;
 
@@ -129,8 +130,14 @@ public class AutoUtils {
 
         sequence.addCommands(robotContainer.intakeCommand.intakeContinuously()
                 .alongWith(robotContainer.shootCommand.fixShootFarContinuously())
-                .withTimeout(6000));
-        sequence.addCommands(robotContainer.shootCommand.shootStop());
+                .withTimeout(4500));
+        sequence.addCommands(robotContainer.intakeCommand.stopIntake());
+
+        sequence.addCommands(new WaitCommand(1500));
+
+        sequence.addCommands(robotContainer.intakeCommand.intakeContinuously()
+                .alongWith(robotContainer.shootCommand.fixShootFarContinuously())
+                .withTimeout(4200));
 
         return sequence;
     }

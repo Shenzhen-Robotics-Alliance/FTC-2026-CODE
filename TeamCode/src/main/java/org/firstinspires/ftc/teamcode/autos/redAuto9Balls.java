@@ -33,7 +33,7 @@ final class redPositions {
 
     public static final Translation2d LINE_2_LEFT_BALL = new Translation2d(0,1.36);
     public static final Translation2d LINE_2_MID_BALL = new Translation2d(0.31,1.35);
-    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.47,1.39);
+    public static final Translation2d LINE_2_RIGHT_BALL = new Translation2d( 0.47,1.4);
     //new
     public static final Translation2d LINE_2_ENDING = LINE_2_RIGHT_BALL.plus(new Translation2d(-0.7,0));
 
@@ -43,7 +43,7 @@ final class redPositions {
     public static final Translation2d FAR_SHOOTING_LINE_3_RIGHT_BALL = new Translation2d(-0.63,0.72);
     public static final Translation2d FAR_SHOOTING_ENDING_LINE_3_ENDING = FAR_SHOOTING_LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
     public static final Translation2d LINE_3_ENDING = LINE_3_RIGHT_BALL.plus(new Translation2d(-0.7,0));
-    public static final Translation2d GATE_POINT = new Translation2d(-0.08,1.00);
+    public static final Translation2d GATE_POINT = new Translation2d(-0.08,0.89);
     public static final Rotation2d PARKING_FACING = Rotation2d.fromDegrees(-90);
 
 }
@@ -67,7 +67,7 @@ public class redAuto9Balls implements Auto{
                 0.75
         );
         sequence.addCommands(driveToFirstLine
-                .withTimeout(1000));
+                .withTimeout(930));
         sequence.addCommands(AutoUtils.RedDriveToIntakeFirstLineContinuousLy(robotContainer).withTimeout(1200));
         sequence.addCommands(AutoUtils.RedFirstLineDriveToShortPoseAndShot(robotContainer, redPositions.LINE_1_ENDING,1300));
 
